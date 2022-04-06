@@ -1,5 +1,5 @@
-# Qonversion Hybrid SDK
-Qonversion Hybrid SDK is used for bridging in cross-platform SDKs. It is indended for internal purposes only.
+# Qonversion Sandwich SDK
+Qonversion Sandwich SDK is used for bridging in cross-platform SDKs. It is intended for internal purposes only.
 If you are looking for cross-platform SDKs then visit the corresponding repositories:
 - [Flutter](https://github.com/qonversion/flutter-sdk)
 - [React Native](https://github.com/qonversion/react-native-sdk)
