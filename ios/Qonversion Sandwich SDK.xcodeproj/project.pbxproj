@@ -78,7 +78,7 @@
 			dependencies = (
 			);
 			name = "Qonversion Sandwich SDK";
-			productName = "Qonversion Hybrid SDK";
+			productName = "Qonversion Sandwich SDK";
 			productReference = 6A297A2B27FCAF1E0040CB36 /* Qonversion_Sandwich_SDK.framework */;
 			productType = "com.apple.product-type.framework";
 		};
