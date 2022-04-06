@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6A297A2F27FCAF1E0040CB36 /* Qonversion_Hybrid_SDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A297A2E27FCAF1E0040CB36 /* Qonversion_Hybrid_SDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6A297A2F27FCAF1E0040CB36 /* QonversionSandwichSdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A297A2E27FCAF1E0040CB36 /* QonversionSandwichSdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6A297A2B27FCAF1E0040CB36 /* Qonversion_Hybrid_SDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Qonversion_Hybrid_SDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6A297A2E27FCAF1E0040CB36 /* Qonversion_Hybrid_SDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Qonversion_Hybrid_SDK.h; sourceTree = "<group>"; };
+		6A297A2B27FCAF1E0040CB36 /* Qonversion_Sandwich_SDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Qonversion_Sandwich_SDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A297A2E27FCAF1E0040CB36 /* QonversionSandwichSdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QonversionSandwichSdk.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,7 +29,7 @@
 		6A297A2127FCAF1E0040CB36 = {
 			isa = PBXGroup;
 			children = (
-				6A297A2D27FCAF1E0040CB36 /* Qonversion Hybrid SDK */,
+				6A297A2D27FCAF1E0040CB36 /* Qonversion Sandwich SDK */,
 				6A297A2C27FCAF1E0040CB36 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -37,17 +37,17 @@
 		6A297A2C27FCAF1E0040CB36 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6A297A2B27FCAF1E0040CB36 /* Qonversion_Hybrid_SDK.framework */,
+				6A297A2B27FCAF1E0040CB36 /* Qonversion_Sandwich_SDK.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6A297A2D27FCAF1E0040CB36 /* Qonversion Hybrid SDK */ = {
+		6A297A2D27FCAF1E0040CB36 /* Qonversion Sandwich SDK */ = {
 			isa = PBXGroup;
 			children = (
-				6A297A2E27FCAF1E0040CB36 /* Qonversion_Hybrid_SDK.h */,
+				6A297A2E27FCAF1E0040CB36 /* QonversionSandwichSdk.h */,
 			);
-			path = "Qonversion Hybrid SDK";
+			path = "Qonversion Sandwich SDK";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -57,16 +57,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A297A2F27FCAF1E0040CB36 /* Qonversion_Hybrid_SDK.h in Headers */,
+				6A297A2F27FCAF1E0040CB36 /* QonversionSandwichSdk.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		6A297A2A27FCAF1E0040CB36 /* Qonversion Hybrid SDK */ = {
+		6A297A2A27FCAF1E0040CB36 /* Qonversion Sandwich SDK */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6A297A3227FCAF1E0040CB36 /* Build configuration list for PBXNativeTarget "Qonversion Hybrid SDK" */;
+			buildConfigurationList = 6A297A3227FCAF1E0040CB36 /* Build configuration list for PBXNativeTarget "Qonversion Sandwich SDK" */;
 			buildPhases = (
 				6A297A2627FCAF1E0040CB36 /* Headers */,
 				6A297A2727FCAF1E0040CB36 /* Sources */,
@@ -77,9 +77,9 @@
 			);
 			dependencies = (
 			);
-			name = "Qonversion Hybrid SDK";
+			name = "Qonversion Sandwich SDK";
 			productName = "Qonversion Hybrid SDK";
-			productReference = 6A297A2B27FCAF1E0040CB36 /* Qonversion_Hybrid_SDK.framework */;
+			productReference = 6A297A2B27FCAF1E0040CB36 /* Qonversion_Sandwich_SDK.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -96,7 +96,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 6A297A2527FCAF1E0040CB36 /* Build configuration list for PBXProject "Qonversion Hybrid SDK" */;
+			buildConfigurationList = 6A297A2527FCAF1E0040CB36 /* Build configuration list for PBXProject "Qonversion Sandwich SDK" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -109,7 +109,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6A297A2A27FCAF1E0040CB36 /* Qonversion Hybrid SDK */,
+				6A297A2A27FCAF1E0040CB36 /* Qonversion Sandwich SDK */,
 			);
 		};
 /* End PBXProject section */
@@ -276,8 +276,8 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.qonversion.hybrid;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = io.qonversion.sandwich;
+				PRODUCT_NAME = Qonversion_Sandwich_SDK;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -304,8 +304,8 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.qonversion.hybrid;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = io.qonversion.sandwich;
+				PRODUCT_NAME = Qonversion_Sandwich_SDK;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -316,7 +316,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6A297A2527FCAF1E0040CB36 /* Build configuration list for PBXProject "Qonversion Hybrid SDK" */ = {
+		6A297A2527FCAF1E0040CB36 /* Build configuration list for PBXProject "Qonversion Sandwich SDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6A297A3027FCAF1E0040CB36 /* Debug */,
@@ -325,7 +325,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6A297A3227FCAF1E0040CB36 /* Build configuration list for PBXNativeTarget "Qonversion Hybrid SDK" */ = {
+		6A297A3227FCAF1E0040CB36 /* Build configuration list for PBXNativeTarget "Qonversion Sandwich SDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6A297A3327FCAF1E0040CB36 /* Debug */,
