@@ -12,7 +12,7 @@ import com.qonversion.android.sdk.dto.offerings.QOffering
 import com.qonversion.android.sdk.dto.offerings.QOfferings
 import com.qonversion.android.sdk.dto.products.QProduct
 
-fun QonversionError.toMap(): Map<String, String> {
+fun QonversionError.toMap(): BridgeData {
     return mapOf(
         "code" to code.toString(),
         "description" to description,
@@ -20,7 +20,7 @@ fun QonversionError.toMap(): Map<String, String> {
     )
 }
 
-fun SkuDetails.toMap(): Map<String, Any?> {
+fun SkuDetails.toMap(): BridgeData {
     return mapOf(
         "description" to description,
         "freeTrialPeriod" to freeTrialPeriod,
@@ -44,7 +44,7 @@ fun SkuDetails.toMap(): Map<String, Any?> {
     )
 }
 
-fun QProduct.toMap(): Map<String, Any?> {
+fun QProduct.toMap(): BridgeData {
     return mapOf(
         "id" to qonversionID,
         "store_id" to storeID,
@@ -57,11 +57,11 @@ fun QProduct.toMap(): Map<String, Any?> {
     )
 }
 
-fun Map<String, QProduct>.toProductsMap(): Map<String, Any> {
+fun Map<String, QProduct>.toProductsMap(): BridgeData {
     return mapValues { it.value.toMap() }
 }
 
-fun QPermission.toMap(): Map<String, Any?> {
+fun QPermission.toMap(): BridgeData {
     return mapOf(
         "id" to permissionID,
         "associated_product" to productID,
@@ -72,11 +72,11 @@ fun QPermission.toMap(): Map<String, Any?> {
     )
 }
 
-fun Map<String, QPermission>.toPermissionsMap(): Map<String, Any> {
+fun Map<String, QPermission>.toPermissionsMap(): BridgeData {
     return mapValues { it.value.toMap() }
 }
 
-fun QOffering.toMap(): Map<String, Any?> {
+fun QOffering.toMap(): BridgeData {
     return mapOf(
         "id" to offeringID,
         "tag" to tag.tag,
@@ -84,22 +84,22 @@ fun QOffering.toMap(): Map<String, Any?> {
     )
 }
 
-fun QOfferings.toMap(): Map<String, Any?> {
+fun QOfferings.toMap(): BridgeData {
     return mapOf(
         "main" to main?.toMap(),
         "available_offerings" to availableOfferings.map { it.toMap() }
     )
 }
 
-fun QEligibility.toMap(): Map<String, Any> {
+fun QEligibility.toMap(): BridgeData {
     return mapOf("status" to status.type)
 }
 
-fun Map<String, QEligibility>.toEligibilityMap(): Map<String, Any> {
+fun Map<String, QEligibility>.toEligibilityMap(): BridgeData {
     return mapValues { it.value.toMap() }
 }
 
-fun QLaunchResult.toMap(): Map<String, Any> {
+fun QLaunchResult.toMap(): BridgeData {
     return mapOf(
         "uid" to uid,
         "timestamp" to date.time.toDouble(),
@@ -109,18 +109,18 @@ fun QLaunchResult.toMap(): Map<String, Any> {
     )
 }
 
-fun QExperimentInfo.toMap(): Map<String, Any> {
+fun QExperimentInfo.toMap(): BridgeData {
     return mapOf(
         "id" to experimentID,
         "group" to mapOf("type" to 0)
     )
 }
 
-fun Map<String, QExperimentInfo>.toExperimentsMap(): Map<String, Any> {
+fun Map<String, QExperimentInfo>.toExperimentsMap(): BridgeData {
     return mapValues { it.value.toMap() }
 }
 
-fun QActionResult.toMap(): Map<String, Any?> {
+fun QActionResult.toMap(): BridgeData {
     return mapOf(
         "type" to type.type,
         "value" to value,
@@ -128,7 +128,7 @@ fun QActionResult.toMap(): Map<String, Any?> {
     )
 }
 
-fun AutomationsEvent.toMap(): Map<String, Any?> {
+fun AutomationsEvent.toMap(): BridgeData {
     return mapOf(
         "type" to type.type,
         "timestamp" to date.time.toDouble()
