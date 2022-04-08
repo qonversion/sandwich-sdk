@@ -1,6 +1,6 @@
 package io.qonversion.sandwich
 
-interface AsyncEventsListener {
+interface QonversionEventsListener {
 
     fun onPermissionsUpdateAfterAsyncPurchase(permissions: BridgeData)
 }
