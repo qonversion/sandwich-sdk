@@ -8,11 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		6A8EB5CA27FD896400DCCD9E /* sandwich.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A8EB5C927FD896400DCCD9E /* sandwich.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6A8EB5D128046BAA00DCCD9E /* Mappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8EB5D028046BAA00DCCD9E /* Mappers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6A8EB5C627FD896400DCCD9E /* QonversionSandwich.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QonversionSandwich.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A8EB5C927FD896400DCCD9E /* sandwich.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sandwich.h; sourceTree = "<group>"; };
+		6A8EB5D028046BAA00DCCD9E /* Mappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mappers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +48,7 @@
 			isa = PBXGroup;
 			children = (
 				6A8EB5C927FD896400DCCD9E /* sandwich.h */,
+				6A8EB5D028046BAA00DCCD9E /* Mappers.swift */,
 			);
 			path = sandwich;
 			sourceTree = "<group>";
@@ -93,6 +96,7 @@
 				TargetAttributes = {
 					6A8EB5C527FD896400DCCD9E = {
 						CreatedOnToolsVersion = 13.2.1;
+						LastSwiftMigration = 1320;
 					};
 				};
 			};
@@ -129,6 +133,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A8EB5D128046BAA00DCCD9E /* Mappers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,6 +265,7 @@
 		6A8EB5CE27FD896400DCCD9E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -280,6 +286,7 @@
 				PRODUCT_NAME = QonversionSandwich;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -288,6 +295,7 @@
 		6A8EB5CF27FD896400DCCD9E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
