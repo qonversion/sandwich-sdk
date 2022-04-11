@@ -5,10 +5,10 @@ Pod::Spec.new do |s|
   s.description  = <<-DESC
   Qonversion Sandwich SDK is used for bridging in cross-platform SDKs. It is intended for internal purposes only.
   DESC
-  s.homepage     = 'https://github.com/qonversion/qonversion-ios-sdk'
-  s.license      = { :type => 'MIT' }
+  s.homepage     = 'https://github.com/qonversion/sandwich-sdk'
+  s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.author       = { 'Qonversion Inc.' => 'hi@qonversion.io' }
-  s.source       = { :git => 'https://github.com/qonversion/qonversion-ios-sdk.git', :tag => 'develop' }
+  s.source       = { :git => 'https://github.com/qonversion/sandwich-sdk.git', :tag => 'ios_mappers' }
   s.platforms    = { :ios => "9.0" }
 
   s.default_subspecs = 'Main'
