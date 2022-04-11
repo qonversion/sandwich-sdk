@@ -11,11 +11,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => 'https://github.com/qonversion/sandwich-sdk.git', :tag => 'ios_mappers' }
   s.platforms    = { :ios => "9.0" }
 
-  s.default_subspecs = 'Main'
-
-  s.subspec 'Main' do |ss|
-    ss.source_files = '**/sandwich/**/*.{h,m,swift}'
-  end
+  s.source_files = '**/sandwich/**/*.{h,m,swift}'
 
   s.dependency "Qonversion", "2.18.3"
 end
