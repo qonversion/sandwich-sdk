@@ -14,6 +14,10 @@ android {
         minSdk 16
         targetSdk 31
 
+        group = 'io.qonversion.sandwich'
+        version = release.versionName
+        versionName = release.versionName
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -33,7 +37,14 @@ android {
     }
 }
 
+ext {
+    PUBLISH_GROUP_ID = 'io.qonversion.sandwich'
+    PUBLISH_ARTIFACT_ID = 'sandwich'
+}
+
 dependencies {
     implementation "io.qonversion.android.sdk:sdk:$qonversion_version"
     implementation 'androidx.preference:preference:1.2.0'
 }
+
+apply from: "../scripts/maven-release.gradle"
