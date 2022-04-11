@@ -227,15 +227,6 @@ class QonversionBridge(
         Qonversion.setDebugMode()
     }
 
-    @Deprecated(
-        "This function was used in debug mode only. You can reinstall the app if you need to reset the user ID.",
-        level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith("")
-    )
-    fun resetUser() {
-        Qonversion.resetUser()
-    }
-
     fun addAttributionData(sourceKey: String, data: Map<String, Any>) {
         try {
             val source = AttributionSource.valueOf(sourceKey)
