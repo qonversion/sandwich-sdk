@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		64E83EB971FD7892008F8D8B /* Pods_QonversionSandwich.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1607ECC5962D51D399DA3708 /* Pods_QonversionSandwich.framework */; };
 		6A8EB5CA27FD896400DCCD9E /* sandwich.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A8EB5C927FD896400DCCD9E /* sandwich.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6A8EB5D128046BAA00DCCD9E /* Mappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8EB5D028046BAA00DCCD9E /* Mappers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1607ECC5962D51D399DA3708 /* Pods_QonversionSandwich.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QonversionSandwich.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C5BEEBADB771536AA73F068 /* Pods-QonversionSandwich.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QonversionSandwich.debug.xcconfig"; path = "Target Support Files/Pods-QonversionSandwich/Pods-QonversionSandwich.debug.xcconfig"; sourceTree = "<group>"; };
+		68DD3D7EEC906C62A62C99BD /* Pods-QonversionSandwich.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QonversionSandwich.release.xcconfig"; path = "Target Support Files/Pods-QonversionSandwich/Pods-QonversionSandwich.release.xcconfig"; sourceTree = "<group>"; };
 		6A8EB5C627FD896400DCCD9E /* QonversionSandwich.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QonversionSandwich.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A8EB5C927FD896400DCCD9E /* sandwich.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sandwich.h; sourceTree = "<group>"; };
 		6A8EB5D028046BAA00DCCD9E /* Mappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mappers.swift; sourceTree = "<group>"; };
@@ -22,6 +26,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64E83EB971FD7892008F8D8B /* Pods_QonversionSandwich.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -33,6 +38,8 @@
 			children = (
 				6A8EB5C827FD896400DCCD9E /* sandwich */,
 				6A8EB5C727FD896400DCCD9E /* Products */,
+				F28FF2D0F3377A838D0252C7 /* Pods */,
+				F92A4373D499F8716A928458 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -53,6 +60,24 @@
 			path = sandwich;
 			sourceTree = "<group>";
 		};
+		F28FF2D0F3377A838D0252C7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2C5BEEBADB771536AA73F068 /* Pods-QonversionSandwich.debug.xcconfig */,
+				68DD3D7EEC906C62A62C99BD /* Pods-QonversionSandwich.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		F92A4373D499F8716A928458 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1607ECC5962D51D399DA3708 /* Pods_QonversionSandwich.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -71,6 +96,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6A8EB5CD27FD896400DCCD9E /* Build configuration list for PBXNativeTarget "QonversionSandwich" */;
 			buildPhases = (
+				19060B28240F812CC9780BA2 /* [CP] Check Pods Manifest.lock */,
 				6A8EB5C127FD896400DCCD9E /* Headers */,
 				6A8EB5C227FD896400DCCD9E /* Sources */,
 				6A8EB5C327FD896400DCCD9E /* Frameworks */,
@@ -127,6 +153,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		19060B28240F812CC9780BA2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-QonversionSandwich-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6A8EB5C227FD896400DCCD9E /* Sources */ = {
@@ -264,6 +315,7 @@
 		};
 		6A8EB5CE27FD896400DCCD9E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C5BEEBADB771536AA73F068 /* Pods-QonversionSandwich.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -294,6 +346,7 @@
 		};
 		6A8EB5CF27FD896400DCCD9E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 68DD3D7EEC906C62A62C99BD /* Pods-QonversionSandwich.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
