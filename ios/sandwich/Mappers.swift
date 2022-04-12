@@ -12,6 +12,7 @@ extension NSError {
   func toMap() -> [String: Any?] {
     let errorMap = [
       "code": code,
+      "domain": domain,
       "description": localizedDescription,
       "additionalMessage": userInfo[NSDebugDescriptionErrorKey]]
     
@@ -38,7 +39,7 @@ extension Qonversion.Product {
         "storeId": storeID,
         "type": type.rawValue,
         "duration": duration.rawValue,
-        "skProduct": skProduct?.toMap(), // ??? sync name with android?
+        "skProduct": skProduct?.toMap(),
         "prettyPrice": prettyPrice,
         "trialDuration": trialDuration.rawValue,
         "offeringId": offeringID
@@ -46,16 +47,14 @@ extension Qonversion.Product {
   }
 }
 
-
-
 extension Qonversion.Permission {
   func toMap() -> [String: Any?] {
     return [
       "id": permissionID,
       "associatedProduct": productID,
       "renewState": renewState.rawValue,
-      "startedTimestamp": startedDate.timeIntervalSince1970 * 1000,
-      "expirationTimestamp": expirationDate?.timeIntervalSince1970 != nil ? expirationDate!.timeIntervalSince1970 * 1000 : nil,
+      "startedTimestamp": startedDate.toMilliseconds(),
+      "expirationTimestamp": expirationDate.map { $0.toMilliseconds() },
       "active": isActive,
     ]
   }
@@ -136,7 +135,7 @@ extension SKProduct {
       "localizedDescription": localizedDescription,
       "localizedTitle": localizedTitle,
       "productIdentifier": productIdentifier,
-      "price": price.description,
+      "price": price.stringValue,
       "priceLocale": priceLocale.toMap(),
       "isDownloadable": isDownloadable,
       "downloadContentVersion": downloadContentVersion,
@@ -185,7 +184,7 @@ extension SKProductSubscriptionPeriod {
 extension SKProductDiscount {
   func toMap() -> [String: Any] {
     var map: [String: Any] = [
-      "price": price.description,
+      "price": price.stringValue,
       "numberOfPeriods": numberOfPeriods,
       "subscriptionPeriod": subscriptionPeriod.toMap(),
       "paymentMode": paymentMode.rawValue,
