@@ -47,13 +47,13 @@ fun SkuDetails.toMap(): BridgeData {
 fun QProduct.toMap(): BridgeData {
     return mapOf(
         "id" to qonversionID,
-        "store_id" to storeID,
+        "storeId" to storeID,
         "type" to type.type,
         "duration" to duration?.type,
-        "sku_details" to skuDetail?.toMap(),
-        "pretty_price" to prettyPrice,
-        "trial_duration" to trialDuration?.type,
-        "offering_id" to offeringID
+        "skuDetails" to skuDetail?.toMap(),
+        "prettyPrice" to prettyPrice,
+        "trialDuration" to trialDuration?.type,
+        "offeringId" to offeringID
     )
 }
 
@@ -64,10 +64,10 @@ fun Map<String, QProduct>.toProductsMap(): BridgeData {
 fun QPermission.toMap(): BridgeData {
     return mapOf(
         "id" to permissionID,
-        "associated_product" to productID,
-        "renew_state" to renewState.type,
-        "started_timestamp" to startedDate.time.toDouble(),
-        "expiration_timestamp" to expirationDate?.time?.toDouble(),
+        "associatedProduct" to productID,
+        "renewState" to renewState.type,
+        "startedTimestamp" to startedDate.time.toDouble(),
+        "expirationTimestamp" to expirationDate?.time?.toDouble(),
         "active" to isActive()
     )
 }
@@ -87,7 +87,7 @@ fun QOffering.toMap(): BridgeData {
 fun QOfferings.toMap(): BridgeData {
     return mapOf(
         "main" to main?.toMap(),
-        "available_offerings" to availableOfferings.map { it.toMap() }
+        "availableOfferings" to availableOfferings.map { it.toMap() }
     )
 }
 
@@ -105,7 +105,7 @@ fun QLaunchResult.toMap(): BridgeData {
         "timestamp" to date.time.toDouble(),
         "products" to products.toProductsMap(),
         "permissions" to permissions.toPermissionsMap(),
-        "user_products" to userProducts.toProductsMap()
+        "userProducts" to userProducts.toProductsMap()
     )
 }
 
