@@ -1,0 +1,18 @@
+PODS:
+  - Qonversion (2.18.3):
+    - Qonversion/Main (= 2.18.3)
+  - Qonversion/Main (2.18.3)
+
+DEPENDENCIES:
+  - Qonversion (= 2.18.3)
+
+SPEC REPOS:
+  trunk:
+    - Qonversion
+
+SPEC CHECKSUMS:
+  Qonversion: a80bf4c9ddaa689b0982a35c6f1d84c4870d0f02
+
+PODFILE CHECKSUM: aca9522a3894fc967fcb25d0f09fbabab4661b28
+
+COCOAPODS: 1.11.2
