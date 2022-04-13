@@ -10,7 +10,7 @@ import Foundation
 import Qonversion
 
 class AutomationsSandwich : NSObject {
-  private var automationsEventListener: AutomationsEventListener? = nil
+  private var automationsEventListener: AutomationsEventListener?
   
   public func subscribe(_ automationsEventListener: AutomationsEventListener) {
     self.automationsEventListener = automationsEventListener
@@ -20,22 +20,22 @@ class AutomationsSandwich : NSObject {
 
 extension AutomationsSandwich: Qonversion.AutomationsDelegate {
   public func automationsDidShowScreen(_ screenID: String) {
-    let payload = ["screenId": screenID]
+    let payload: BridgeData = ["screenId": screenID]
     automationsEventListener?.automationDidTrigger(event: AutomationsEvent.screenShown.rawValue, payload: payload)
   }
   
   public func automationsDidStartExecuting(actionResult: Qonversion.ActionResult) {
-    let payload = actionResult.toMap()
+    let payload: BridgeData = actionResult.toMap()
     automationsEventListener?.automationDidTrigger(event: AutomationsEvent.actionStarted.rawValue, payload: payload)
   }
   
   public func automationsDidFailExecuting(actionResult: Qonversion.ActionResult) {
-    let payload = actionResult.toMap()
+    let payload: BridgeData = actionResult.toMap()
     automationsEventListener?.automationDidTrigger(event: AutomationsEvent.actionFailed.rawValue, payload: payload)
   }
   
   public func automationsDidFinishExecuting(actionResult: Qonversion.ActionResult) {
-    let payload = actionResult.toMap()
+    let payload: BridgeData = actionResult.toMap()
     automationsEventListener?.automationDidTrigger(event: AutomationsEvent.actionFinished.rawValue, payload: payload)
   }
   
