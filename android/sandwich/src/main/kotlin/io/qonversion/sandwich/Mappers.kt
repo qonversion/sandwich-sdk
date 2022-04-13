@@ -12,6 +12,10 @@ import com.qonversion.android.sdk.dto.offerings.QOffering
 import com.qonversion.android.sdk.dto.offerings.QOfferings
 import com.qonversion.android.sdk.dto.products.QProduct
 
+fun QonversionError.toSandwichError(): SandwichError {
+    return SandwichError(this)
+}
+
 fun QonversionError.toMap(): BridgeData {
     return mapOf(
         "code" to code.toString(),

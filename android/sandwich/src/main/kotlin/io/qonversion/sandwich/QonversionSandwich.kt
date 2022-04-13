@@ -18,10 +18,10 @@ class QonversionSandwich(
 
     private var isSubscribedOnAsyncEvents = false
 
-    private val noActivityForPurchaseErrorMap = QonversionError(
+    private val noActivityForPurchaseError = QonversionError(
         QonversionErrorCode.PurchaseInvalid,
         "Current Android activity is null, cannot perform the action."
-    ).toMap()
+    )
 
     // region Initialization
 
@@ -40,7 +40,7 @@ class QonversionSandwich(
                 }
 
                 override fun onError(error: QonversionError) {
-                    resultListener.onError(error.toMap())
+                    resultListener.onError(error.toSandwichError())
                 }
             }
         )
@@ -66,7 +66,7 @@ class QonversionSandwich(
     fun purchase(productId: String, resultListener: ResultListener) {
         val currentActivity = activityProvider.currentActivity
             ?: run {
-                resultListener.onError(noActivityForPurchaseErrorMap)
+                resultListener.onError(noActivityForPurchaseError.toSandwichError())
                 return
             }
 
@@ -81,7 +81,7 @@ class QonversionSandwich(
     ) {
         val currentActivity = activityProvider.currentActivity
             ?: run {
-                resultListener.onError(noActivityForPurchaseErrorMap)
+                resultListener.onError(noActivityForPurchaseError.toSandwichError())
                 return
             }
 
@@ -105,7 +105,7 @@ class QonversionSandwich(
     ) {
         val currentActivity = activityProvider.currentActivity
             ?: run {
-                resultListener.onError(noActivityForPurchaseErrorMap)
+                resultListener.onError(noActivityForPurchaseError.toSandwichError())
                 return
             }
 
@@ -122,7 +122,7 @@ class QonversionSandwich(
     ) {
         val currentActivity = activityProvider.currentActivity
             ?: run {
-                resultListener.onError(noActivityForPurchaseErrorMap)
+                resultListener.onError(noActivityForPurchaseError.toSandwichError())
                 return
             }
 
@@ -150,7 +150,7 @@ class QonversionSandwich(
             }
 
             override fun onError(error: QonversionError) {
-                resultListener.onError(error.toMap())
+                resultListener.onError(error.toSandwichError())
             }
         })
     }
@@ -162,7 +162,7 @@ class QonversionSandwich(
             }
 
             override fun onError(error: QonversionError) {
-                resultListener.onError(error.toMap())
+                resultListener.onError(error.toSandwichError())
             }
         })
     }
@@ -183,7 +183,7 @@ class QonversionSandwich(
             }
 
             override fun onError(error: QonversionError) {
-                resultListener.onError(error.toMap())
+                resultListener.onError(error.toSandwichError())
             }
         })
     }
@@ -195,7 +195,7 @@ class QonversionSandwich(
             }
 
             override fun onError(error: QonversionError) {
-                resultListener.onError(error.toMap())
+                resultListener.onError(error.toSandwichError())
             }
         })
     }
@@ -309,7 +309,7 @@ class QonversionSandwich(
         }
 
         override fun onError(error: QonversionError) {
-            resultListener.onError(error.toMap())
+            resultListener.onError(error.toSandwichError())
         }
     }
 
