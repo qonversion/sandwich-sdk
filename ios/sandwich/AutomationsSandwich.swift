@@ -1,14 +1,15 @@
 //
-//  AutomationsBridge.swift
+//  AutomationsSandwich.swift
 //  QonversionSandwich
 //
 //  Created by Kamo Spertsyan on 13.04.2022.
+//  Copyright © 2022 Qonversion Inc. All rights reserved.
 //
 
 import Foundation
 import Qonversion
 
-class AutomationsBridge : NSObject {
+class AutomationsSandwich : NSObject {
   private var automationsEventListener: AutomationsEventListener? = nil
   
   public func subscribe(_ automationsEventListener: AutomationsEventListener) {
@@ -17,7 +18,7 @@ class AutomationsBridge : NSObject {
   }
 }
 
-extension AutomationsBridge: Qonversion.AutomationsDelegate {
+extension AutomationsSandwich: Qonversion.AutomationsDelegate {
   public func automationsDidShowScreen(_ screenID: String) {
     let payload = ["screenId": screenID]
     automationsEventListener?.automationDidTrigger(event: AutomationsEvent.screenShown.rawValue, payload: payload)

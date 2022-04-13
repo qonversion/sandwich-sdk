@@ -10,7 +10,7 @@ import com.qonversion.android.sdk.dto.experiments.QExperimentInfo
 import com.qonversion.android.sdk.dto.offerings.QOfferings
 import com.qonversion.android.sdk.dto.products.QProduct
 
-class QonversionBridge(
+class QonversionSandwich(
     private val application: Application,
     private val activityProvider: ActivityProvider,
     private val qonversionEventsListener: QonversionEventsListener
@@ -23,13 +23,7 @@ class QonversionBridge(
         "Current Android activity is null, cannot perform the action."
     ).toMap()
 
-    fun storeSdkInfo(source: String, version: String) {
-        val editor = PreferenceManager.getDefaultSharedPreferences(application).edit()
-        editor.putString(KEY_VERSION, version)
-        editor.putString(KEY_SOURCE, source)
-        editor.apply()
-    }
-
+    // region Initialization
     fun launch(
         projectKey: String,
         isObserveMode: Boolean,
@@ -53,10 +47,19 @@ class QonversionBridge(
         subscribeOnAsyncEvents()
     }
 
-    fun identify(userId: String) {
-        Qonversion.identify(userId)
+    fun storeSdkInfo(source: String, version: String) {
+        val editor = PreferenceManager.getDefaultSharedPreferences(application).edit()
+        editor.putString(KEY_VERSION, version)
+        editor.putString(KEY_SOURCE, source)
+        editor.apply()
     }
 
+    fun setDebugMode() {
+        Qonversion.setDebugMode()
+    }
+    // endregion
+
+    // region Product Center
     fun purchase(productId: String, resultListener: ResultListener) {
         val currentActivity = activityProvider.currentActivity
             ?: run {
@@ -132,6 +135,115 @@ class QonversionBridge(
         })
     }
 
+    fun checkPermissions(resultListener: ResultListener) {
+        val permissionsCallback = getPermissionsCallback(resultListener)
+        Qonversion.checkPermissions(permissionsCallback)
+    }
+
+    fun offerings(resultListener: ResultListener) {
+        Qonversion.offerings(object : QonversionOfferingsCallback {
+            override fun onSuccess(offerings: QOfferings) {
+                resultListener.onSuccess(offerings.toMap())
+            }
+
+            override fun onError(error: QonversionError) {
+                resultListener.onError(error.toMap())
+            }
+        })
+    }
+
+    fun products(resultListener: ResultListener) {
+        Qonversion.products(object : QonversionProductsCallback {
+            override fun onSuccess(products: Map<String, QProduct>) {
+                resultListener.onSuccess(products.toProductsMap())
+            }
+
+            override fun onError(error: QonversionError) {
+                resultListener.onError(error.toMap())
+            }
+        })
+    }
+
+    fun restore(resultListener: ResultListener) {
+        val permissionsCallback = getPermissionsCallback(resultListener)
+        Qonversion.restore(permissionsCallback)
+    }
+
+    fun syncPurchases() {
+        Qonversion.syncPurchases()
+    }
+
+    fun checkTrialIntroEligibility(ids: List<String>, resultListener: ResultListener) {
+        Qonversion.checkTrialIntroEligibilityForProductIds(ids, object : QonversionEligibilityCallback {
+            override fun onSuccess(eligibilities: Map<String, QEligibility>) {
+                resultListener.onSuccess(eligibilities.toEligibilityMap())
+            }
+
+            override fun onError(error: QonversionError) {
+                resultListener.onError(error.toMap())
+            }
+        })
+    }
+
+    fun experiments(resultListener: ResultListener) {
+        Qonversion.experiments(object : QonversionExperimentsCallback {
+            override fun onSuccess(experiments: Map<String, QExperimentInfo>) {
+                resultListener.onSuccess(experiments.toExperimentsMap())
+            }
+
+            override fun onError(error: QonversionError) {
+                resultListener.onError(error.toMap())
+            }
+        })
+    }
+    // endregion
+
+    // region User Info
+    fun identify(userId: String) {
+        Qonversion.identify(userId)
+    }
+
+    fun setDefinedProperty(propertyKey: String, value: String) {
+        try {
+            val property = QUserProperties.valueOf(propertyKey)
+            Qonversion.setProperty(property, value)
+        } catch (e: IllegalArgumentException) {
+            // Ignore property.
+        }
+    }
+
+    fun setCustomProperty(key: String, value: String) {
+        Qonversion.setUserProperty(key, value)
+    }
+
+    fun logout() {
+        Qonversion.logout()
+    }
+
+    fun addAttributionData(sourceKey: String, data: Map<String, Any>) {
+        try {
+            val source = AttributionSource.valueOf(sourceKey)
+            Qonversion.attribution(data, source)
+        } catch (e: java.lang.IllegalArgumentException) {
+            // Ignore attribution.
+        }
+    }
+    // endregion
+
+    // region Notifications
+    fun setNotificationToken(token: String) {
+        Qonversion.setNotificationsToken(token)
+    }
+
+    fun handleNotification(notificationData: Map<String, Any?>): Boolean {
+        val stringData = notificationData
+            .filterValues { it != null }
+            .mapValues { it.value.toString() }
+        return Qonversion.handleNotification(stringData)
+    }
+    // endregion
+
+    // region Private
     private interface ProductCallback {
         fun onProductLoaded(product: QProduct)
 
@@ -168,109 +280,6 @@ class QonversionBridge(
         })
     }
 
-    fun checkPermissions(resultListener: ResultListener) {
-        val permissionsCallback = getPermissionsCallback(resultListener)
-        Qonversion.checkPermissions(permissionsCallback)
-    }
-
-    fun restore(resultListener: ResultListener) {
-        val permissionsCallback = getPermissionsCallback(resultListener)
-        Qonversion.checkPermissions(permissionsCallback)
-    }
-
-    fun offerings(resultListener: ResultListener) {
-        Qonversion.offerings(object : QonversionOfferingsCallback {
-            override fun onSuccess(offerings: QOfferings) {
-                resultListener.onSuccess(offerings.toMap())
-            }
-
-            override fun onError(error: QonversionError) {
-                resultListener.onError(error.toMap())
-            }
-        })
-    }
-
-    fun products(resultListener: ResultListener) {
-        Qonversion.products(object : QonversionProductsCallback {
-            override fun onSuccess(products: Map<String, QProduct>) {
-                resultListener.onSuccess(products.toProductsMap())
-            }
-
-            override fun onError(error: QonversionError) {
-                resultListener.onError(error.toMap())
-            }
-        })
-    }
-
-    fun setDefinedProperty(propertyKey: String, value: String) {
-        try {
-            val property = QUserProperties.valueOf(propertyKey)
-            Qonversion.setProperty(property, value)
-        } catch (e: IllegalArgumentException) {
-            // Ignore property.
-        }
-    }
-
-    fun setCustomProperty(key: String, value: String) {
-        Qonversion.setUserProperty(key, value)
-    }
-
-    fun syncPurchases() {
-        Qonversion.syncPurchases()
-    }
-
-    fun logout() {
-        Qonversion.logout()
-    }
-
-    fun setDebugMode() {
-        Qonversion.setDebugMode()
-    }
-
-    fun addAttributionData(sourceKey: String, data: Map<String, Any>) {
-        try {
-            val source = AttributionSource.valueOf(sourceKey)
-            Qonversion.attribution(data, source)
-        } catch (e: java.lang.IllegalArgumentException) {
-            // Ignore attribution.
-        }
-    }
-
-    fun checkTrialIntroEligibility(ids: List<String>, resultListener: ResultListener) {
-        Qonversion.checkTrialIntroEligibilityForProductIds(ids, object : QonversionEligibilityCallback {
-            override fun onSuccess(eligibilities: Map<String, QEligibility>) {
-                resultListener.onSuccess(eligibilities.toEligibilityMap())
-            }
-
-            override fun onError(error: QonversionError) {
-                resultListener.onError(error.toMap())
-            }
-        })
-    }
-
-    fun experiments(resultListener: ResultListener) {
-        Qonversion.experiments(object : QonversionExperimentsCallback {
-            override fun onSuccess(experiments: Map<String, QExperimentInfo>) {
-                resultListener.onSuccess(experiments.toExperimentsMap())
-            }
-
-            override fun onError(error: QonversionError) {
-                resultListener.onError(error.toMap())
-            }
-        })
-    }
-
-    fun setNotificationToken(token: String) {
-        Qonversion.setNotificationsToken(token)
-    }
-
-    fun handleNotification(notificationData: Map<String, Any?>): Boolean {
-        val stringData = notificationData
-            .filterValues { it != null }
-            .mapValues { it.value.toString() }
-        return Qonversion.handleNotification(stringData)
-    }
-
     private fun subscribeOnAsyncEvents() {
         if (isSubscribedOnAsyncEvents) {
             return
@@ -294,4 +303,5 @@ class QonversionBridge(
             resultListener.onError(error.toMap())
         }
     }
+    // endregion
 }

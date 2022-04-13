@@ -3,6 +3,7 @@
 //  QonversionSandwich
 //
 //  Created by Kamo Spertsyan on 11.04.2022.
+//  Copyright © 2022 Qonversion Inc. All rights reserved.
 //
 
 import Foundation

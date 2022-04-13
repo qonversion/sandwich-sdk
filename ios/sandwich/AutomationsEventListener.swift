@@ -3,12 +3,13 @@
 //  QonversionSandwich
 //
 //  Created by Kamo Spertsyan on 13.04.2022.
+//  Copyright © 2022 Qonversion Inc. All rights reserved.
 //
 
 import Foundation
 
 public protocol AutomationsEventListener {
-  
+
   func automationDidTrigger(event: String, payload: BridgeData?)
 }
 

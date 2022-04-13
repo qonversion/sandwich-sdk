@@ -4,7 +4,7 @@ import com.qonversion.android.sdk.automations.Automations
 import com.qonversion.android.sdk.automations.AutomationsDelegate
 import com.qonversion.android.sdk.automations.QActionResult
 
-class AutomationsBridge {
+class AutomationsSandwich {
 
     fun subscribe(eventListener: AutomationsEventListener) {
         val delegate = createAutomationsDelegate(eventListener)
