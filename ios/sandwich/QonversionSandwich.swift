@@ -42,7 +42,7 @@ public class QonversionSandwich : NSObject {
     subscribeOnAsyncEvents()
   }
   
-  private func storeSdkInfo(source: String, version: String) {
+  public func storeSdkInfo(source: String, version: String) {
     let defaults = UserDefaults.standard
     defaults.set(source, forKey: UserDefaultsConstants.sourceKey)
     defaults.set(version, forKey: UserDefaultsConstants.sourceVersionKey)
