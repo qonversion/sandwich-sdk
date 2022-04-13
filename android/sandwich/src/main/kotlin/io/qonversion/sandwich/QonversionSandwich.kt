@@ -24,6 +24,7 @@ class QonversionSandwich(
     ).toMap()
 
     // region Initialization
+
     fun launch(
         projectKey: String,
         isObserveMode: Boolean,
@@ -57,9 +58,11 @@ class QonversionSandwich(
     fun setDebugMode() {
         Qonversion.setDebugMode()
     }
+
     // endregion
 
     // region Product Center
+
     fun purchase(productId: String, resultListener: ResultListener) {
         val currentActivity = activityProvider.currentActivity
             ?: run {
@@ -196,9 +199,11 @@ class QonversionSandwich(
             }
         })
     }
+
     // endregion
 
     // region User Info
+
     fun identify(userId: String) {
         Qonversion.identify(userId)
     }
@@ -228,9 +233,11 @@ class QonversionSandwich(
             // Ignore attribution.
         }
     }
+
     // endregion
 
     // region Notifications
+
     fun setNotificationToken(token: String) {
         Qonversion.setNotificationsToken(token)
     }
@@ -241,9 +248,11 @@ class QonversionSandwich(
             .mapValues { it.value.toString() }
         return Qonversion.handleNotification(stringData)
     }
+
     // endregion
 
     // region Private
+
     private interface ProductCallback {
         fun onProductLoaded(product: QProduct)
 
@@ -303,5 +312,6 @@ class QonversionSandwich(
             resultListener.onError(error.toMap())
         }
     }
+
     // endregion
 }
