@@ -9,7 +9,7 @@ import Foundation
 import Qonversion
 
 extension NSError {
-  func toMap() -> [String: Any?] {
+  func toMap() -> BridgeData {
     let errorMap = [
       "code": code,
       "domain": domain,
@@ -21,7 +21,7 @@ extension NSError {
 }
 
 extension Qonversion.LaunchResult {
-  func toMap() -> [String: Any] {
+  func toMap() -> BridgeData {
     return [
       "uid": uid,
       "timestamp": NSNumber(value: timestamp).intValue * 1000,
@@ -33,7 +33,7 @@ extension Qonversion.LaunchResult {
 }
 
 extension Qonversion.Product {
-  func toMap() -> [String: Any?] {
+  func toMap() -> BridgeData {
     return [
         "id": qonversionID,
         "storeId": storeID,
@@ -48,7 +48,7 @@ extension Qonversion.Product {
 }
 
 extension Qonversion.Permission {
-  func toMap() -> [String: Any?] {
+  func toMap() -> BridgeData {
     return [
       "id": permissionID,
       "associatedProduct": productID,
@@ -61,7 +61,7 @@ extension Qonversion.Permission {
 }
 
 extension Qonversion.Offerings {
-  func toMap() -> [String: Any?] {
+  func toMap() -> BridgeData {
     return [
       "main": main?.toMap(),
       "availableOfferings": availableOfferings.map { $0.toMap() }
@@ -70,7 +70,7 @@ extension Qonversion.Offerings {
 }
 
 extension Qonversion.Offering {
-  func toMap() -> [String: Any?] {
+  func toMap() -> BridgeData {
     return [
       "id": identifier,
       "tag": tag.rawValue,
@@ -80,7 +80,7 @@ extension Qonversion.Offering {
 }
 
 extension Qonversion.IntroEligibility {
-  func toMap() -> [String: Any?] {
+  func toMap() -> BridgeData {
     return ["status": status.rawValue]
   }
 }
@@ -112,8 +112,27 @@ extension Qonversion.Property {
   }
 }
 
+extension Qonversion.AttributionProvider {
+  static func fromString(_ string: String) -> Self? {
+    switch string {
+    case "AppsFlyer":
+      return .appsFlyer
+    case "Branch":
+      return .branch
+    case "Adjust":
+      return .adjust
+    case "AppleSearchAds":
+      return .appleSearchAds
+    case "AppleAdServices":
+      return .appleAdServices
+    default:
+      return nil
+    }
+  }
+}
+
 extension Qonversion.ActionResult {
-  func toMap() -> [String: Any?] {
+  func toMap() -> BridgeData {
     let nsError = error as NSError?
     
     return ["type": type.rawValue,
@@ -123,15 +142,15 @@ extension Qonversion.ActionResult {
 }
 
 extension QONAutomationsEvent {
-  func toMap() -> [String: Any?] {
+  func toMap() -> BridgeData {
     return ["type": type.rawValue,
             "timestamp": date.toMilliseconds()]
   }
 }
 
 extension SKProduct {
-  func toMap() -> [String: Any?] {
-    var map: [String: Any?] = [
+  func toMap() -> BridgeData {
+    var map: BridgeData = [
       "localizedDescription": localizedDescription,
       "localizedTitle": localizedTitle,
       "productIdentifier": productIdentifier,
@@ -161,7 +180,7 @@ extension SKProduct {
 }
 
 extension Locale {
-  func toMap() -> [String: Any?] {
+  func toMap() -> BridgeData {
     return [
       "currencySymbol": currencySymbol,
       "currencyCode": currencyCode,
@@ -172,7 +191,7 @@ extension Locale {
 
 @available(iOS 11.2, macOS 10.13.2, *)
 extension SKProductSubscriptionPeriod {
-  func toMap() -> [String: Any] {
+  func toMap() -> BridgeData {
     return [
       "numberOfUnits": numberOfUnits,
       "unit": unit.rawValue
@@ -182,8 +201,8 @@ extension SKProductSubscriptionPeriod {
 
 @available(iOS 11.2, macOS 10.13.2, *)
 extension SKProductDiscount {
-  func toMap() -> [String: Any] {
-    var map: [String: Any] = [
+  func toMap() -> BridgeData {
+    var map: BridgeData = [
       "price": price.stringValue,
       "numberOfPeriods": numberOfPeriods,
       "subscriptionPeriod": subscriptionPeriod.toMap(),
@@ -201,7 +220,7 @@ extension SKProductDiscount {
 }
 
 extension Qonversion.ExperimentInfo {
-  func toMap() -> [String: Any?] {
+  func toMap() -> BridgeData {
     return [
       "id": identifier,
       "group": [

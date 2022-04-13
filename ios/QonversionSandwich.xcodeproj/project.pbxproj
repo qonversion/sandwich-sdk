@@ -8,8 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		64E83EB971FD7892008F8D8B /* Pods_QonversionSandwich.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1607ECC5962D51D399DA3708 /* Pods_QonversionSandwich.framework */; };
-		6A8EB5CA27FD896400DCCD9E /* sandwich.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A8EB5C927FD896400DCCD9E /* sandwich.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6A8EB5D128046BAA00DCCD9E /* Mappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8EB5D028046BAA00DCCD9E /* Mappers.swift */; };
+		6ACDA8F6280586460003AC8F /* QonversionBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACDA8F5280586460003AC8F /* QonversionBridge.swift */; };
+		6ACDA8F8280587A20003AC8F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACDA8F7280587A20003AC8F /* Constants.swift */; };
+		6ACDA8FA2806D36F0003AC8F /* QonversionEventListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACDA8F92806D36F0003AC8F /* QonversionEventListener.swift */; };
+		6ACDA8FC2806D6630003AC8F /* AutomationsBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACDA8FB2806D6630003AC8F /* AutomationsBridge.swift */; };
+		6ACDA8FE2806D6750003AC8F /* AutomationsEventListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACDA8FD2806D6750003AC8F /* AutomationsEventListener.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -17,8 +21,12 @@
 		2C5BEEBADB771536AA73F068 /* Pods-QonversionSandwich.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QonversionSandwich.debug.xcconfig"; path = "Target Support Files/Pods-QonversionSandwich/Pods-QonversionSandwich.debug.xcconfig"; sourceTree = "<group>"; };
 		68DD3D7EEC906C62A62C99BD /* Pods-QonversionSandwich.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QonversionSandwich.release.xcconfig"; path = "Target Support Files/Pods-QonversionSandwich/Pods-QonversionSandwich.release.xcconfig"; sourceTree = "<group>"; };
 		6A8EB5C627FD896400DCCD9E /* QonversionSandwich.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QonversionSandwich.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6A8EB5C927FD896400DCCD9E /* sandwich.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sandwich.h; sourceTree = "<group>"; };
 		6A8EB5D028046BAA00DCCD9E /* Mappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mappers.swift; sourceTree = "<group>"; };
+		6ACDA8F5280586460003AC8F /* QonversionBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QonversionBridge.swift; sourceTree = "<group>"; };
+		6ACDA8F7280587A20003AC8F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		6ACDA8F92806D36F0003AC8F /* QonversionEventListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QonversionEventListener.swift; sourceTree = "<group>"; };
+		6ACDA8FB2806D6630003AC8F /* AutomationsBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationsBridge.swift; sourceTree = "<group>"; };
+		6ACDA8FD2806D6750003AC8F /* AutomationsEventListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationsEventListener.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,8 +62,12 @@
 		6A8EB5C827FD896400DCCD9E /* sandwich */ = {
 			isa = PBXGroup;
 			children = (
-				6A8EB5C927FD896400DCCD9E /* sandwich.h */,
 				6A8EB5D028046BAA00DCCD9E /* Mappers.swift */,
+				6ACDA8FD2806D6750003AC8F /* AutomationsEventListener.swift */,
+				6ACDA8F5280586460003AC8F /* QonversionBridge.swift */,
+				6ACDA8F7280587A20003AC8F /* Constants.swift */,
+				6ACDA8F92806D36F0003AC8F /* QonversionEventListener.swift */,
+				6ACDA8FB2806D6630003AC8F /* AutomationsBridge.swift */,
 			);
 			path = sandwich;
 			sourceTree = "<group>";
@@ -66,7 +78,6 @@
 				2C5BEEBADB771536AA73F068 /* Pods-QonversionSandwich.debug.xcconfig */,
 				68DD3D7EEC906C62A62C99BD /* Pods-QonversionSandwich.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -85,7 +96,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A8EB5CA27FD896400DCCD9E /* sandwich.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,7 +194,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6ACDA8FA2806D36F0003AC8F /* QonversionEventListener.swift in Sources */,
+				6ACDA8FE2806D6750003AC8F /* AutomationsEventListener.swift in Sources */,
+				6ACDA8F6280586460003AC8F /* QonversionBridge.swift in Sources */,
 				6A8EB5D128046BAA00DCCD9E /* Mappers.swift in Sources */,
+				6ACDA8F8280587A20003AC8F /* Constants.swift in Sources */,
+				6ACDA8FC2806D6630003AC8F /* AutomationsBridge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
