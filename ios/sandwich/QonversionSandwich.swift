@@ -28,7 +28,7 @@ public class QonversionSandwich : NSObject {
   ) {
     Qonversion.launch(withKey: projectKey) { launchResult, error in
       if let nsError = error as NSError? {
-        return completion(nil, nsError.toMap())
+        return completion(nil, nsError.toSandwichError())
       }
       
       let resultDict = launchResult.toMap()
@@ -79,14 +79,14 @@ public class QonversionSandwich : NSObject {
     } else {
       let error = NSError.init(domain: keyQNErrorDomain, code: Qonversion.Error.productNotFound.rawValue, userInfo: nil)
       
-      completion(nil, error.toMap())
+      completion(nil, error.toSandwichError())
     }
   }
   
   public func checkPermissions(completion: @escaping BridgeCompletion) {
     Qonversion.checkPermissions { (permissions, error) in
       if let nsError = error as NSError? {
-        return completion(nil, nsError.toMap())
+        return completion(nil, nsError.toSandwichError())
       }
       
       let permissionsDict = permissions.mapValues { $0.toMap() }
@@ -98,7 +98,7 @@ public class QonversionSandwich : NSObject {
   public func offerings(completion: @escaping BridgeCompletion) {
     Qonversion.offerings { offerings, error in
       if let nsError = error as NSError? {
-        completion(nil, nsError.toMap())
+        completion(nil, nsError.toSandwichError())
       }
       
       completion(offerings?.toMap(), nil)
@@ -108,7 +108,7 @@ public class QonversionSandwich : NSObject {
   public func products(completion: @escaping BridgeCompletion) {
     Qonversion.products { (products, error) in
       if let nsError = error as NSError? {
-        return completion(nil, nsError.toMap())
+        return completion(nil, nsError.toSandwichError())
       }
       
       let productsDict = products.mapValues { $0.toMap() }
@@ -120,7 +120,7 @@ public class QonversionSandwich : NSObject {
   public func restore(completion: @escaping BridgeCompletion) {
     Qonversion.restore { (permissions, error) in
       if let nsError = error as NSError? {
-        return completion(nil, nsError.toMap())
+        return completion(nil, nsError.toSandwichError())
       }
       
       let permissionsDict = permissions.mapValues { $0.toMap() }
@@ -132,7 +132,7 @@ public class QonversionSandwich : NSObject {
   public func checkTrialIntroEligibility(_ ids: [String], completion: @escaping BridgeCompletion) {
     Qonversion.checkTrialIntroEligibility(forProductIds: ids) { eligibilities, error in
       if let nsError = error as NSError? {
-        return completion(nil, nsError.toMap())
+        return completion(nil, nsError.toSandwichError())
       }
       
       let eligibilitiesDict = eligibilities.mapValues { $0.toMap() }
@@ -144,7 +144,7 @@ public class QonversionSandwich : NSObject {
   public func experiments(completion: @escaping BridgeCompletion) {
     Qonversion.experiments() { experiments, error in
       if let nsError = error as NSError? {
-        return completion(nil, nsError.toMap())
+        return completion(nil, nsError.toSandwichError())
       }
       
       let experimentsDict = experiments.mapValues { $0.toMap() }
@@ -236,9 +236,9 @@ public class QonversionSandwich : NSObject {
     completion: @escaping BridgeCompletion
   ) {
     if let nsError = error as NSError? {
-      var errorDict = nsError.toMap()
-      errorDict["isCancelled"] = isCancelled
-      return completion(nil, errorDict)
+      var wrappedError = nsError.toSandwichError()
+      wrappedError.additionalInfo["isCancelled"] = isCancelled
+      return completion(nil, wrappedError)
     }
     
     let permissionsDict = permissions.mapValues { $0.toMap() }

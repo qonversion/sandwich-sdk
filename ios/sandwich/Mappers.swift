@@ -10,6 +10,15 @@ import Foundation
 import Qonversion
 
 extension NSError {
+  func toSandwichError() -> SandwichError {
+    return SandwichError(
+      code: String(code),
+      domain: domain,
+      description: localizedDescription,
+      additionalMessage: userInfo[NSDebugDescriptionErrorKey] as? String
+    )
+  }
+  
   func toMap() -> BridgeData {
     let errorMap = [
       "code": code,
