@@ -14,7 +14,7 @@ extension NSError {
     return SandwichError(
       code: String(code),
       domain: domain,
-      description: localizedDescription,
+      details: localizedDescription,
       additionalMessage: userInfo[NSDebugDescriptionErrorKey] as? String
     )
   }

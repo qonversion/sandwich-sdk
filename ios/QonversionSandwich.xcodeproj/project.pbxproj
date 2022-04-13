@@ -25,7 +25,7 @@
 		6A439CA32807112400019344 /* SandwichError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SandwichError.swift; sourceTree = "<group>"; };
 		6A8EB5C627FD896400DCCD9E /* QonversionSandwich.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QonversionSandwich.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A8EB5D028046BAA00DCCD9E /* Mappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mappers.swift; sourceTree = "<group>"; };
-		6ACDA8F5280586460003AC8F /* QonversionSandwich.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QonversionSandwich.swift; sourceTree = "<group>"; };
+		6ACDA8F5280586460003AC8F /* QonversionSandwich.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = QonversionSandwich.swift; sourceTree = "<group>"; tabWidth = 2; };
 		6ACDA8F7280587A20003AC8F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		6ACDA8F92806D36F0003AC8F /* QonversionEventListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QonversionEventListener.swift; sourceTree = "<group>"; };
 		6ACDA8FB2806D6630003AC8F /* AutomationsSandwich.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationsSandwich.swift; sourceTree = "<group>"; };

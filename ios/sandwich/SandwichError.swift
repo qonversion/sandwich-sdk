@@ -6,12 +6,10 @@
 //  Copyright © 2022 Qonversion Inc. All rights reserved.
 //
 
-import Foundation
-
-struct SandwichError {
+public struct SandwichError {
   let code: String
   let domain: String
-  let description: String
+  let details: String
   let additionalMessage: String?
   var additionalInfo: [String: Any?] = [:]
 }
