@@ -174,6 +174,9 @@ extension SKProduct {
     if #available(iOS 11.2, macOS 10.13.2, *) {
       map["subscriptionPeriod"] = subscriptionPeriod?.toMap()
       map["introductoryPrice"] = introductoryPrice?.toMap()
+    }
+    
+    if #available(iOS 12.2, macOS 10.14.4, *) {
       map["discounts"] = discounts.map { $0.toMap() }
     }
 
@@ -181,7 +184,7 @@ extension SKProduct {
       map["subscriptionGroupIdentifier"] = subscriptionGroupIdentifier
     }
       
-    if #available(iOS 14.0, *) {
+    if #available(iOS 14.0, macOS 11.0, *) {
       map["isFamilyShareable"] = isFamilyShareable;
     }
     
@@ -220,9 +223,12 @@ extension SKProductDiscount {
       "priceLocale": priceLocale.toMap()
     ]
       
-    if #available(iOS 12.0, *) {
-      map["identifier"] = identifier
+    if #available(iOS 12.2, macOS 10.14.4, *) {
       map["type"] = type
+    }
+    
+    if #available(iOS 12.2, macOS 10.14.4, *) {
+      map["identifier"] = identifier
     }
       
     return map
