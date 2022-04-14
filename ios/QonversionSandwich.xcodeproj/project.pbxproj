@@ -16,9 +16,9 @@
 		6ACDA8FC2806D6630003AC8F /* AutomationsSandwich.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACDA8FB2806D6630003AC8F /* AutomationsSandwich.swift */; };
 		6ACDA8FE2806D6750003AC8F /* AutomationsEventListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACDA8FD2806D6750003AC8F /* AutomationsEventListener.swift */; };
 		6ACDA9022806DE9F0003AC8F /* CompletionHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACDA9012806DE9F0003AC8F /* CompletionHandlers.swift */; };
-		701E696C2807643C0005C35D /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 701E696B2807643C0005C35D /* LICENSE */; };
-		701E696E280764410005C35D /* QonversionSandwich.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 701E696D280764410005C35D /* QonversionSandwich.podspec */; };
 		701E6970280764480005C35D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 701E696F280764480005C35D /* Podfile */; };
+		701E697328082C700005C35D /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 701E697128082C700005C35D /* LICENSE */; };
+		701E697428082C700005C35D /* QonversionSandwich.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 701E697228082C700005C35D /* QonversionSandwich.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,9 +34,9 @@
 		6ACDA8FB2806D6630003AC8F /* AutomationsSandwich.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AutomationsSandwich.swift; sourceTree = "<group>"; tabWidth = 2; };
 		6ACDA8FD2806D6750003AC8F /* AutomationsEventListener.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AutomationsEventListener.swift; sourceTree = "<group>"; tabWidth = 2; };
 		6ACDA9012806DE9F0003AC8F /* CompletionHandlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionHandlers.swift; sourceTree = "<group>"; };
-		701E696B2807643C0005C35D /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		701E696D280764410005C35D /* QonversionSandwich.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = QonversionSandwich.podspec; sourceTree = "<group>"; };
-		701E696F280764480005C35D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		701E696F280764480005C35D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		701E697128082C700005C35D /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		701E697228082C700005C35D /* QonversionSandwich.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = QonversionSandwich.podspec; path = ../QonversionSandwich.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,9 +88,9 @@
 		701E696A2807642C0005C35D /* Deployment */ = {
 			isa = PBXGroup;
 			children = (
+				701E697128082C700005C35D /* LICENSE */,
+				701E697228082C700005C35D /* QonversionSandwich.podspec */,
 				701E696F280764480005C35D /* Podfile */,
-				701E696B2807643C0005C35D /* LICENSE */,
-				701E696D280764410005C35D /* QonversionSandwich.podspec */,
 			);
 			name = Deployment;
 			sourceTree = "<group>";
@@ -183,9 +183,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				701E697428082C700005C35D /* QonversionSandwich.podspec in Resources */,
+				701E697328082C700005C35D /* LICENSE in Resources */,
 				701E6970280764480005C35D /* Podfile in Resources */,
-				701E696C2807643C0005C35D /* LICENSE in Resources */,
-				701E696E280764410005C35D /* QonversionSandwich.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
