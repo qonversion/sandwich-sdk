@@ -16,6 +16,9 @@
 		6ACDA8FC2806D6630003AC8F /* AutomationsSandwich.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACDA8FB2806D6630003AC8F /* AutomationsSandwich.swift */; };
 		6ACDA8FE2806D6750003AC8F /* AutomationsEventListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACDA8FD2806D6750003AC8F /* AutomationsEventListener.swift */; };
 		6ACDA9022806DE9F0003AC8F /* CompletionHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACDA9012806DE9F0003AC8F /* CompletionHandlers.swift */; };
+		701E696C2807643C0005C35D /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 701E696B2807643C0005C35D /* LICENSE */; };
+		701E696E280764410005C35D /* QonversionSandwich.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 701E696D280764410005C35D /* QonversionSandwich.podspec */; };
+		701E6970280764480005C35D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 701E696F280764480005C35D /* Podfile */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,13 +27,16 @@
 		68DD3D7EEC906C62A62C99BD /* Pods-QonversionSandwich.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QonversionSandwich.release.xcconfig"; path = "Target Support Files/Pods-QonversionSandwich/Pods-QonversionSandwich.release.xcconfig"; sourceTree = "<group>"; };
 		6A439CA32807112400019344 /* SandwichError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SandwichError.swift; sourceTree = "<group>"; };
 		6A8EB5C627FD896400DCCD9E /* QonversionSandwich.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QonversionSandwich.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6A8EB5D028046BAA00DCCD9E /* Mappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mappers.swift; sourceTree = "<group>"; };
+		6A8EB5D028046BAA00DCCD9E /* Mappers.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Mappers.swift; sourceTree = "<group>"; tabWidth = 2; };
 		6ACDA8F5280586460003AC8F /* QonversionSandwich.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = QonversionSandwich.swift; sourceTree = "<group>"; tabWidth = 2; };
 		6ACDA8F7280587A20003AC8F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		6ACDA8F92806D36F0003AC8F /* QonversionEventListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QonversionEventListener.swift; sourceTree = "<group>"; };
 		6ACDA8FB2806D6630003AC8F /* AutomationsSandwich.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AutomationsSandwich.swift; sourceTree = "<group>"; tabWidth = 2; };
 		6ACDA8FD2806D6750003AC8F /* AutomationsEventListener.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AutomationsEventListener.swift; sourceTree = "<group>"; tabWidth = 2; };
 		6ACDA9012806DE9F0003AC8F /* CompletionHandlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionHandlers.swift; sourceTree = "<group>"; };
+		701E696B2807643C0005C35D /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		701E696D280764410005C35D /* QonversionSandwich.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = QonversionSandwich.podspec; sourceTree = "<group>"; };
+		701E696F280764480005C35D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +54,7 @@
 		6A8EB5BC27FD896400DCCD9E = {
 			isa = PBXGroup;
 			children = (
+				701E696A2807642C0005C35D /* Deployment */,
 				6A8EB5C827FD896400DCCD9E /* sandwich */,
 				6A8EB5C727FD896400DCCD9E /* Products */,
 				F28FF2D0F3377A838D0252C7 /* Pods */,
@@ -76,6 +83,16 @@
 				6ACDA9012806DE9F0003AC8F /* CompletionHandlers.swift */,
 			);
 			path = sandwich;
+			sourceTree = "<group>";
+		};
+		701E696A2807642C0005C35D /* Deployment */ = {
+			isa = PBXGroup;
+			children = (
+				701E696F280764480005C35D /* Podfile */,
+				701E696B2807643C0005C35D /* LICENSE */,
+				701E696D280764410005C35D /* QonversionSandwich.podspec */,
+			);
+			name = Deployment;
 			sourceTree = "<group>";
 		};
 		F28FF2D0F3377A838D0252C7 /* Pods */ = {
@@ -166,6 +183,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				701E6970280764480005C35D /* Podfile in Resources */,
+				701E696C2807643C0005C35D /* LICENSE in Resources */,
+				701E696E280764410005C35D /* QonversionSandwich.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +372,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -383,6 +404,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
