@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => 'https://github.com/qonversion/sandwich-sdk.git', :tag => s.version.to_s }
   s.platforms    = { :ios => "9.0" }
 
-  s.source_files = '**/sandwich/**/*.{h,m,swift}'
+  s.source_files = 'ios/sandwich/**/*.{h,m,swift}'
 
   s.dependency "Qonversion", "2.18.3"
 end
