@@ -225,12 +225,9 @@ extension SKProductDiscount {
       
     if #available(iOS 12.2, macOS 10.14.4, *) {
       map["type"] = type
-    }
-    
-    if #available(iOS 12.2, macOS 10.14.4, *) {
       map["identifier"] = identifier
     }
-      
+    
     return map
   }
 }
