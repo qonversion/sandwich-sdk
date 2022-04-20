@@ -260,7 +260,7 @@ public class QonversionSandwich : NSObject {
 
 extension QonversionSandwich: Qonversion.PurchasesDelegate {
   public func qonversionDidReceiveUpdatedPermissions(_ permissions: [String : Qonversion.Permission]) {
-    let permissionsDict: BridgeData = permissions.mapValues { $0.toMap() }
+    let permissionsDict: BridgeData = permissions.mapValues { $0.toMap() }.clearEmptyValues()
     
     qonversionEventListener?.qonversionDidReceiveUpdatedPermissions(permissionsDict as [String: Any])
   }
