@@ -12,7 +12,7 @@ import Qonversion
 class AutomationsSandwich : NSObject {
   private var automationsEventListener: AutomationsEventListener?
   
-  public func subscribe(_ automationsEventListener: AutomationsEventListener) {
+  @objc public func subscribe(_ automationsEventListener: AutomationsEventListener) {
     self.automationsEventListener = automationsEventListener
     Qonversion.Automations.setDelegate(self)
   }
@@ -21,22 +21,22 @@ class AutomationsSandwich : NSObject {
 extension AutomationsSandwich: Qonversion.AutomationsDelegate {
   public func automationsDidShowScreen(_ screenID: String) {
     let payload: BridgeData = ["screenId": screenID]
-    automationsEventListener?.automationDidTrigger(event: AutomationsEvent.screenShown.rawValue, payload: payload)
+    automationsEventListener?.automationDidTrigger(event: AutomationsEvent.screenShown.rawValue, payload: payload.clearEmptyValues())
   }
   
   public func automationsDidStartExecuting(actionResult: Qonversion.ActionResult) {
     let payload: BridgeData = actionResult.toMap()
-    automationsEventListener?.automationDidTrigger(event: AutomationsEvent.actionStarted.rawValue, payload: payload)
+    automationsEventListener?.automationDidTrigger(event: AutomationsEvent.actionStarted.rawValue, payload: payload.clearEmptyValues())
   }
   
   public func automationsDidFailExecuting(actionResult: Qonversion.ActionResult) {
     let payload: BridgeData = actionResult.toMap()
-    automationsEventListener?.automationDidTrigger(event: AutomationsEvent.actionFailed.rawValue, payload: payload)
+    automationsEventListener?.automationDidTrigger(event: AutomationsEvent.actionFailed.rawValue, payload: payload.clearEmptyValues())
   }
   
   public func automationsDidFinishExecuting(actionResult: Qonversion.ActionResult) {
     let payload: BridgeData = actionResult.toMap()
-    automationsEventListener?.automationDidTrigger(event: AutomationsEvent.actionFinished.rawValue, payload: payload)
+    automationsEventListener?.automationDidTrigger(event: AutomationsEvent.actionFinished.rawValue, payload: payload.clearEmptyValues())
   }
   
   public func automationsFinished() {

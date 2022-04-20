@@ -8,9 +8,9 @@
 
 import Foundation
 
-public protocol AutomationsEventListener {
+@objc public protocol AutomationsEventListener {
 
-  func automationDidTrigger(event: String, payload: BridgeData?)
+  @objc func automationDidTrigger(event: String, payload: [String: Any]?)
 }
 
 enum AutomationsEvent: String {
