@@ -10,5 +10,5 @@ import Foundation
 import Qonversion
 
 public typealias BridgeData = [String: Any?]
-public typealias BridgeCompletion = (_ result: BridgeData?, _ error: SandwichError?) -> Void
+public typealias BridgeCompletion =  (_ result: [String: Any]?, _ error: SandwichError?) -> Void
 typealias ProductCompletion = (_ result: Qonversion.Product?) -> Void

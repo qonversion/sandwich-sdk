@@ -13,7 +13,7 @@ public class QonversionSandwich : NSObject {
   
   // MARK: - Private variables
   
-  private var qonversionEventListener: QonversionEventListener
+  private var qonversionEventListener: QonversionEventListener? = nil
   private var isSubscribedOnAsyncEvents: Bool = false
   private var promoPurchasesExecutionBlocks = [String: Qonversion.PromoPurchaseCompletionHandler]()
   
@@ -21,12 +21,12 @@ public class QonversionSandwich : NSObject {
   
   // MARK: Initialization
   
-  public init(qonversionEventListener: QonversionEventListener) {
+  @objc public init(qonversionEventListener: QonversionEventListener) {
     self.qonversionEventListener = qonversionEventListener
   }
   
-  public func launch(
-    with projectKey: String,
+  @objc public func launch(
+    projectKey: String,
     completion: @escaping BridgeCompletion
   ) {
     Qonversion.launch(withKey: projectKey) { launchResult, error in
@@ -34,32 +34,32 @@ public class QonversionSandwich : NSObject {
         return completion(nil, error.toSandwichError())
       }
       
-      let resultDict: BridgeData = launchResult.toMap()
+      let bridgeData: [String: Any] = launchResult.toMap().clearEmptyValues()
       
-      completion(resultDict, nil)
+      completion(bridgeData, nil)
     }
     
     subscribeOnAsyncEvents()
   }
   
-  public func storeSdkInfo(source: String, version: String) {
+  @objc public func storeSdkInfo(source: String, version: String) {
     let defaults = UserDefaults.standard
     defaults.set(source, forKey: UserDefaultsConstants.sourceKey)
     defaults.set(version, forKey: UserDefaultsConstants.sourceVersionKey)
   }
   
-  public func setDebugMode() {
+  @objc public func setDebugMode() {
     Qonversion.setDebugMode()
   }
   
   // MARK: Product Center
   
-  public func purchase(_ productId: String, completion: @escaping BridgeCompletion) {
+  @objc public func purchase(_ productId: String, completion: @escaping BridgeCompletion) {
     let purchaseCompletion = getPurchaseCompletionHandler(for: completion)
     Qonversion.purchase(productId, completion: purchaseCompletion)
   }
   
-  public func purchaseProduct(_ productId: String, _ offeringId: String, completion: @escaping BridgeCompletion) {
+  @objc public func purchaseProduct(_ productId: String, _ offeringId: String, completion: @escaping BridgeCompletion) {
     loadProduct(productId, offeringId) { [weak self] (product) in
       guard let self = self else { return }
       
@@ -72,7 +72,7 @@ public class QonversionSandwich : NSObject {
     }
   }
   
-  public func promoPurchase(_ productId: String, completion: @escaping BridgeCompletion) {
+  @objc public func promoPurchase(_ productId: String, completion: @escaping BridgeCompletion) {
     if let executionBlock = promoPurchasesExecutionBlocks[productId] {
       promoPurchasesExecutionBlocks[productId] = nil
 
@@ -86,77 +86,79 @@ public class QonversionSandwich : NSObject {
     }
   }
   
-  public func checkPermissions(completion: @escaping BridgeCompletion) {
+  @objc public func checkPermissions(_ completion: @escaping BridgeCompletion) {
     Qonversion.checkPermissions { (permissions, error) in
       if let error = error as NSError? {
         return completion(nil, error.toSandwichError())
       }
       
-      let permissionsDict: BridgeData = permissions.mapValues { $0.toMap() }
+      let permissionsDict: [String: Any] = permissions.mapValues { $0.toMap() }.clearEmptyValues()
       
       completion(permissionsDict, nil)
     }
   }
   
-  public func offerings(completion: @escaping BridgeCompletion) {
+  @objc public func offerings(_ completion: @escaping BridgeCompletion) {
     Qonversion.offerings { offerings, error in
       if let error = error as NSError? {
         completion(nil, error.toSandwichError())
       }
       
-      completion(offerings?.toMap(), nil)
+      let bridgeData: [String: Any]? = offerings?.toMap().clearEmptyValues()
+      
+      completion(bridgeData, nil)
     }
   }
   
-  public func products(completion: @escaping BridgeCompletion) {
+  @objc public func products(_ completion: @escaping BridgeCompletion) {
     Qonversion.products { (products, error) in
       if let error = error as NSError? {
         return completion(nil, error.toSandwichError())
       }
       
-      let productsDict: BridgeData = products.mapValues { $0.toMap() }
+      let productsDict: [String: Any] = products.mapValues { $0.toMap() }.clearEmptyValues()
       
       completion(productsDict, nil)
     }
   }
   
-  public func restore(completion: @escaping BridgeCompletion) {
+  @objc public func restore(_ completion: @escaping BridgeCompletion) {
     Qonversion.restore { (permissions, error) in
       if let error = error as NSError? {
         return completion(nil, error.toSandwichError())
       }
       
-      let permissionsDict: BridgeData = permissions.mapValues { $0.toMap() }
+      let permissionsDict: [String: Any] = permissions.mapValues { $0.toMap() }.clearEmptyValues()
       
       completion(permissionsDict, nil)
     }
   }
   
-  public func checkTrialIntroEligibility(_ ids: [String], completion: @escaping BridgeCompletion) {
+  @objc public func checkTrialIntroEligibility(_ ids: [String], completion: @escaping BridgeCompletion) {
     Qonversion.checkTrialIntroEligibility(forProductIds: ids) { eligibilities, error in
       if let error = error as NSError? {
         return completion(nil, error.toSandwichError())
       }
       
-      let eligibilitiesDict: BridgeData = eligibilities.mapValues { $0.toMap() }
+      let eligibilitiesDict: [String: Any] = eligibilities.mapValues { $0.toMap() }.clearEmptyValues()
       
       completion(eligibilitiesDict, nil)
     }
   }
   
-  public func experiments(completion: @escaping BridgeCompletion) {
+  @objc public func experiments(_ completion: @escaping BridgeCompletion) {
     Qonversion.experiments() { experiments, error in
       if let error = error as NSError? {
         return completion(nil, error.toSandwichError())
       }
       
-      let experimentsDict: BridgeData = experiments.mapValues { $0.toMap() }
+      let experimentsDict: [String: Any] = experiments.mapValues { $0.toMap() }.clearEmptyValues()
       
       completion(experimentsDict, nil)
     }
   }
   
-  public func presentCodeRedemptionSheet() {
+  @objc public func presentCodeRedemptionSheet() {
     if #available(iOS 14.0, *) {
       Qonversion.presentCodeRedemptionSheet()
     }
@@ -164,46 +166,46 @@ public class QonversionSandwich : NSObject {
   
   // MARK: User Info
   
-  public func identify(_ userId: String) {
+  @objc public func identify(_ userId: String) {
     Qonversion.identify(userId)
   }
   
-  public func setDefinedProperty(property: String, value: String) {
+  @objc public func setDefinedProperty(_ property: String, value: String) {
     guard let parsedProperty = Qonversion.Property.fromString(property) else { return }
 
     Qonversion.setProperty(parsedProperty, value: value)
   }
   
-  public func setCursomProperty(property: String, value: String) {
+  @objc public func setCustomProperty(_ property: String, value: String) {
     Qonversion.setUserProperty(property, value: value)
   }
   
-  public func logout() {
+  @objc public func logout() {
     Qonversion.logout()
   }
 
-  public func addAttributionData(_ sourceKey: String, _ value: [String: Any]) {
+  @objc public func addAttributionData(sourceKey: String, value: [String: Any]) {
     guard let provider = Qonversion.AttributionProvider.fromString(sourceKey) else { return}
 
     Qonversion.addAttributionData(value, from: provider)
   }
   
-  public func setAppleSearchAdsAttributionEnabled(_ enable: Bool) {
+  @objc public func setAppleSearchAdsAttributionEnabled(_ enable: Bool) {
     Qonversion.setAppleSearchAdsAttributionEnabled(enable)
   }
   
-  public func setAdvertisingId() {
+  @objc public func setAdvertisingId() {
     Qonversion.setAdvertisingID()
   }
   
   // MARK: Notifications
   
-  public func setNotificationToken(_ token: String) {
+  @objc public func setNotificationToken(_ token: String) {
     let tokenData: Data = token.toData()
     Qonversion.setNotificationsToken(tokenData)
   }
   
-  public func handleNotification(_ notificationData: [AnyHashable: Any]) -> Bool {
+  @objc public func handleNotification(_ notificationData: [AnyHashable: Any]) -> Bool {
     return Qonversion.handleNotification(notificationData)
   }
   
@@ -233,13 +235,13 @@ public class QonversionSandwich : NSObject {
     completion: @escaping BridgeCompletion
   ) {
     if let error = error as NSError? {
-      var wrappedError = error.toSandwichError()
+      let wrappedError = error.toSandwichError()
       wrappedError.additionalInfo["isCancelled"] = isCancelled
       
       return completion(nil, wrappedError)
     }
     
-    let permissionsDict: BridgeData = permissions.mapValues { $0.toMap() }
+    let permissionsDict: [String: Any] = permissions.mapValues { $0.toMap() }.clearEmptyValues()
     
     completion(permissionsDict, nil)
   }
@@ -260,7 +262,7 @@ extension QonversionSandwich: Qonversion.PurchasesDelegate {
   public func qonversionDidReceiveUpdatedPermissions(_ permissions: [String : Qonversion.Permission]) {
     let permissionsDict: BridgeData = permissions.mapValues { $0.toMap() }
     
-    qonversionEventListener.qonversionDidReceiveUpdatedPermissions(permissionsDict)
+    qonversionEventListener?.qonversionDidReceiveUpdatedPermissions(permissionsDict as [String: Any])
   }
 }
 
@@ -270,6 +272,6 @@ extension QonversionSandwich: QNPromoPurchasesDelegate {
   public func shouldPurchasePromoProduct(withIdentifier productID: String, executionBlock: @escaping Qonversion.PromoPurchaseCompletionHandler) {
     promoPurchasesExecutionBlocks[productID] = executionBlock
     
-    qonversionEventListener.shouldPurchasePromoProduct(with: productID)
+    qonversionEventListener?.shouldPurchasePromoProduct(with: productID)
   }
 }
