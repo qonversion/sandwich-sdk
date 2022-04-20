@@ -8,9 +8,9 @@
 
 import Foundation
 
-public protocol QonversionEventListener {
+@objc public protocol QonversionEventListener {
 
-  func qonversionDidReceiveUpdatedPermissions(_ permissions: BridgeData)
+  @objc func qonversionDidReceiveUpdatedPermissions(_ permissions: [String: Any])
   
-  func shouldPurchasePromoProduct(with productId: String)
+  @objc func shouldPurchasePromoProduct(with productId: String)
 }

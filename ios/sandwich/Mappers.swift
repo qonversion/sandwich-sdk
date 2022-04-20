@@ -9,6 +9,28 @@
 import Foundation
 import Qonversion
 
+extension BridgeData {
+    func clearEmptyValues() -> [String: Any] {
+        func clear(_ value: Any?) -> Any? {
+            if let value = value as? [Any?] {
+                return value.compactMap {
+                    clear($0)
+                }
+            } else if let value = value as? [String: Any?] {
+                return value.compactMapValues {
+                    clear($0)
+                }
+            } else {
+                return value
+            }
+        }
+        
+        return compactMapValues {
+            clear($0)
+        }
+    }
+}
+
 extension NSError {
   func toSandwichError() -> SandwichError {
     return SandwichError(
