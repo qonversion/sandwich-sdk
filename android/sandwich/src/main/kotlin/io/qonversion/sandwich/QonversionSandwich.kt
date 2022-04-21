@@ -296,7 +296,7 @@ class QonversionSandwich(
 
         Qonversion.setUpdatedPurchasesListener(object : UpdatedPurchasesListener {
             override fun onPermissionsUpdate(permissions: Map<String, QPermission>) {
-                qonversionEventsListener.onPermissionsUpdateAfterAsyncPurchase(permissions.toPermissionsMap())
+                qonversionEventsListener.onPermissionsUpdate(permissions.toPermissionsMap())
             }
         })
 
