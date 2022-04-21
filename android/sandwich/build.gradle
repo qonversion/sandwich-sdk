@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 28
 
     defaultConfig {
         minSdk 16
@@ -44,7 +44,7 @@ ext {
 
 dependencies {
     implementation "io.qonversion.android.sdk:sdk:$qonversion_version"
-    implementation 'androidx.preference:preference:1.2.0'
+    implementation 'androidx.preference:preference:1.1.1'
 }
 
 apply from: "../scripts/maven-release.gradle"

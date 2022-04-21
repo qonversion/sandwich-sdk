@@ -17,8 +17,9 @@
 		6ACDA8FE2806D6750003AC8F /* AutomationsEventListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACDA8FD2806D6750003AC8F /* AutomationsEventListener.swift */; };
 		6ACDA9022806DE9F0003AC8F /* CompletionHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACDA9012806DE9F0003AC8F /* CompletionHandlers.swift */; };
 		701E6970280764480005C35D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 701E696F280764480005C35D /* Podfile */; };
-		701E697328082C700005C35D /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 701E697128082C700005C35D /* LICENSE */; };
 		701E697428082C700005C35D /* QonversionSandwich.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 701E697228082C700005C35D /* QonversionSandwich.podspec */; };
+		701E69BB28099E380005C35D /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 701E69BA28099E380005C35D /* LICENSE.txt */; };
+		70F78C7B2810658D004974DA /* AutomationsMappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F78C7A2810658D004974DA /* AutomationsMappers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,8 +36,9 @@
 		6ACDA8FD2806D6750003AC8F /* AutomationsEventListener.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AutomationsEventListener.swift; sourceTree = "<group>"; tabWidth = 2; };
 		6ACDA9012806DE9F0003AC8F /* CompletionHandlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionHandlers.swift; sourceTree = "<group>"; };
 		701E696F280764480005C35D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		701E697128082C700005C35D /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		701E697228082C700005C35D /* QonversionSandwich.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = QonversionSandwich.podspec; path = ../QonversionSandwich.podspec; sourceTree = "<group>"; };
+		701E697228082C700005C35D /* QonversionSandwich.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = QonversionSandwich.podspec; path = ../QonversionSandwich.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		701E69BA28099E380005C35D /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE.txt; path = ../LICENSE.txt; sourceTree = "<group>"; };
+		70F78C7A2810658D004974DA /* AutomationsMappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationsMappers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				6A8EB5D028046BAA00DCCD9E /* Mappers.swift */,
+				70F78C7A2810658D004974DA /* AutomationsMappers.swift */,
 				6ACDA8FD2806D6750003AC8F /* AutomationsEventListener.swift */,
 				6ACDA8F5280586460003AC8F /* QonversionSandwich.swift */,
 				6ACDA8F7280587A20003AC8F /* Constants.swift */,
@@ -88,7 +91,7 @@
 		701E696A2807642C0005C35D /* Deployment */ = {
 			isa = PBXGroup;
 			children = (
-				701E697128082C700005C35D /* LICENSE */,
+				701E69BA28099E380005C35D /* LICENSE.txt */,
 				701E697228082C700005C35D /* QonversionSandwich.podspec */,
 				701E696F280764480005C35D /* Podfile */,
 			);
@@ -156,7 +159,7 @@
 				TargetAttributes = {
 					6A8EB5C527FD896400DCCD9E = {
 						CreatedOnToolsVersion = 13.2.1;
-						LastSwiftMigration = 1320;
+						LastSwiftMigration = 1330;
 					};
 				};
 			};
@@ -183,8 +186,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				701E69BB28099E380005C35D /* LICENSE.txt in Resources */,
 				701E697428082C700005C35D /* QonversionSandwich.podspec in Resources */,
-				701E697328082C700005C35D /* LICENSE in Resources */,
 				701E6970280764480005C35D /* Podfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -221,6 +224,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70F78C7B2810658D004974DA /* AutomationsMappers.swift in Sources */,
 				6ACDA8FA2806D36F0003AC8F /* QonversionEventListener.swift in Sources */,
 				6A439CA42807112400019344 /* SandwichError.swift in Sources */,
 				6ACDA8FE2806D6750003AC8F /* AutomationsEventListener.swift in Sources */,
@@ -378,11 +382,12 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.2;
+				MARKETING_VERSION = 0.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = io.qonversion.sandwich;
 				PRODUCT_NAME = QonversionSandwich;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -410,11 +415,12 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.2;
+				MARKETING_VERSION = 0.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = io.qonversion.sandwich;
 				PRODUCT_NAME = QonversionSandwich;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
