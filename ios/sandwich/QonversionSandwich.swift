@@ -140,7 +140,10 @@ public class QonversionSandwich : NSObject {
         return completion(nil, error.toSandwichError())
       }
       
-      let eligibilitiesDict: [String: Any] = eligibilities.mapValues { $0.toMap() }.clearEmptyValues()
+      var eligibilitiesDict: [String: [String: Any]] = [:]
+      eligibilities.forEach { (key, value) in
+        eligibilitiesDict[key] = value.toMap().clearEmptyValues()
+      }
       
       completion(eligibilitiesDict, nil)
     }
