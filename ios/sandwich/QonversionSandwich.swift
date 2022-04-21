@@ -141,7 +141,7 @@ public class QonversionSandwich : NSObject {
       }
       
       let eligibilitiesDict: [String: Any] = eligibilities.mapValues { $0.toMap() }.clearEmptyValues()
-      
+
       completion(eligibilitiesDict, nil)
     }
   }
@@ -158,11 +158,12 @@ public class QonversionSandwich : NSObject {
     }
   }
   
+#if os(iOS)
+  @available (iOS 14.0, *)
   @objc public func presentCodeRedemptionSheet() {
-    if #available(iOS 14.0, *) {
-      Qonversion.presentCodeRedemptionSheet()
-    }
+    Qonversion.presentCodeRedemptionSheet()
   }
+#endif
   
   // MARK: User Info
   
@@ -205,9 +206,11 @@ public class QonversionSandwich : NSObject {
     Qonversion.setNotificationsToken(tokenData)
   }
   
+#if os(iOS)
   @objc public func handleNotification(_ notificationData: [AnyHashable: Any]) -> Bool {
     return Qonversion.handleNotification(notificationData)
   }
+#endif
   
   // MARK: - Private functions
   

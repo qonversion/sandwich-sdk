@@ -113,7 +113,16 @@ extension Qonversion.Offering {
 
 extension Qonversion.IntroEligibility {
   func toMap() -> BridgeData {
-    return ["status": status.rawValue]
+    let statusValue: String
+    
+    switch status {
+    case .eligible: statusValue = "intro_or_trial_eligible"
+    case .ineligible: statusValue = "intro_or_trial_ineligible"
+    case .nonIntroProduct: statusValue = "non_intro_or_trial_product"
+    default: statusValue = "unknown"
+    }
+    
+    return ["status": statusValue]
   }
 }
 
@@ -166,61 +175,6 @@ extension Qonversion.AttributionProvider {
   }
 }
 
-extension Qonversion.ActionResultType {
-  func toString() -> String {
-    switch self {
-    case .URL: return "url"
-    case .deeplink: return "deeplink"
-    case .navigation: return "navigate"
-    case .purchase: return "purchase"
-    case .restore: return "restore"
-    case .close: return "close"
-    default: return "unknown"
-    }
-  }
-}
-
-extension Qonversion.ActionResult {
-  func toMap() -> BridgeData {
-    let nsError = error as NSError?
-    
-    return ["type": type.toString(),
-            "value": parameters,
-            "error": nsError?.toMap()]
-  }
-}
-
-extension Qonversion.AutomationsEventType {
-  func toString() -> String {
-    switch self {
-    case .trialStarted: return "trial_started"
-    case .trialConverted: return "trial_converted"
-    case .trialCanceled: return "trial_canceled"
-    case .trialBillingRetry: return "trial_billing_retry_entered"
-    case .subscriptionStarted: return "subscription_started"
-    case .subscriptionRenewed: return "subscription_renewed"
-    case .subscriptionRefunded: return "subscription_refunded"
-    case .subscriptionCanceled: return "subscription_canceled"
-    case .subscriptionBillingRetry: return "subscription_billing_retry_entered"
-    case .inAppPurchase: return "in_app_purchase"
-    case .subscriptionUpgraded: return "subscription_upgraded"
-    case .trialStillActive: return "trial_still_active"
-    case .trialExpired: return "trial_expired"
-    case .subscriptionExpired: return "subscription_expired"
-    case .subscriptionDowngraded: return "subscription_downgraded"
-    case .subscriptionProductChanged: return "subscription_product_changed"
-    default: return "unknown"
-    }
-  }
-}
-
-extension QONAutomationsEvent {
-  func toMap() -> BridgeData {
-    return ["type": type.toString(),
-            "timestamp": date.toMilliseconds()]
-  }
-}
-
 extension SKProduct {
   func toMap() -> BridgeData {
     var map: BridgeData = [
@@ -228,26 +182,32 @@ extension SKProduct {
       "localizedTitle": localizedTitle,
       "productIdentifier": productIdentifier,
       "price": price.stringValue,
-      "priceLocale": priceLocale.toMap(),
-      "isDownloadable": isDownloadable,
-      "downloadContentVersion": downloadContentVersion,
-      "downloadContentLengths": downloadContentLengths
+      "priceLocale": priceLocale.toMap()
     ]
     
-    if #available(iOS 11.2, macOS 10.13.2, *) {
+    if #available(iOS 6.0, macOS 10.14, watchOS 6.2, *) {
+      map["downloadContentVersion"] = downloadContentVersion
+      map["downloadContentLengths"] = downloadContentLengths
+    }
+    
+    if #available(iOS 6.0, macOS 10.15, watchOS 6.2, *) {
+      map["isDownloadable"] = isDownloadable
+    }
+    
+    if #available(iOS 11.2, tvOS 11.2, macOS 10.13.2, watchOS 6.2, *) {
       map["subscriptionPeriod"] = subscriptionPeriod?.toMap()
       map["introductoryPrice"] = introductoryPrice?.toMap()
     }
     
-    if #available(iOS 12.2, macOS 10.14.4, *) {
+    if #available(iOS 12.2, macOS 10.14.4, tvOS 12.2, *) {
       map["discounts"] = discounts.map { $0.toMap() }
     }
 
-    if #available(iOS 12.0, macOS 10.14, *) {
+    if #available(iOS 12.0, tvOS 12.0, macOS 10.14, *) {
       map["subscriptionGroupIdentifier"] = subscriptionGroupIdentifier
     }
       
-    if #available(iOS 14.0, macOS 11.0, *) {
+    if #available(iOS 14.0, tvOS 14.0, macOS 11.0, watchOS 7.0, *) {
       map["isFamilyShareable"] = isFamilyShareable;
     }
     
@@ -265,7 +225,7 @@ extension Locale {
   }
 }
 
-@available(iOS 11.2, macOS 10.13.2, *)
+@available(iOS 11.2, macOS 10.13.2, tvOS 11.2, watchOS 6.2, *)
 extension SKProductSubscriptionPeriod {
   func toMap() -> BridgeData {
     return [
@@ -275,7 +235,7 @@ extension SKProductSubscriptionPeriod {
   }
 }
 
-@available(iOS 11.2, macOS 10.13.2, *)
+@available(iOS 11.2, macOS 10.13.2, tvOS 11.2, *)
 extension SKProductDiscount {
   func toMap() -> BridgeData {
     var map: BridgeData = [
@@ -286,7 +246,7 @@ extension SKProductDiscount {
       "priceLocale": priceLocale.toMap()
     ]
       
-    if #available(iOS 12.2, macOS 10.14.4, *) {
+    if #available(iOS 12.2, tvOS 12.2, watchOS 6.2, macOS 10.14.4, *) {
       map["type"] = type
       map["identifier"] = identifier
     }
