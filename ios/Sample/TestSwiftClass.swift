@@ -14,6 +14,12 @@ class TestSwiftClass {
     private lazy var sandwich = QonversionSandwich(qonversionEventListener: self)
     
     init() {
+        functionToTestSwiftSandwich()
+    }
+    
+    func functionToTestSwiftSandwich() {
+        // write any code here
+        
         
     }
 }

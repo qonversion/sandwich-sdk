@@ -19,7 +19,6 @@
 		701E6970280764480005C35D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 701E696F280764480005C35D /* Podfile */; };
 		701E697428082C700005C35D /* QonversionSandwich.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 701E697228082C700005C35D /* QonversionSandwich.podspec */; };
 		701E69BB28099E380005C35D /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 701E69BA28099E380005C35D /* LICENSE.txt */; };
-		70F78C7B2810658D004974DA /* AutomationsMappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F78C7A2810658D004974DA /* AutomationsMappers.swift */; };
 		70F78C6328104E81004974DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F78C6228104E81004974DA /* AppDelegate.swift */; };
 		70F78C6528104E81004974DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F78C6428104E81004974DA /* SceneDelegate.swift */; };
 		70F78C6728104E81004974DA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F78C6628104E81004974DA /* ViewController.swift */; };
@@ -28,6 +27,7 @@
 		70F78C6F28104E82004974DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70F78C6D28104E82004974DA /* LaunchScreen.storyboard */; };
 		70F78C7728104EAD004974DA /* TestClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F78C7628104EAD004974DA /* TestClass.m */; };
 		70F78C7928104F8F004974DA /* TestSwiftClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F78C7828104F8F004974DA /* TestSwiftClass.swift */; };
+		70F78C7B2810658D004974DA /* AutomationsMappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F78C7A2810658D004974DA /* AutomationsMappers.swift */; };
 		A9B6A5F1616DC05D33AA7131 /* Pods_Sample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2978A890248F68C3F7FC8AB4 /* Pods_Sample.framework */; };
 /* End PBXBuildFile section */
 
@@ -53,7 +53,6 @@
 		701E696F280764480005C35D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		701E697228082C700005C35D /* QonversionSandwich.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = QonversionSandwich.podspec; path = ../QonversionSandwich.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		701E69BA28099E380005C35D /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE.txt; path = ../LICENSE.txt; sourceTree = "<group>"; };
-		70F78C7A2810658D004974DA /* AutomationsMappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationsMappers.swift; sourceTree = "<group>"; };
 		70F78C6028104E81004974DA /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70F78C6228104E81004974DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70F78C6428104E81004974DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +65,7 @@
 		70F78C7528104EAD004974DA /* TestClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestClass.h; sourceTree = "<group>"; };
 		70F78C7628104EAD004974DA /* TestClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestClass.m; sourceTree = "<group>"; };
 		70F78C7828104F8F004974DA /* TestSwiftClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSwiftClass.swift; sourceTree = "<group>"; };
+		70F78C7A2810658D004974DA /* AutomationsMappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationsMappers.swift; sourceTree = "<group>"; };
 		BD5E002836B9B98F76E4FFE5 /* Pods-Sample Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample Swift.debug.xcconfig"; path = "Target Support Files/Pods-Sample Swift/Pods-Sample Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		E06D87679C44EE198805A5C3 /* Pods-Sample Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample Swift.release.xcconfig"; path = "Target Support Files/Pods-Sample Swift/Pods-Sample Swift.release.xcconfig"; sourceTree = "<group>"; };
 		FC7022C807F2F121E1338D7F /* Pods_Sample_Obj_C.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sample_Obj_C.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -222,7 +222,7 @@
 				70F78C5C28104E81004974DA /* Sources */,
 				70F78C5D28104E81004974DA /* Frameworks */,
 				70F78C5E28104E81004974DA /* Resources */,
-				91919D0C541C816F66439655 /* [CP] Embed Pods Frameworks */,
+				46B8FCA04E5CECC8C7CF537F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -341,7 +341,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		91919D0C541C816F66439655 /* [CP] Embed Pods Frameworks */ = {
+		46B8FCA04E5CECC8C7CF537F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

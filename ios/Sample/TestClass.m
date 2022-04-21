@@ -22,6 +22,7 @@
     
     if (self) {
         _sandwich = [[QonversionSandwich alloc] initWithQonversionEventListener:self];
+        [self functionToTestObjCSandwich];
     }
     
     return self;
@@ -29,7 +30,6 @@
 
 - (void)functionToTestObjCSandwich {
     // write any code here
-    
     
 }
 
