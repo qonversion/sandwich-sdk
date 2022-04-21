@@ -113,7 +113,16 @@ extension Qonversion.Offering {
 
 extension Qonversion.IntroEligibility {
   func toMap() -> BridgeData {
-    return ["status": status.rawValue]
+    let statusValue: String
+    
+    switch status {
+    case .eligible: statusValue = "intro_or_trial_eligible"
+    case .ineligible: statusValue = "intro_or_trial_ineligible"
+    case .nonIntroProduct: statusValue = "non_intro_or_trial_product"
+    default: statusValue = "unknown"
+    }
+    
+    return ["status": statusValue]
   }
 }
 
