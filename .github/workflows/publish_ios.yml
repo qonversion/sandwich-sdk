@@ -1,0 +1,19 @@
+name: Publish iOS
+
+on:
+  release:
+    types: [released]
+
+jobs:
+  cocoapods-release:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: CocoaPods Release
+        with:
+          ref: main
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+        run: |
+          pod trunk push Qonversion.podspec
