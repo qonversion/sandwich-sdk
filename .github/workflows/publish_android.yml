@@ -1,8 +1,7 @@
 name: Publish Android
 
 on:
-  release:
-    types: [released]
+  workflow_dispatch
 
 jobs:
   publish:
