@@ -1,13 +1,15 @@
 name: Publish iOS
 
 on:
-  release:
-    types: [released]
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   cocoapods-release:
     runs-on: macos-latest
-
+    defaults:
+      run:
+        working-directory: ./ios
     steps:
       - uses: actions/checkout@v2
       - name: CocoaPods Release
