@@ -11,11 +11,12 @@ jobs:
       run:
         working-directory: ./ios
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out code
+        uses: actions/checkout@v2
+
       - name: CocoaPods Release
         with:
           ref: main
+        run: pod trunk push Qonversion.podspec
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
-        run: |
-          pod trunk push Qonversion.podspec
