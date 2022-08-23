@@ -7,14 +7,11 @@ on:
 jobs:
   cocoapods-release:
     runs-on: macos-latest
-    defaults:
-      run:
-        working-directory: ./ios
     steps:
       - name: Check out code
         uses: actions/checkout@v2
 
       - name: CocoaPods Release
-        run: pod trunk push Qonversion.podspec
+        run: pod trunk push QonversionSandwich.podspec
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
