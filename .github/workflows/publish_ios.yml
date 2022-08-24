@@ -1,8 +1,8 @@
 name: Publish iOS
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  release:
+    types: [released]
 
 jobs:
   cocoapods-release:
