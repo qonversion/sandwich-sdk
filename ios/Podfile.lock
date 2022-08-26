@@ -1,16 +1,16 @@
 PODS:
-  - Qonversion (2.18.3):
-    - Qonversion/Main (= 2.18.3)
-  - Qonversion/Main (2.18.3)
-  - QonversionSandwich (0.0.3):
-    - Qonversion (= 2.18.3)
+  - Qonversion (2.20.0):
+    - Qonversion/Main (= 2.20.0)
+  - Qonversion/Main (2.20.0)
+  - QonversionSandwich (0.0.7):
+    - Qonversion (= 2.20.0)
 
 DEPENDENCIES:
-  - Qonversion (= 2.18.3)
+  - Qonversion (= 2.20.0)
   - QonversionSandwich (from `../`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - Qonversion
 
 EXTERNAL SOURCES:
@@ -18,9 +18,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Qonversion: a80bf4c9ddaa689b0982a35c6f1d84c4870d0f02
-  QonversionSandwich: b3c48f6b5c26da7bb6930d7477bf8853d451a0c9
+  Qonversion: 11af455df897239813c302f9d8916c66515a6335
+  QonversionSandwich: c68bce2c06f9286ee6be7e8f041fffd2e1d9b03d
 
-PODFILE CHECKSUM: 10c1487a8058925a17d0d9759d60a94fd385195a
+PODFILE CHECKSUM: 7f5e04dce234a7e5e57dda2d2e5a5f8e4bcf35d7
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.11.2

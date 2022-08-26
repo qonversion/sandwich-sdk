@@ -150,6 +150,42 @@ extension Qonversion.Property {
     case "AdvertisingId":
       return .advertisingID
       
+    case "FirebaseAppInstanceId":
+      return .firebaseAppInstanceId
+      
+    default:
+      return nil
+    }
+  }
+}
+
+extension Qonversion.PermissionsCacheLifetime {
+  static func fromString(_ string: String) -> Self? {
+    switch string {
+    case "Week":
+      return .week;
+
+    case "TwoWeeks":
+      return .twoWeeks;
+
+    case "Month":
+      return .month;
+
+    case "TwoMonths":
+      return .twoMonth;
+
+    case "ThreeMonths":
+      return .threeMonth;
+
+    case "SixMonths":
+      return .sixMonth;
+
+    case "Year":
+      return .year;
+
+    case "Unlimited":
+      return .unlimited;
+
     default:
       return nil
     }
