@@ -1,10 +1,12 @@
 package io.qonversion.sandwich
 
 import android.app.Application
+import android.util.Log
 import androidx.preference.PreferenceManager
 import com.qonversion.android.sdk.*
 import com.qonversion.android.sdk.dto.QLaunchResult
 import com.qonversion.android.sdk.dto.QPermission
+import com.qonversion.android.sdk.dto.QPermissionsCacheLifetime
 import com.qonversion.android.sdk.dto.eligibility.QEligibility
 import com.qonversion.android.sdk.dto.experiments.QExperimentInfo
 import com.qonversion.android.sdk.dto.offerings.QOfferings
@@ -231,6 +233,15 @@ class QonversionSandwich(
             Qonversion.attribution(data, source)
         } catch (e: java.lang.IllegalArgumentException) {
             // Ignore attribution.
+        }
+    }
+
+    fun setPermissionsCacheLifetime(lifetimeKey: String) {
+        try {
+            val lifetime = QPermissionsCacheLifetime.valueOf(lifetimeKey)
+            Qonversion.setPermissionsCacheLifetime(lifetime)
+        } catch (e: IllegalArgumentException) {
+            // Ignore lifetime.
         }
     }
 
