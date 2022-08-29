@@ -17,8 +17,8 @@ default_platform(:mac)
 
 def update_android_version(new_version)
 	path = "../android/build.gradle"
-    regex = /versionName: ".*",/
-    result_value = "versionName: \"#{new_version}\","
+    regex = /versionName: ".*"/
+    result_value = "versionName: \"#{new_version}\""
 
     update_file(path, regex, result_value)
 end
