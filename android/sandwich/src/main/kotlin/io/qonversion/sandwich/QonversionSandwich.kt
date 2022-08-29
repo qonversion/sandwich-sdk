@@ -1,7 +1,6 @@
 package io.qonversion.sandwich
 
 import android.app.Application
-import android.util.Log
 import androidx.preference.PreferenceManager
 import com.qonversion.android.sdk.*
 import com.qonversion.android.sdk.dto.QLaunchResult
@@ -65,32 +64,32 @@ class QonversionSandwich(
 
     // region Product Center
 
-    fun purchase(productId: String, resultListener: ResultListener) {
+    fun purchase(productId: String, resultListener: PurchaseResultListener) {
         val currentActivity = activityProvider.currentActivity
             ?: run {
-                resultListener.onError(noActivityForPurchaseError.toSandwichError())
+                resultListener.onError(noActivityForPurchaseError.toSandwichError(), false)
                 return
             }
 
-        val permissionsCallback = getPermissionsCallback(resultListener)
-        Qonversion.purchase(currentActivity, productId, permissionsCallback)
+        val purchaseCallback = getPurchaseCallback(resultListener)
+        Qonversion.purchase(currentActivity, productId, purchaseCallback)
     }
 
     fun purchaseProduct(
         productId: String,
         offeringId: String?,
-        resultListener: ResultListener
+        resultListener: PurchaseResultListener
     ) {
         val currentActivity = activityProvider.currentActivity
             ?: run {
-                resultListener.onError(noActivityForPurchaseError.toSandwichError())
+                resultListener.onError(noActivityForPurchaseError.toSandwichError(), false)
                 return
             }
 
-        val permissionsCallback = getPermissionsCallback(resultListener)
+        val purchaseCallback = getPurchaseCallback(resultListener)
         loadProduct(productId, offeringId, object : ProductCallback {
             override fun onProductLoaded(product: QProduct) {
-                Qonversion.purchase(currentActivity, product, permissionsCallback)
+                Qonversion.purchase(currentActivity, product, purchaseCallback)
             }
 
             override fun onLoadingFailed() {
@@ -103,16 +102,16 @@ class QonversionSandwich(
         productId: String,
         oldProductId: String,
         prorationMode: Int?,
-        resultListener: ResultListener
+        resultListener: PurchaseResultListener
     ) {
         val currentActivity = activityProvider.currentActivity
             ?: run {
-                resultListener.onError(noActivityForPurchaseError.toSandwichError())
+                resultListener.onError(noActivityForPurchaseError.toSandwichError(), false)
                 return
             }
 
-        val permissionsCallback = getPermissionsCallback(resultListener)
-        Qonversion.updatePurchase(currentActivity, productId, oldProductId, prorationMode, permissionsCallback)
+        val purchaseCallback = getPurchaseCallback(resultListener)
+        Qonversion.updatePurchase(currentActivity, productId, oldProductId, prorationMode, purchaseCallback)
     }
 
     fun updatePurchaseWithProduct(
@@ -120,18 +119,18 @@ class QonversionSandwich(
         offeringId: String?,
         oldProductId: String,
         prorationMode: Int?,
-        resultListener: ResultListener
+        resultListener: PurchaseResultListener
     ) {
         val currentActivity = activityProvider.currentActivity
             ?: run {
-                resultListener.onError(noActivityForPurchaseError.toSandwichError())
+                resultListener.onError(noActivityForPurchaseError.toSandwichError(), false)
                 return
             }
 
-        val permissionsCallback = getPermissionsCallback(resultListener)
+        val purchaseCallback = getPurchaseCallback(resultListener)
         loadProduct(productId, offeringId, object : ProductCallback {
             override fun onProductLoaded(product: QProduct) {
-                Qonversion.updatePurchase(currentActivity, product, oldProductId, prorationMode, permissionsCallback)
+                Qonversion.updatePurchase(currentActivity, product, oldProductId, prorationMode, purchaseCallback)
             }
 
             override fun onLoadingFailed() {
@@ -321,6 +320,17 @@ class QonversionSandwich(
 
         override fun onError(error: QonversionError) {
             resultListener.onError(error.toSandwichError())
+        }
+    }
+
+    private fun getPurchaseCallback(resultListener: PurchaseResultListener) = object : QonversionPermissionsCallback {
+        override fun onSuccess(permissions: Map<String, QPermission>) {
+            resultListener.onSuccess(permissions.toPermissionsMap())
+        }
+
+        override fun onError(error: QonversionError) {
+            val isCancelled = error.code == QonversionErrorCode.CanceledPurchase
+            resultListener.onError(error.toSandwichError(), isCancelled)
         }
     }
 
