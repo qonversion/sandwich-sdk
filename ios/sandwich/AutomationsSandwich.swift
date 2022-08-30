@@ -16,6 +16,18 @@ class AutomationsSandwich : NSObject {
     self.automationsEventListener = automationsEventListener
     Qonversion.Automations.setDelegate(self)
   }
+
+  @objc public func getAvailableEvents() -> [String] {
+    let availableEvents: [AutomationsEvent] = [
+      .screenShown,
+      .actionStarted,
+      .actionFailed,
+      .actionFinished,
+      .automationsFinished
+    ]
+
+    return availableEvents.map { $0.rawValue }
+  }
 }
 
 extension AutomationsSandwich: Qonversion.AutomationsDelegate {
