@@ -199,7 +199,7 @@ public class QonversionSandwich : NSObject {
     Qonversion.setAdvertisingID()
   }
   
-  @objc public func setPermissionsCacheLifetime(_ lifetime: String, value: String) {
+  @objc public func setPermissionsCacheLifetime(_ lifetime: String) {
       guard let parsedLifetime = Qonversion.PermissionsCacheLifetime.fromString(lifetime) else { return }
 
       Qonversion.setPermissionsCacheLifetime(parsedLifetime)
