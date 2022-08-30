@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   excluded_files = ['ios/sandwich/AutomationsSandwich.swift', 'ios/sandwich/AutomationsEventListener.swift', 'ios/sandwich/AutomationsMappers.swift']
   s.name         = 'QonversionSandwich'
-  s.version      = '0.0.9'
+  s.version      = '0.0.10'
   s.summary      = 'qonversion.io'
   s.swift_version = '5.0'
   s.description  = <<-DESC
