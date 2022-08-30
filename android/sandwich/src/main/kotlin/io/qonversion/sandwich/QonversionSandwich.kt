@@ -237,7 +237,7 @@ class QonversionSandwich(
 
     fun setPermissionsCacheLifetime(lifetimeKey: String) {
         try {
-            val lifetime = QPermissionsCacheLifetime.valueOf(lifetimeKey)
+            val lifetime = lifetimeKey.toPermissionsCacheLifetime()
             Qonversion.setPermissionsCacheLifetime(lifetime)
         } catch (e: IllegalArgumentException) {
             // Ignore lifetime.
