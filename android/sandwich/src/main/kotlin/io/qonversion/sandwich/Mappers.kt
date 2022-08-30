@@ -1,16 +1,19 @@
 package io.qonversion.sandwich
 
+import android.icu.util.MeasureUnit.WEEK
 import com.android.billingclient.api.SkuDetails
 import com.qonversion.android.sdk.QonversionError
 import com.qonversion.android.sdk.automations.AutomationsEvent
 import com.qonversion.android.sdk.automations.QActionResult
 import com.qonversion.android.sdk.dto.QLaunchResult
 import com.qonversion.android.sdk.dto.QPermission
+import com.qonversion.android.sdk.dto.QPermissionsCacheLifetime
 import com.qonversion.android.sdk.dto.eligibility.QEligibility
 import com.qonversion.android.sdk.dto.experiments.QExperimentInfo
 import com.qonversion.android.sdk.dto.offerings.QOffering
 import com.qonversion.android.sdk.dto.offerings.QOfferings
 import com.qonversion.android.sdk.dto.products.QProduct
+
 
 fun QonversionError.toSandwichError(): SandwichError {
     return SandwichError(this)
@@ -137,4 +140,22 @@ fun AutomationsEvent.toMap(): BridgeData {
         "type" to type.type,
         "timestamp" to date.time.toDouble()
     )
+}
+
+fun String.toPermissionsCacheLifetime(): QPermissionsCacheLifetime {
+    val convertedKeys = mapOf(
+        "Week" to "WEEK",
+        "TwoWeeks" to "TWO_WEEKS",
+        "Month" to "MONTH",
+        "TwoMonths" to "TWO_MONTHS",
+        "ThreeMonths" to "THREE_MONTHS",
+        "SixMonths" to "SIX_MONTHS",
+        "Year" to "YEAR",
+        "Unlimited" to "UNLIMITED"
+    )
+
+    val convertedKey = convertedKeys[this]
+        ?: throw IllegalArgumentException("Unsupported lifetime key - $this")
+
+    return QPermissionsCacheLifetime.valueOf(convertedKey)
 }
