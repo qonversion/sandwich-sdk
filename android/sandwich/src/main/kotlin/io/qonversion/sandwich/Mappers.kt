@@ -1,6 +1,5 @@
 package io.qonversion.sandwich
 
-import android.icu.util.MeasureUnit.WEEK
 import com.android.billingclient.api.SkuDetails
 import com.qonversion.android.sdk.QonversionError
 import com.qonversion.android.sdk.automations.AutomationsEvent
@@ -13,7 +12,6 @@ import com.qonversion.android.sdk.dto.experiments.QExperimentInfo
 import com.qonversion.android.sdk.dto.offerings.QOffering
 import com.qonversion.android.sdk.dto.offerings.QOfferings
 import com.qonversion.android.sdk.dto.products.QProduct
-
 
 fun QonversionError.toSandwichError(): SandwichError {
     return SandwichError(this)

@@ -43,7 +43,7 @@ ext {
 }
 
 dependencies {
-    implementation "io.qonversion.android.sdk:sdk:$qonversion_version"
+    api "io.qonversion.android.sdk:sdk:$qonversion_version"
     implementation 'androidx.preference:preference:1.1.1'
 }
 
