@@ -9,11 +9,11 @@
 import Foundation
 
 public class SandwichError: NSObject {
-  let code: String
-  let domain: String
-  let details: String
-  let additionalMessage: String?
-  var additionalInfo: [String: Any]
+  public let code: String
+  public let domain: String
+  public let details: String
+  public let additionalMessage: String?
+  public var additionalInfo: [String: Any]
   
   public init(code: String,
               domain: String,
