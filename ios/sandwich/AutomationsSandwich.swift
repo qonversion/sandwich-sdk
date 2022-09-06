@@ -9,7 +9,7 @@
 import Foundation
 import Qonversion
 
-class AutomationsSandwich : NSObject {
+public class AutomationsSandwich : NSObject {
   private var automationsEventListener: AutomationsEventListener?
   
   @objc public func subscribe(_ automationsEventListener: AutomationsEventListener) {

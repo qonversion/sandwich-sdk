@@ -43,7 +43,7 @@ extension NSError {
   
   func toMap() -> BridgeData {
     let errorMap = [
-      "code": code,
+      "code": String(code),
       "domain": domain,
       "description": localizedDescription,
       "additionalMessage": userInfo[NSDebugDescriptionErrorKey]]
@@ -283,7 +283,7 @@ extension SKProductDiscount {
     ]
       
     if #available(iOS 12.2, tvOS 12.2, watchOS 6.2, macOS 10.14.4, *) {
-      map["type"] = type
+      map["type"] = type.rawValue
       map["identifier"] = identifier
     }
     
