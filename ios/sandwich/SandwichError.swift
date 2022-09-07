@@ -8,22 +8,22 @@
 
 import Foundation
 
-public class SandwichError: NSObject {
-  public let code: String
-  public let domain: String
-  public let details: String
-  public let additionalMessage: String?
-  public var additionalInfo: [String: Any]
-  
-  public init(code: String,
-              domain: String,
-              details: String,
-              additionalMessage: String?,
-              additionalInfo: [String: Any] = [:]) {
-    self.code = code
-    self.domain = domain
-    self.details = details
-    self.additionalMessage = additionalMessage
-    self.additionalInfo = additionalInfo
-  }
+@objc public class SandwichError: NSObject {
+    @objc public let code: String
+    @objc public let domain: String
+    @objc public let details: String
+    @objc public let additionalMessage: String?
+    @objc public var additionalInfo: [String: Any]
+    
+    public init(code: String,
+                domain: String,
+                details: String,
+                additionalMessage: String?,
+                additionalInfo: [String: Any] = [:]) {
+        self.code = code
+        self.domain = domain
+        self.details = details
+        self.additionalMessage = additionalMessage
+        self.additionalInfo = additionalInfo
+    }
 }
