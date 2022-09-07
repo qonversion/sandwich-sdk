@@ -13,7 +13,7 @@ import Foundation
   @objc func automationDidTrigger(event: String, payload: [String: Any]?)
 }
 
-enum AutomationsEvent: String {
+public enum AutomationsEvent: String {
   case screenShown = "automations_screen_shown"
   case actionStarted = "automations_action_started"
   case actionFailed = "automations_action_failed"
