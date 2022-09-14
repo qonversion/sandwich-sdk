@@ -59,7 +59,11 @@ public class QonversionSandwich : NSObject {
     Qonversion.purchase(productId, completion: purchaseCompletion)
   }
   
-  @objc public func purchaseProduct(_ productId: String, _ offeringId: String, completion: @escaping BridgeCompletion) {
+  @objc public func purchaseProduct(_ productId: String, offeringId: String?, completion: @escaping BridgeCompletion) {
+    guard let offeringId = offeringId else {
+      return purchase(productId, completion: completion)
+    }
+    
     loadProduct(productId, offeringId) { [weak self] (product) in
       guard let self = self else { return }
       

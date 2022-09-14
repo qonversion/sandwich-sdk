@@ -5,7 +5,6 @@ import androidx.preference.PreferenceManager
 import com.qonversion.android.sdk.*
 import com.qonversion.android.sdk.dto.QLaunchResult
 import com.qonversion.android.sdk.dto.QPermission
-import com.qonversion.android.sdk.dto.QPermissionsCacheLifetime
 import com.qonversion.android.sdk.dto.eligibility.QEligibility
 import com.qonversion.android.sdk.dto.experiments.QExperimentInfo
 import com.qonversion.android.sdk.dto.offerings.QOfferings
@@ -80,15 +79,15 @@ class QonversionSandwich(
         offeringId: String?,
         resultListener: PurchaseResultListener
     ) {
-        val currentActivity = activityProvider.currentActivity
-            ?: run {
-                resultListener.onError(noActivityForPurchaseError.toSandwichError(), false)
-                return
-            }
-
         val purchaseCallback = getPurchaseCallback(resultListener)
         loadProduct(productId, offeringId, object : ProductCallback {
             override fun onProductLoaded(product: QProduct) {
+                val currentActivity = activityProvider.currentActivity
+                    ?: run {
+                        resultListener.onError(noActivityForPurchaseError.toSandwichError(), false)
+                        return
+                    }
+
                 Qonversion.purchase(currentActivity, product, purchaseCallback)
             }
 
@@ -121,15 +120,14 @@ class QonversionSandwich(
         prorationMode: Int?,
         resultListener: PurchaseResultListener
     ) {
-        val currentActivity = activityProvider.currentActivity
-            ?: run {
-                resultListener.onError(noActivityForPurchaseError.toSandwichError(), false)
-                return
-            }
-
         val purchaseCallback = getPurchaseCallback(resultListener)
         loadProduct(productId, offeringId, object : ProductCallback {
             override fun onProductLoaded(product: QProduct) {
+                val currentActivity = activityProvider.currentActivity
+                    ?: run {
+                        resultListener.onError(noActivityForPurchaseError.toSandwichError(), false)
+                        return
+                    }
                 Qonversion.updatePurchase(currentActivity, product, oldProductId, prorationMode, purchaseCallback)
             }
 
