@@ -158,3 +158,8 @@ fun String.toPermissionsCacheLifetime(): QPermissionsCacheLifetime {
 
     return QPermissionsCacheLifetime.valueOf(convertedKey)
 }
+
+fun Map<String, Any?>.toStringMap(): Map<String, String> {
+    return filterValues { it != null }
+        .mapValues { it.value.toString() }
+}

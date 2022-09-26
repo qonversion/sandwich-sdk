@@ -217,6 +217,10 @@ public class QonversionSandwich : NSObject {
   }
   
 #if os(iOS)
+  @objc public func getNotificationCustomPayload(_ notificationData: [AnyHashable: Any]) -> [AnyHashable: Any]? {
+    return Qonversion.getNotificationCustomPayload(notificationData)
+  }
+  
   @objc public func handleNotification(_ notificationData: [AnyHashable: Any]) -> Bool {
     return Qonversion.handleNotification(notificationData)
   }
