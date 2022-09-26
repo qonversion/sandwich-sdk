@@ -88,6 +88,7 @@ extension Qonversion.Permission {
       "startedTimestamp": startedDate.toMilliseconds(),
       "expirationTimestamp": expirationDate.map { $0.toMilliseconds() },
       "active": isActive,
+      "source": source.toString(),
     ]
   }
 }
@@ -123,6 +124,25 @@ extension Qonversion.IntroEligibility {
     }
     
     return ["status": statusValue]
+  }
+}
+
+extension Qonversion.PermissionSource {
+  func toString() -> String {
+    switch self {
+    case .unknown:
+      return "Unknown"
+    case .appStore:
+      return "AppStore"
+    case .playStore:
+      return "PlayStore"
+    case .stripe:
+      return "Stripe"
+    case .manual:
+      return "Manual"
+    default:
+      return "Unknown"
+    }
   }
 }
 
