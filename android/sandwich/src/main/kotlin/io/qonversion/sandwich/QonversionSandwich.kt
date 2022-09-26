@@ -246,14 +246,17 @@ class QonversionSandwich(
 
     // region Notifications
 
+    fun getNotificationCustomPayload(notificationData: Map<String, Any?>): Map<String, Any?>? {
+        val stringData = notificationData.toStringMap()
+        return Qonversion.getNotificationCustomPayload(stringData)
+    }
+
     fun setNotificationToken(token: String) {
         Qonversion.setNotificationsToken(token)
     }
 
     fun handleNotification(notificationData: Map<String, Any?>): Boolean {
-        val stringData = notificationData
-            .filterValues { it != null }
-            .mapValues { it.value.toString() }
+        val stringData = notificationData.toStringMap()
         return Qonversion.handleNotification(stringData)
     }
 
