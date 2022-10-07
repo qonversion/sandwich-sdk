@@ -5,13 +5,16 @@ on:
     types: [released]
   pull_request: # remove after tests
     types: [opened, synchronize, reopened]
-  workflow_dispatch
+  workflow_dispatch:
 
 jobs:
   notify_cross_platforms:
     name: Wait for publishing and upgrade cross-platforms
     runs-on: ubuntu-latest
     steps:
+      - name: Print release version
+        run: echo '{{ github.event.release.tag_name }}'
+
       - name: Wait for publishing
         uses: lewagon/wait-on-check-action@v1.1.2
         with:
@@ -28,17 +31,26 @@ jobs:
               owner: 'qonversion',
               repo: 'react-native-sdk',
               workflow_id: 'upgrade_sandwich.yml',
-              ref: 'main'
+              ref: 'main',
+              inputs: {
+                sandwich_version: ${{ github.event.release.tag_name }}
+              },
             })
             await github.rest.actions.createWorkflowDispatch({
               owner: 'qonversion',
               repo: 'flutter-sdk',
               workflow_id: 'upgrade_sandwich.yml',
-              ref: 'main'
+              ref: 'main',
+              inputs: {
+                sandwich_version: ${{ github.event.release.tag_name }}
+              },
             })
             await github.rest.actions.createWorkflowDispatch({
               owner: 'qonversion',
               repo: 'unity-sdk',
               workflow_id: 'upgrade_sandwich.yml',
-              ref: 'main'
+              ref: 'main',
+              inputs: {
+                sandwich_version: ${{ github.event.release.tag_name }}
+              },
             })
