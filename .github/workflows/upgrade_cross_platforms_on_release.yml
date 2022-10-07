@@ -1,0 +1,44 @@
+name: Upgrade cross-platforms on release
+
+on:
+  release:
+    types: [released]
+  pull_request: # remove after tests
+    types: [opened, synchronize, reopened]
+  workflow_dispatch
+
+jobs:
+  notify_cross_platforms:
+    name: Wait for publishing and upgrade cross-platforms
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for publishing
+        uses: lewagon/wait-on-check-action@v1.1.2
+        with:
+          ref: ${{ github.ref }}
+          check-regexp: 'Publish [Android|iOS] release'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 20
+
+      - name: Notify cross-platforms
+        with:
+          github-token: ${{ secrets.PAT_TOKEN }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: 'qonversion',
+              repo: 'react-native-sdk',
+              workflow_id: 'upgrade_sandwich.yml',
+              ref: 'main'
+            })
+            await github.rest.actions.createWorkflowDispatch({
+              owner: 'qonversion',
+              repo: 'flutter-sdk',
+              workflow_id: 'upgrade_sandwich.yml',
+              ref: 'main'
+            })
+            await github.rest.actions.createWorkflowDispatch({
+              owner: 'qonversion',
+              repo: 'unity-sdk',
+              workflow_id: 'upgrade_sandwich.yml',
+              ref: 'main'
+            })

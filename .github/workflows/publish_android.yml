@@ -6,7 +6,7 @@ on:
 
 jobs:
   publish:
-    name: Upload archives
+    name: Publish Android release
     runs-on: ubuntu-latest
     defaults:
       run:
