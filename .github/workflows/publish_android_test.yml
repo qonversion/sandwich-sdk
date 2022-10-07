@@ -1,4 +1,4 @@
-name: Publish Android
+name: Publish Android Test
 
 on:
   pull_request:
