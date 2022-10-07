@@ -13,13 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print release version
-        run: echo '${{ github.event.release.tag_name }}'
+        run: echo '${{ github.ref_name }}'
 
       - name: Wait for publishing
         uses: lewagon/wait-on-check-action@v1.1.2
         with:
           ref: ${{ github.ref }}
-          check-regexp: 'Publish [Android|iOS] release'
+          check-name: 'Lint'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 20
 
