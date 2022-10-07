@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Get Previous tag
         id: current_tag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        uses: WyriHaximus/github-action-get-previous-tag@v1
 
       - name: Print release version
         run: echo '${{ steps.current_tag.outputs.tag }}'
