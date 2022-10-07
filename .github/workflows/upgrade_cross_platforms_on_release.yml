@@ -24,6 +24,7 @@ jobs:
           wait-interval: 20
 
       - name: Notify cross-platforms
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.PAT_TOKEN }}
           script: |
