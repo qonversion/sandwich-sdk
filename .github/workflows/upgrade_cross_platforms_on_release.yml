@@ -20,13 +20,10 @@ jobs:
         id: current_tag
         uses: WyriHaximus/github-action-get-previous-tag@v1
 
-      - name: Print release version
-        run: echo '${{ steps.current_tag.outputs.tag }}'
-
       - name: Wait for publishing
         uses: lewagon/wait-on-check-action@v1.1.2
         with:
-          ref: ${{ github.ref }}
+          ref: ${{ github.sha }}
           check-name: 'Lint'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 20
@@ -42,7 +39,7 @@ jobs:
               workflow_id: 'upgrade_sandwich.yml',
               ref: 'main',
               inputs: {
-                sandwich_version: ${{ github.event.release.tag_name }}
+                sandwich_version: ${{ steps.current_tag.outputs.tag }}
               },
             })
             await github.rest.actions.createWorkflowDispatch({
@@ -51,7 +48,7 @@ jobs:
               workflow_id: 'upgrade_sandwich.yml',
               ref: 'main',
               inputs: {
-                sandwich_version: ${{ github.event.release.tag_name }}
+                sandwich_version: ${{ steps.current_tag.outputs.tag }}
               },
             })
             await github.rest.actions.createWorkflowDispatch({
@@ -60,6 +57,6 @@ jobs:
               workflow_id: 'upgrade_sandwich.yml',
               ref: 'main',
               inputs: {
-                sandwich_version: ${{ github.event.release.tag_name }}
+                sandwich_version: ${{ steps.current_tag.outputs.tag }}
               },
             })
