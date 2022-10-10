@@ -38,7 +38,7 @@ jobs:
               owner: 'qonversion',
               repo: 'react-native-sdk',
               workflow_id: 'upgrade_sandwich.yml',
-              ref: 'main',
+              ref: 'tech/autoupgradeCP',
               inputs: {
                 sandwich_version: '${{ steps.current_tag.outputs.tag }}'
               },
