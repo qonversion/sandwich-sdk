@@ -20,11 +20,19 @@ jobs:
         id: current_tag
         uses: WyriHaximus/github-action-get-previous-tag@v1
 
+      - name: Wait for publishing v1
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-build
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: lint
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
       - name: Wait for publishing
         uses: lewagon/wait-on-check-action@v1.1.2
         with:
-          ref: tech/autoupgradeCP
-          check-name: 'Lint'
+          ref: ${{ github.ref }}
+          check-name: 'lint'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 20
 
