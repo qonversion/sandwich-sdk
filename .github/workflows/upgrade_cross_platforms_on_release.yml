@@ -1,17 +1,16 @@
 name: Upgrade cross-platforms on release
 
 on:
-  # workflow_run:
-  #   workflows: [Publish SDKs]
-  #   types:
-  #     - completed
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_run:
+    workflows: [Publish SDKs]
+    types:
+      - completed
 
 jobs:
   notify_cross_platforms:
     name: Wait for publishing and upgrade cross-platforms
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -20,14 +19,6 @@ jobs:
       - name: Get Previous tag
         id: current_tag
         uses: WyriHaximus/github-action-get-previous-tag@v1
-
-      # - name: Wait for Android publishing
-      #   uses: fountainhead/action-wait-for-check@v1.0.0
-      #   id: wait-for-android-publish
-      #   with:
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     checkName: lint
-      #     ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: Notify cross-platforms
         uses: actions/github-script@v6
@@ -38,26 +29,33 @@ jobs:
               owner: 'qonversion',
               repo: 'react-native-sdk',
               workflow_id: 'upgrade_sandwich.yml',
-              ref: 'tech/autoupgradeCP',
+              ref: 'main',
               inputs: {
-                sandwich_version: '0.2.1'
+                sandwich_version: '${{ steps.current_tag.outputs.tag }}'
               },
             })
             await github.rest.actions.createWorkflowDispatch({
               owner: 'qonversion',
               repo: 'flutter-sdk',
               workflow_id: 'upgrade_sandwich.yml',
-              ref: 'tech/autoupgradeCP',
+              ref: 'main',
               inputs: {
-                sandwich_version: '0.2.1'
+                sandwich_version: '${{ steps.current_tag.outputs.tag }}'
               },
             })
             await github.rest.actions.createWorkflowDispatch({
               owner: 'qonversion',
               repo: 'unity-sdk',
               workflow_id: 'upgrade_sandwich.yml',
-              ref: 'tech/autoupgradeCP',
+              ref: 'main',
               inputs: {
-                sandwich_version: '0.2.1'
+                sandwich_version: '${{ steps.current_tag.outputs.tag }}'
               },
             })
+  on_publishing_failed:
+    name: Cancel due to publishing faulure
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    uses: actions/github-script@v3
+    with:
+      script: |
+          core.setFailed('Publishing script failed')
