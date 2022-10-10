@@ -1,10 +1,12 @@
 name: Upgrade cross-platforms on release
 
 on:
-  workflow_run:
-    workflows: [Checks]
-    types:
-      - completed
+  # workflow_run:
+  #   workflows: [Publish SDKs]
+  #   types:
+  #     - completed
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   notify_cross_platforms:
