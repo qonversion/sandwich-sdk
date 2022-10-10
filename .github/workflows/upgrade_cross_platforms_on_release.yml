@@ -43,21 +43,3 @@ jobs:
                 sandwich_version: '${{ steps.current_tag.outputs.tag }}'
               },
             })
-            await github.rest.actions.createWorkflowDispatch({
-              owner: 'qonversion',
-              repo: 'flutter-sdk',
-              workflow_id: 'upgrade_sandwich.yml',
-              ref: 'main',
-              inputs: {
-                sandwich_version: '${{ steps.current_tag.outputs.tag }}'
-              },
-            })
-            await github.rest.actions.createWorkflowDispatch({
-              owner: 'qonversion',
-              repo: 'unity-sdk',
-              workflow_id: 'upgrade_sandwich.yml',
-              ref: 'main',
-              inputs: {
-                sandwich_version: '${{ steps.current_tag.outputs.tag }}'
-              },
-            })
