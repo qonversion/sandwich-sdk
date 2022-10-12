@@ -5,6 +5,7 @@ on:
     workflows: [Publish SDKs]
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   notify_cross_platforms:
@@ -23,7 +24,7 @@ jobs:
       - name: Notify cross-platforms
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.PAT_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.actions.createWorkflowDispatch({
               owner: 'qonversion',
