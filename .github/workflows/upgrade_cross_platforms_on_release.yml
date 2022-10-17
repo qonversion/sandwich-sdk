@@ -18,8 +18,7 @@ jobs:
           fetch-depth: 0
 
       - name: Get Previous tag
-        id: current_tag
-        uses: WyriHaximus/github-action-get-previous-tag@v1
+        run: echo sandwich_version=`git describe --tags \`git rev-list --tags --max-count=1\`` >> $GITHUB_ENV
 
       - name: Notify cross-platforms
         uses: actions/github-script@v6
@@ -32,7 +31,7 @@ jobs:
               workflow_id: 'upgrade_sandwich.yml',
               ref: 'main',
               inputs: {
-                sandwich_version: '${{ steps.current_tag.outputs.tag }}'
+                sandwich_version: '${{ env.sandwich_version }}'
               },
             })
             await github.rest.actions.createWorkflowDispatch({
@@ -41,7 +40,7 @@ jobs:
               workflow_id: 'upgrade_sandwich.yml',
               ref: 'main',
               inputs: {
-                sandwich_version: '${{ steps.current_tag.outputs.tag }}'
+                sandwich_version: '${{ env.sandwich_version }}'
               },
             })
             await github.rest.actions.createWorkflowDispatch({
@@ -50,7 +49,7 @@ jobs:
               workflow_id: 'upgrade_sandwich.yml',
               ref: 'main',
               inputs: {
-                sandwich_version: '${{ steps.current_tag.outputs.tag }}'
+                sandwich_version: '${{ env.sandwich_version }}'
               },
             })
   on_publishing_failed:
