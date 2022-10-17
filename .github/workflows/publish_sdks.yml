@@ -1,12 +1,12 @@
-name: Publish Android
+name: Publish SDKs
 
 on:
   release:
     types: [released]
 
 jobs:
-  publish:
-    name: Upload archives
+  android_publish:
+    name: Publish Android release
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -33,3 +33,15 @@ jobs:
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+
+  iOS_publish:
+    name: Publish iOS release
+    runs-on: macos-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: CocoaPods Release
+        run: pod trunk push QonversionSandwich.podspec
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
