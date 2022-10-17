@@ -54,8 +54,10 @@ jobs:
             })
   on_publishing_failed:
     name: Cancel due to publishing faulure
+    runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
-    uses: actions/github-script@v3
-    with:
-      script: |
-          core.setFailed('Publishing script failed')
+    steps:
+      - name: Fail job
+        run: |
+          echo "Publishing script failed"
+          exit 1
