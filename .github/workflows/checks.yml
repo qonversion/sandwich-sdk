@@ -9,8 +9,8 @@ jobs:
 
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
-          with:
-            xcode-version: '13.4.1'
+        with:
+          xcode-version: '13.4.1'
 
       - uses: actions/checkout@v2
       - name: Validation
