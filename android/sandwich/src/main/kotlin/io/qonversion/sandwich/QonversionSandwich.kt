@@ -33,8 +33,6 @@ class QonversionSandwich(
     private val qonversionEventsListener: QonversionEventsListener
 ) {
 
-    private var isSubscribedOnAsyncEvents = false
-
     private val noActivityForPurchaseError = QonversionError(
         QonversionErrorCode.PurchaseInvalid,
         "Current Android activity is null, cannot perform the action."

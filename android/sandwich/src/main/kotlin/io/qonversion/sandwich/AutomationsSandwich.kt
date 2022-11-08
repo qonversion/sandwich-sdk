@@ -8,11 +8,36 @@ class AutomationsSandwich {
 
     // region Initialization
 
-    fun subscribe(eventListener: AutomationsEventListener) {
-        val delegate = createAutomationsDelegate(eventListener)
+    fun initialize() {
         Automations.initialize()
+    }
+
+    fun setDelegate(eventListener: AutomationsEventListener) {
+        val delegate = createAutomationsDelegate(eventListener)
         Automations.sharedInstance.setDelegate(delegate)
     }
+
+    // endregion
+
+    // region Notifications
+
+    fun getNotificationCustomPayload(notificationData: Map<String, Any?>): Map<String, Any?>? {
+        val stringData = notificationData.toStringMap()
+        return Automations.sharedInstance.getNotificationCustomPayload(stringData)
+    }
+
+    fun setNotificationToken(token: String) {
+        Automations.sharedInstance.setNotificationsToken(token)
+    }
+
+    fun handleNotification(notificationData: Map<String, Any?>): Boolean {
+        val stringData = notificationData.toStringMap()
+        return Automations.sharedInstance.handleNotification(stringData)
+    }
+
+    // endregion
+
+    // region Private
 
     private fun createAutomationsDelegate(eventListener: AutomationsEventListener): AutomationsDelegate {
         return object : AutomationsDelegate {
@@ -37,24 +62,6 @@ class AutomationsSandwich {
                 eventListener.onAutomationEvent(AutomationsEventListener.Event.AutomationsFinished)
             }
         }
-    }
-
-    // endregion
-
-    // region Notifications
-
-    fun getNotificationCustomPayload(notificationData: Map<String, Any?>): Map<String, Any?>? {
-        val stringData = notificationData.toStringMap()
-        return Automations.sharedInstance.getNotificationCustomPayload(stringData)
-    }
-
-    fun setNotificationToken(token: String) {
-        Automations.sharedInstance.setNotificationsToken(token)
-    }
-
-    fun handleNotification(notificationData: Map<String, Any?>): Boolean {
-        val stringData = notificationData.toStringMap()
-        return Automations.sharedInstance.handleNotification(stringData)
     }
 
     // endregion
