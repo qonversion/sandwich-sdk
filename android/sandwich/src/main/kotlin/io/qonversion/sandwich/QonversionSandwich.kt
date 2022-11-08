@@ -44,8 +44,8 @@ class QonversionSandwich(
         context: Context,
         projectKey: String,
         launchModeKey: String,
-        environmentKey: String,
-        entitlementsCacheLifetimeKey: String
+        environmentKey: String? = null,
+        entitlementsCacheLifetimeKey: String? = null
     ) {
         val launchMode = QLaunchMode.valueOf(launchModeKey)
         val config = QonversionConfig.Builder(context, projectKey, launchMode)
@@ -293,7 +293,8 @@ class QonversionSandwich(
         })
     }
 
-    private fun QonversionConfig.Builder.setEnvironment(environmentKey: String) = apply {
+    private fun QonversionConfig.Builder.setEnvironment(environmentKey: String?) = apply {
+        environmentKey ?: return@apply
         try {
             val environment = QEnvironment.valueOf(environmentKey)
             setEnvironment(environment)
@@ -302,7 +303,8 @@ class QonversionSandwich(
         }
     }
 
-    private fun QonversionConfig.Builder.setEntitlementsCacheLifetime(lifetimeKey: String) = apply {
+    private fun QonversionConfig.Builder.setEntitlementsCacheLifetime(lifetimeKey: String?) = apply {
+        lifetimeKey ?: return@apply
         try {
             val lifetime = QEntitlementsCacheLifetime.valueOf(lifetimeKey)
             setEntitlementsCacheLifetime(lifetime)
