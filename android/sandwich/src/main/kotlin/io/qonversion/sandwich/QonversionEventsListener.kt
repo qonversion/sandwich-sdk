@@ -2,5 +2,5 @@ package io.qonversion.sandwich
 
 interface QonversionEventsListener {
 
-    fun onPermissionsUpdate(permissions: BridgeData)
+    fun onEntitlementsUpdate(entitlements: BridgeData)
 }

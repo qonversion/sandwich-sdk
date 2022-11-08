@@ -1,5 +1,5 @@
 buildscript {
-    ext.qonversion_version = '3.4.0'
+    ext.qonversion_version = '4.0.0-RC1'
 }
 
 plugins {
