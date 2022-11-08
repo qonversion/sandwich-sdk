@@ -316,7 +316,7 @@ class QonversionSandwich(
     private fun QonversionConfig.Builder.setEntitlementsUpdateListener() = apply {
         setEntitlementsUpdateListener(object : EntitlementsUpdateListener {
             override fun onEntitlementsUpdated(entitlements: Map<String, QEntitlement>) {
-                qonversionEventsListener.onEntitlementsUpdate(entitlements.toEntitlementsMap())
+                qonversionEventsListener.onEntitlementsUpdated(entitlements.toEntitlementsMap())
             }
         })
     }
