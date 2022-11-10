@@ -72,20 +72,8 @@ fun QEntitlement.toMap(): BridgeData {
         "expirationTimestamp" to expirationDate?.time?.toDouble(),
         "active" to isActive,
         "source" to source.name,
-        "product" to product.toMap()
-    )
-}
-
-fun QEntitlement.Product.toMap(): BridgeData {
-    return mapOf(
         "product_id" to productId,
-        "subscription" to subscription?.toMap()
-    )
-}
-
-fun QEntitlement.Product.Subscription.toMap(): BridgeData {
-    return mapOf(
-        "renew_state" to renewState.type
+        "renewState" to renewState.type
     )
 }
 

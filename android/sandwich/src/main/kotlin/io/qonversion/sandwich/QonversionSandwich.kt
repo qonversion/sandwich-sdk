@@ -18,7 +18,7 @@ import com.qonversion.android.sdk.dto.QonversionErrorCode
 import com.qonversion.android.sdk.dto.eligibility.QEligibility
 import com.qonversion.android.sdk.dto.offerings.QOfferings
 import com.qonversion.android.sdk.dto.products.QProduct
-import com.qonversion.android.sdk.listeners.EntitlementsUpdateListener
+import com.qonversion.android.sdk.listeners.QEntitlementsUpdateListener
 import com.qonversion.android.sdk.listeners.QonversionEligibilityCallback
 import com.qonversion.android.sdk.listeners.QonversionEntitlementsCallback
 import com.qonversion.android.sdk.listeners.QonversionOfferingsCallback
@@ -76,7 +76,7 @@ class QonversionSandwich(
             }
 
         val purchaseCallback = getPurchaseCallback(resultListener)
-        Qonversion.sharedInstance.purchase(currentActivity, productId, purchaseCallback)
+        Qonversion.shared.purchase(currentActivity, productId, purchaseCallback)
     }
 
     fun purchaseProduct(
@@ -93,7 +93,7 @@ class QonversionSandwich(
                         return
                     }
 
-                Qonversion.sharedInstance.purchase(currentActivity, product, purchaseCallback)
+                Qonversion.shared.purchase(currentActivity, product, purchaseCallback)
             }
 
             override fun onLoadingFailed() {
@@ -115,7 +115,7 @@ class QonversionSandwich(
             }
 
         val purchaseCallback = getPurchaseCallback(resultListener)
-        Qonversion.sharedInstance.updatePurchase(
+        Qonversion.shared.updatePurchase(
             currentActivity,
             productId,
             oldProductId,
@@ -139,7 +139,7 @@ class QonversionSandwich(
                         resultListener.onError(noActivityForPurchaseError.toSandwichError(), false)
                         return
                     }
-                Qonversion.sharedInstance.updatePurchase(
+                Qonversion.shared.updatePurchase(
                     currentActivity,
                     product,
                     oldProductId,
@@ -156,11 +156,11 @@ class QonversionSandwich(
 
     fun checkEntitlements(resultListener: ResultListener) {
         val entitlementsCallback = getEntitlementsCallback(resultListener)
-        Qonversion.sharedInstance.checkEntitlements(entitlementsCallback)
+        Qonversion.shared.checkEntitlements(entitlementsCallback)
     }
 
     fun offerings(resultListener: ResultListener) {
-        Qonversion.sharedInstance.offerings(object : QonversionOfferingsCallback {
+        Qonversion.shared.offerings(object : QonversionOfferingsCallback {
             override fun onSuccess(offerings: QOfferings) {
                 resultListener.onSuccess(offerings.toMap())
             }
@@ -172,7 +172,7 @@ class QonversionSandwich(
     }
 
     fun products(resultListener: ResultListener) {
-        Qonversion.sharedInstance.products(object : QonversionProductsCallback {
+        Qonversion.shared.products(object : QonversionProductsCallback {
             override fun onSuccess(products: Map<String, QProduct>) {
                 resultListener.onSuccess(products.toProductsMap())
             }
@@ -185,15 +185,15 @@ class QonversionSandwich(
 
     fun restore(resultListener: ResultListener) {
         val entitlementsCallback = getEntitlementsCallback(resultListener)
-        Qonversion.sharedInstance.restore(entitlementsCallback)
+        Qonversion.shared.restore(entitlementsCallback)
     }
 
     fun syncPurchases() {
-        Qonversion.sharedInstance.syncPurchases()
+        Qonversion.shared.syncPurchases()
     }
 
     fun checkTrialIntroEligibility(ids: List<String>, resultListener: ResultListener) {
-        Qonversion.sharedInstance.checkTrialIntroEligibilityForProductIds(
+        Qonversion.shared.checkTrialIntroEligibilityForProductIds(
             ids,
             object : QonversionEligibilityCallback {
                 override fun onSuccess(eligibilities: Map<String, QEligibility>) {
@@ -212,7 +212,7 @@ class QonversionSandwich(
     // region User Info
 
     fun userInfo(resultListener: ResultListener) {
-        Qonversion.sharedInstance.userInfo(object : QonversionUserCallback {
+        Qonversion.shared.userInfo(object : QonversionUserCallback {
             override fun onSuccess(user: QUser) {
                 resultListener.onSuccess(user.toMap())
             }
@@ -224,30 +224,30 @@ class QonversionSandwich(
     }
 
     fun identify(userId: String) {
-        Qonversion.sharedInstance.identify(userId)
+        Qonversion.shared.identify(userId)
     }
 
     fun setDefinedProperty(propertyKey: String, value: String) {
         try {
             val property = QUserProperties.valueOf(propertyKey)
-            Qonversion.sharedInstance.setProperty(property, value)
+            Qonversion.shared.setProperty(property, value)
         } catch (e: IllegalArgumentException) {
             // Ignore property.
         }
     }
 
     fun setCustomProperty(key: String, value: String) {
-        Qonversion.sharedInstance.setUserProperty(key, value)
+        Qonversion.shared.setUserProperty(key, value)
     }
 
     fun logout() {
-        Qonversion.sharedInstance.logout()
+        Qonversion.shared.logout()
     }
 
     fun addAttributionData(sourceKey: String, data: Map<String, Any>) {
         try {
             val source = QAttributionSource.valueOf(sourceKey)
-            Qonversion.sharedInstance.attribution(data, source)
+            Qonversion.shared.attribution(data, source)
         } catch (e: java.lang.IllegalArgumentException) {
             // Ignore attribution.
         }
@@ -272,7 +272,7 @@ class QonversionSandwich(
             callback.onLoadingFailed()
             return
         }
-        Qonversion.sharedInstance.offerings(object : QonversionOfferingsCallback {
+        Qonversion.shared.offerings(object : QonversionOfferingsCallback {
             override fun onSuccess(offerings: QOfferings) {
                 val offering = offerings.offeringForID(offeringId)
                 if (offering == null) {
@@ -314,7 +314,7 @@ class QonversionSandwich(
     }
 
     private fun QonversionConfig.Builder.setEntitlementsUpdateListener() = apply {
-        setEntitlementsUpdateListener(object : EntitlementsUpdateListener {
+        setEntitlementsUpdateListener(object : QEntitlementsUpdateListener {
             override fun onEntitlementsUpdated(entitlements: Map<String, QEntitlement>) {
                 qonversionEventsListener.onEntitlementsUpdated(entitlements.toEntitlementsMap())
             }
