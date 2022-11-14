@@ -72,7 +72,7 @@ fun QEntitlement.toMap(): BridgeData {
         "expirationTimestamp" to expirationDate?.time?.toDouble(),
         "active" to isActive,
         "source" to source.name,
-        "product_id" to productId,
+        "productId" to productId,
         "renewState" to renewState.type
     )
 }
