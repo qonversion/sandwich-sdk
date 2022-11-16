@@ -6,6 +6,8 @@ import com.qonversion.android.sdk.automations.dto.QActionResult
 
 class AutomationsSandwich {
 
+    private lateinit var automationsDelegate: AutomationsDelegate;
+
     // region Initialization
 
     fun initialize() {
@@ -13,8 +15,8 @@ class AutomationsSandwich {
     }
 
     fun setDelegate(eventListener: AutomationsEventListener) {
-        val delegate = createAutomationsDelegate(eventListener)
-        Automations.sharedInstance.setDelegate(delegate)
+        automationsDelegate = createAutomationsDelegate(eventListener)
+        Automations.sharedInstance.setDelegate(automationsDelegate)
     }
 
     // endregion
