@@ -5,10 +5,6 @@ platform :ios, '9.0'
 
 use_frameworks!
 
-target 'QonversionSandwich' do
-  pod 'Qonversion', '2.21.0'
-end
-
 target 'Sample' do
   pod 'QonversionSandwich', :path => '../'
 end

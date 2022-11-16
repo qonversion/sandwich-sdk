@@ -1,0 +1,63 @@
+name: Upgrade cross-platforms on release
+
+on:
+  workflow_run:
+    workflows: [Publish SDKs]
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  notify_cross_platforms:
+    name: Wait for publishing and upgrade cross-platforms
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion != 'failure' }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get Previous tag
+        run: echo sandwich_version=`git describe --tags \`git rev-list --tags --max-count=1\`` >> $GITHUB_ENV
+
+      - name: Notify cross-platforms
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: 'qonversion',
+              repo: 'react-native-sdk',
+              workflow_id: 'upgrade_sandwich.yml',
+              ref: 'main',
+              inputs: {
+                sandwich_version: '${{ env.sandwich_version }}'
+              },
+            })
+            await github.rest.actions.createWorkflowDispatch({
+              owner: 'qonversion',
+              repo: 'flutter-sdk',
+              workflow_id: 'upgrade_sandwich.yml',
+              ref: 'main',
+              inputs: {
+                sandwich_version: '${{ env.sandwich_version }}'
+              },
+            })
+            await github.rest.actions.createWorkflowDispatch({
+              owner: 'qonversion',
+              repo: 'unity-sdk',
+              workflow_id: 'upgrade_sandwich.yml',
+              ref: 'main',
+              inputs: {
+                sandwich_version: '${{ env.sandwich_version }}'
+              },
+            })
+  on_publishing_failed:
+    name: Cancel due to publishing faulure
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - name: Fail job
+        run: |
+          echo "Publishing script failed"
+          exit 1

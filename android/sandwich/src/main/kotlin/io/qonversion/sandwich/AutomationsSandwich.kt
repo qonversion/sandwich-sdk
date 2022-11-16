@@ -6,9 +6,11 @@ import com.qonversion.android.sdk.automations.QActionResult
 
 class AutomationsSandwich {
 
+    private lateinit var automationsDelegate: AutomationsDelegate;
+
     fun subscribe(eventListener: AutomationsEventListener) {
-        val delegate = createAutomationsDelegate(eventListener)
-        Automations.setDelegate(delegate)
+        automationsDelegate = createAutomationsDelegate(eventListener)
+        Automations.setDelegate(automationsDelegate)
     }
 
     private fun createAutomationsDelegate(eventListener: AutomationsEventListener): AutomationsDelegate {
