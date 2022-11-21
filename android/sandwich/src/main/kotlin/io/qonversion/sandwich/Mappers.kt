@@ -1,12 +1,11 @@
 package io.qonversion.sandwich
 
 import com.android.billingclient.api.SkuDetails
-import com.qonversion.android.sdk.QonversionError
-import com.qonversion.android.sdk.automations.AutomationsEvent
-import com.qonversion.android.sdk.automations.QActionResult
-import com.qonversion.android.sdk.dto.QLaunchResult
-import com.qonversion.android.sdk.dto.QPermission
-import com.qonversion.android.sdk.dto.QPermissionsCacheLifetime
+import com.qonversion.android.sdk.dto.QonversionError
+import com.qonversion.android.sdk.automations.dto.AutomationsEvent
+import com.qonversion.android.sdk.automations.dto.QActionResult
+import com.qonversion.android.sdk.dto.QEntitlement
+import com.qonversion.android.sdk.dto.QUser
 import com.qonversion.android.sdk.dto.eligibility.QEligibility
 import com.qonversion.android.sdk.dto.experiments.QExperimentInfo
 import com.qonversion.android.sdk.dto.offerings.QOffering
@@ -66,19 +65,19 @@ fun Map<String, QProduct>.toProductsMap(): BridgeData {
     return mapValues { it.value.toMap() }
 }
 
-fun QPermission.toMap(): BridgeData {
+fun QEntitlement.toMap(): BridgeData {
     return mapOf(
-        "id" to permissionID,
-        "associatedProduct" to productID,
-        "renewState" to renewState.type,
+        "id" to id,
         "startedTimestamp" to startedDate.time.toDouble(),
         "expirationTimestamp" to expirationDate?.time?.toDouble(),
-        "active" to isActive(),
-        "source" to source.name
+        "active" to isActive,
+        "source" to source.name,
+        "productId" to productId,
+        "renewState" to renewState.type
     )
 }
 
-fun Map<String, QPermission>.toPermissionsMap(): BridgeData {
+fun Map<String, QEntitlement>.toEntitlementsMap(): BridgeData {
     return mapValues { it.value.toMap() }
 }
 
@@ -101,18 +100,15 @@ fun QEligibility.toMap(): BridgeData {
     return mapOf("status" to status.type)
 }
 
-fun Map<String, QEligibility>.toEligibilityMap(): BridgeData {
-    return mapValues { it.value.toMap() }
+fun QUser.toMap(): BridgeData {
+    return mapOf(
+        "qonversionId" to qonversionId,
+        "identityId" to identityId
+    )
 }
 
-fun QLaunchResult.toMap(): BridgeData {
-    return mapOf(
-        "uid" to uid,
-        "timestamp" to date.time.toDouble(),
-        "products" to products.toProductsMap(),
-        "permissions" to permissions.toPermissionsMap(),
-        "userProducts" to userProducts.toProductsMap()
-    )
+fun Map<String, QEligibility>.toEligibilityMap(): BridgeData {
+    return mapValues { it.value.toMap() }
 }
 
 fun QExperimentInfo.toMap(): BridgeData {
@@ -139,24 +135,6 @@ fun AutomationsEvent.toMap(): BridgeData {
         "type" to type.type,
         "timestamp" to date.time.toDouble()
     )
-}
-
-fun String.toPermissionsCacheLifetime(): QPermissionsCacheLifetime {
-    val convertedKeys = mapOf(
-        "Week" to "WEEK",
-        "TwoWeeks" to "TWO_WEEKS",
-        "Month" to "MONTH",
-        "TwoMonths" to "TWO_MONTHS",
-        "ThreeMonths" to "THREE_MONTHS",
-        "SixMonths" to "SIX_MONTHS",
-        "Year" to "YEAR",
-        "Unlimited" to "UNLIMITED"
-    )
-
-    val convertedKey = convertedKeys[this]
-        ?: throw IllegalArgumentException("Unsupported lifetime key - $this")
-
-    return QPermissionsCacheLifetime.valueOf(convertedKey)
 }
 
 fun Map<String, Any?>.toStringMap(): Map<String, String> {

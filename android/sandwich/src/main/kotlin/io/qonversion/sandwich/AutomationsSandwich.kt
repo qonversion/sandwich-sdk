@@ -2,16 +2,44 @@ package io.qonversion.sandwich
 
 import com.qonversion.android.sdk.automations.Automations
 import com.qonversion.android.sdk.automations.AutomationsDelegate
-import com.qonversion.android.sdk.automations.QActionResult
+import com.qonversion.android.sdk.automations.dto.QActionResult
 
 class AutomationsSandwich {
 
     private lateinit var automationsDelegate: AutomationsDelegate;
 
-    fun subscribe(eventListener: AutomationsEventListener) {
-        automationsDelegate = createAutomationsDelegate(eventListener)
-        Automations.setDelegate(automationsDelegate)
+    // region Initialization
+
+    fun initialize() {
+        Automations.initialize()
     }
+
+    fun setDelegate(eventListener: AutomationsEventListener) {
+        automationsDelegate = createAutomationsDelegate(eventListener)
+        Automations.shared.setDelegate(automationsDelegate)
+    }
+
+    // endregion
+
+    // region Notifications
+
+    fun getNotificationCustomPayload(notificationData: Map<String, Any?>): Map<String, Any?>? {
+        val stringData = notificationData.toStringMap()
+        return Automations.shared.getNotificationCustomPayload(stringData)
+    }
+
+    fun setNotificationToken(token: String) {
+        Automations.shared.setNotificationsToken(token)
+    }
+
+    fun handleNotification(notificationData: Map<String, Any?>): Boolean {
+        val stringData = notificationData.toStringMap()
+        return Automations.shared.handleNotification(stringData)
+    }
+
+    // endregion
+
+    // region Private
 
     private fun createAutomationsDelegate(eventListener: AutomationsEventListener): AutomationsDelegate {
         return object : AutomationsDelegate {
@@ -37,4 +65,6 @@ class AutomationsSandwich {
             }
         }
     }
+
+    // endregion
 }
