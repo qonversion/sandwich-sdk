@@ -6,13 +6,13 @@ import android.util.Log
 import androidx.preference.PreferenceManager
 import com.qonversion.android.sdk.Qonversion
 import com.qonversion.android.sdk.QonversionConfig
-import com.qonversion.android.sdk.dto.QAttributionSource
+import com.qonversion.android.sdk.dto.QAttributionProvider
 import com.qonversion.android.sdk.dto.QEntitlement
 import com.qonversion.android.sdk.dto.QEntitlementsCacheLifetime
 import com.qonversion.android.sdk.dto.QEnvironment
 import com.qonversion.android.sdk.dto.QLaunchMode
 import com.qonversion.android.sdk.dto.QUser
-import com.qonversion.android.sdk.dto.QUserProperties
+import com.qonversion.android.sdk.dto.QUserProperty
 import com.qonversion.android.sdk.dto.QonversionError
 import com.qonversion.android.sdk.dto.QonversionErrorCode
 import com.qonversion.android.sdk.dto.eligibility.QEligibility
@@ -193,7 +193,7 @@ class QonversionSandwich(
     }
 
     fun checkTrialIntroEligibility(ids: List<String>, resultListener: ResultListener) {
-        Qonversion.shared.checkTrialIntroEligibilityForProductIds(
+        Qonversion.shared.checkTrialIntroEligibility(
             ids,
             object : QonversionEligibilityCallback {
                 override fun onSuccess(eligibilities: Map<String, QEligibility>) {
@@ -229,7 +229,7 @@ class QonversionSandwich(
 
     fun setDefinedProperty(propertyKey: String, value: String) {
         try {
-            val property = QUserProperties.valueOf(propertyKey)
+            val property = QUserProperty.valueOf(propertyKey)
             Qonversion.shared.setProperty(property, value)
         } catch (e: IllegalArgumentException) {
             // Ignore property.
@@ -244,9 +244,9 @@ class QonversionSandwich(
         Qonversion.shared.logout()
     }
 
-    fun addAttributionData(sourceKey: String, data: Map<String, Any>) {
+    fun addAttributionData(providerKey: String, data: Map<String, Any>) {
         try {
-            val source = QAttributionSource.valueOf(sourceKey)
+            val source = QAttributionProvider.valueOf(providerKey)
             Qonversion.shared.attribution(data, source)
         } catch (e: java.lang.IllegalArgumentException) {
             // Ignore attribution.

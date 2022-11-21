@@ -16,7 +16,7 @@ class AutomationsSandwich {
 
     fun setDelegate(eventListener: AutomationsEventListener) {
         automationsDelegate = createAutomationsDelegate(eventListener)
-        Automations.sharedInstance.setDelegate(automationsDelegate)
+        Automations.shared.setDelegate(automationsDelegate)
     }
 
     // endregion
@@ -25,16 +25,16 @@ class AutomationsSandwich {
 
     fun getNotificationCustomPayload(notificationData: Map<String, Any?>): Map<String, Any?>? {
         val stringData = notificationData.toStringMap()
-        return Automations.sharedInstance.getNotificationCustomPayload(stringData)
+        return Automations.shared.getNotificationCustomPayload(stringData)
     }
 
     fun setNotificationToken(token: String) {
-        Automations.sharedInstance.setNotificationsToken(token)
+        Automations.shared.setNotificationsToken(token)
     }
 
     fun handleNotification(notificationData: Map<String, Any?>): Boolean {
         val stringData = notificationData.toStringMap()
-        return Automations.sharedInstance.handleNotification(stringData)
+        return Automations.shared.handleNotification(stringData)
     }
 
     // endregion
