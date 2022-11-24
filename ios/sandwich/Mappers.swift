@@ -71,7 +71,7 @@ extension Qonversion.Entitlement {
   func toMap() -> BridgeData {
     return [
       "id": entitlementID,
-      "associatedProduct": productID,
+      "productId": productID,
       "renewState": renewState.rawValue,
       "startedTimestamp": startedDate.toMilliseconds(),
       "expirationTimestamp": expirationDate.map { $0.toMilliseconds() },
