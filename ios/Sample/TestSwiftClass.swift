@@ -28,7 +28,7 @@ class TestSwiftClass {
 
 extension TestSwiftClass: QonversionEventListener {
     
-    func qonversionDidReceiveUpdatedPermissions(_ permissions: [String : Any]) {
+    func qonversionDidReceiveUpdatedEntitlements(_ permissions: [String : Any]) {
         
     }
     

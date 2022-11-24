@@ -115,6 +115,21 @@ extension Qonversion.IntroEligibility {
   }
 }
 
+extension Qonversion.LaunchMode {
+  static func fromString(_ string: String) -> Self? {
+    switch string {
+    case "Analytics":
+      return .analytics
+
+    case "SubscriptionManagement":
+      return .subscriptionManagement
+      
+    default:
+      return nil
+    }
+  }
+}
+
 extension Qonversion.EntitlementSource {
   func toString() -> String {
     switch self {

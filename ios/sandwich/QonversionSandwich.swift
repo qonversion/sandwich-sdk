@@ -16,7 +16,6 @@ public class QonversionSandwich : NSObject {
   private var qonversionEventListener: QonversionEventListener? = nil
   private var isSubscribedOnAsyncEvents: Bool = false
   private var promoPurchasesExecutionBlocks = [String: Qonversion.PromoPurchaseCompletionHandler]()
-  private let launchModes: [String: Qonversion.LaunchMode] = ["": .analytics, "1": .subscriptionManagement]
     
   // MARK: - Public Functions
   
@@ -32,7 +31,7 @@ public class QonversionSandwich : NSObject {
     environmentKey: String? = nil,
     entitlementsCacheLifetimeKey: String? = nil
   ) {
-    guard let launchMode: Qonversion.LaunchMode = launchModes[launchModeKey] else { return }
+    guard let launchMode = Qonversion.LaunchMode.fromString(launchModeKey) else { return }
     
     let config = Configuration(projectKey: projectKey, launchMode: launchMode)
     config.setEntitlementsUpdateListener(self)
@@ -84,8 +83,8 @@ public class QonversionSandwich : NSObject {
     if let executionBlock = promoPurchasesExecutionBlocks[productId] {
       promoPurchasesExecutionBlocks[productId] = nil
 
-      executionBlock { [weak self] (permissions, error, isCancelled) in
-        self?.handlePurchaseResult(permissions, error, isCancelled, completion: completion)
+      executionBlock { [weak self] (entitlements, error, isCancelled) in
+        self?.handlePurchaseResult(entitlements, error, isCancelled, completion: completion)
       }
     } else {
       let error = NSError.init(domain: keyQONErrorDomain, code: Qonversion.Error.productNotFound.rawValue, userInfo: nil)
@@ -94,15 +93,15 @@ public class QonversionSandwich : NSObject {
     }
   }
   
-  @objc public func checkPermissions(_ completion: @escaping BridgeCompletion) {
-    Qonversion.shared().checkEntitlements { (permissions, error) in
+  @objc public func checkEntitlements(_ completion: @escaping BridgeCompletion) {
+    Qonversion.shared().checkEntitlements { (entitlements, error) in
       if let error = error as NSError? {
         return completion(nil, error.toSandwichError())
       }
       
-      let permissionsDict: [String: Any] = permissions.mapValues { $0.toMap() }.clearEmptyValues()
+      let entitlementsDict: [String: Any] = entitlements.mapValues { $0.toMap() }.clearEmptyValues()
       
-      completion(permissionsDict, nil)
+      completion(entitlementsDict, nil)
     }
   }
   
@@ -131,14 +130,14 @@ public class QonversionSandwich : NSObject {
   }
   
   @objc public func restore(_ completion: @escaping BridgeCompletion) {
-    Qonversion.shared().restore { (permissions, error) in
+    Qonversion.shared().restore { (entitlements, error) in
       if let error = error as NSError? {
         return completion(nil, error.toSandwichError())
       }
       
-      let permissionsDict: [String: Any] = permissions.mapValues { $0.toMap() }.clearEmptyValues()
+      let entitlementsDict: [String: Any] = entitlements.mapValues { $0.toMap() }.clearEmptyValues()
       
-      completion(permissionsDict, nil)
+      completion(entitlementsDict, nil)
     }
   }
   
@@ -181,7 +180,7 @@ public class QonversionSandwich : NSObject {
     Qonversion.shared().logout()
   }
 
-  @objc public func addAttributionData(sourceKey: String, value: [String: Any]) {
+  @objc public func attribution(sourceKey: String, value: [String: Any]) {
     guard let provider = Qonversion.AttributionProvider.fromString(sourceKey) else { return}
 
     Qonversion.shared().addAttributionData(value, from: provider)
@@ -224,15 +223,15 @@ public class QonversionSandwich : NSObject {
   }
   
   private func getPurchaseCompletionHandler(for completion: @escaping BridgeCompletion) -> Qonversion.PurchaseCompletionHandler {
-    let purchaseCompletion: Qonversion.PurchaseCompletionHandler = { [weak self] (permissions, error, isCancelled) in
-      self?.handlePurchaseResult(permissions, error, isCancelled, completion: completion)
+    let purchaseCompletion: Qonversion.PurchaseCompletionHandler = { [weak self] (entitlements, error, isCancelled) in
+      self?.handlePurchaseResult(entitlements, error, isCancelled, completion: completion)
     }
     
     return purchaseCompletion
   }
   
   private func handlePurchaseResult(
-    _ permissions: [String: Qonversion.Entitlement],
+    _ entitlements: [String: Qonversion.Entitlement],
     _ error: Error?,
     _ isCancelled: Bool,
     completion: @escaping BridgeCompletion
@@ -244,9 +243,9 @@ public class QonversionSandwich : NSObject {
       return completion(nil, wrappedError)
     }
     
-    let permissionsDict: [String: Any] = permissions.mapValues { $0.toMap() }.clearEmptyValues()
+    let entitlementsDict: [String: Any] = entitlements.mapValues { $0.toMap() }.clearEmptyValues()
     
-    completion(permissionsDict, nil)
+    completion(entitlementsDict, nil)
   }
   
   private func subscribeOnAsyncEvents() {
@@ -263,9 +262,9 @@ public class QonversionSandwich : NSObject {
 
 extension QonversionSandwich: Qonversion.EntitlementsUpdateListener {
   public func didReceiveUpdatedEntitlements(_ entitlements: [String : Qonversion.Entitlement]) {
-    let permissionsDict: BridgeData = entitlements.mapValues { $0.toMap() }.clearEmptyValues()
+    let entitlementsDict: BridgeData = entitlements.mapValues { $0.toMap() }.clearEmptyValues()
     
-    qonversionEventListener?.qonversionDidReceiveUpdatedPermissions(permissionsDict as [String: Any])
+    qonversionEventListener?.qonversionDidReceiveUpdatedEntitlements(entitlementsDict as [String: Any])
   }
 }
 
