@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.author       = { 'Qonversion Inc.' => 'hi@qonversion.io' }
   s.source       = { :git => 'https://github.com/qonversion/sandwich-sdk.git', :tag => s.version.to_s }
   s.framework    = 'StoreKit'
-  s.platforms    = { :ios => "9.0", :osx => "10.12", :tvos => "9.0", :watchos => "6.2" }
+  s.platforms    = { :ios => "9.0" }
   
   s.osx.exclude_files         = excluded_files
   s.tvos.exclude_files        = excluded_files
