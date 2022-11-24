@@ -52,18 +52,6 @@ extension NSError {
   }
 }
 
-extension Qonversion.LaunchResult {
-  func toMap() -> BridgeData {
-    return [
-      "uid": uid,
-      "timestamp": NSNumber(value: timestamp).intValue * 1000,
-      "products": products.mapValues { $0.toMap() },
-      "permissions": entitlements.mapValues { $0.toMap() },
-      "userProducts": userPoducts.mapValues { $0.toMap() },
-    ]
-  }
-}
-
 extension Qonversion.Product {
   func toMap() -> BridgeData {
     return [
