@@ -14,7 +14,7 @@ public class AutomationsSandwich : NSObject {
   
   @objc public func subscribe(_ automationsEventListener: AutomationsEventListener) {
     self.automationsEventListener = automationsEventListener
-    Qonversion.Automations.setDelegate(self)
+    Qonversion.Automations.shared().setDelegate(self)
   }
 
   @objc public func getAvailableEvents() -> [String] {

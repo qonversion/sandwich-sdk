@@ -52,18 +52,6 @@ extension NSError {
   }
 }
 
-extension Qonversion.LaunchResult {
-  func toMap() -> BridgeData {
-    return [
-      "uid": uid,
-      "timestamp": NSNumber(value: timestamp).intValue * 1000,
-      "products": products.mapValues { $0.toMap() },
-      "permissions": permissions.mapValues { $0.toMap() },
-      "userProducts": userPoducts.mapValues { $0.toMap() },
-    ]
-  }
-}
-
 extension Qonversion.Product {
   func toMap() -> BridgeData {
     return [
@@ -79,11 +67,11 @@ extension Qonversion.Product {
   }
 }
 
-extension Qonversion.Permission {
+extension Qonversion.Entitlement {
   func toMap() -> BridgeData {
     return [
-      "id": permissionID,
-      "associatedProduct": productID,
+      "id": entitlementID,
+      "productId": productID,
       "renewState": renewState.rawValue,
       "startedTimestamp": startedDate.toMilliseconds(),
       "expirationTimestamp": expirationDate.map { $0.toMilliseconds() },
@@ -127,7 +115,22 @@ extension Qonversion.IntroEligibility {
   }
 }
 
-extension Qonversion.PermissionSource {
+extension Qonversion.LaunchMode {
+  static func fromString(_ string: String) -> Self? {
+    switch string {
+    case "Analytics":
+      return .analytics
+
+    case "SubscriptionManagement":
+      return .subscriptionManagement
+      
+    default:
+      return nil
+    }
+  }
+}
+
+extension Qonversion.EntitlementSource {
   func toString() -> String {
     switch self {
     case .unknown:
@@ -179,32 +182,45 @@ extension Qonversion.Property {
   }
 }
 
-extension Qonversion.PermissionsCacheLifetime {
-  static func fromString(_ string: String) -> Self? {
+extension Qonversion.Environment {
+  static func fromString(_ string: String?) -> Self? {
+    switch string {
+    case "Production":
+      return .production
+    case "Sandbox":
+      return .sandbox
+    default:
+      return nil
+    }
+  }
+}
+
+extension Qonversion.EntitlementsCacheLifetime {
+  static func fromString(_ string: String?) -> Self? {
     switch string {
     case "Week":
-      return .week;
+      return .week
 
     case "TwoWeeks":
-      return .twoWeeks;
+      return .twoWeeks
 
     case "Month":
-      return .month;
+      return .month
 
     case "TwoMonths":
-      return .twoMonth;
+      return .twoMonths
 
     case "ThreeMonths":
-      return .threeMonth;
+      return .threeMonths
 
     case "SixMonths":
-      return .sixMonth;
+      return .sixMonths
 
     case "Year":
-      return .year;
+      return .year
 
     case "Unlimited":
-      return .unlimited;
+      return .unlimited
 
     default:
       return nil
@@ -264,7 +280,7 @@ extension SKProduct {
     }
       
     if #available(iOS 14.0, tvOS 14.0, macOS 11.0, watchOS 7.0, *) {
-      map["isFamilyShareable"] = isFamilyShareable;
+      map["isFamilyShareable"] = isFamilyShareable
     }
     
     return map

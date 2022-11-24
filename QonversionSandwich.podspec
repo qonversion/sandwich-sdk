@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.author       = { 'Qonversion Inc.' => 'hi@qonversion.io' }
   s.source       = { :git => 'https://github.com/qonversion/sandwich-sdk.git', :tag => s.version.to_s }
   s.framework    = 'StoreKit'
-  s.platforms    = { :ios => "9.0", :osx => "10.12", :tvos => "9.0", :watchos => "6.2" }
+  s.platforms    = { :ios => "9.0" }
   
   s.osx.exclude_files         = excluded_files
   s.tvos.exclude_files        = excluded_files
@@ -21,5 +21,5 @@ Pod::Spec.new do |s|
   s.source_files = 'ios/sandwich/**/*.{h,m,swift}'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
 
-  s.dependency "Qonversion", "2.21.0"
+  s.dependency "Qonversion", "3.0.0-RC2"
 end
