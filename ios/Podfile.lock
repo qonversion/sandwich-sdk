@@ -2,7 +2,7 @@ PODS:
   - Qonversion (3.0.0-RC2):
     - Qonversion/Main (= 3.0.0-RC2)
   - Qonversion/Main (3.0.0-RC2)
-  - QonversionSandwich (0.2.1):
+  - QonversionSandwich (1.0.0-RC2):
     - Qonversion (= 3.0.0-RC2)
 
 DEPENDENCIES:
@@ -19,7 +19,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Qonversion: 470fbd9d3888f03df598474ce3a102541d45b6d8
-  QonversionSandwich: 481143473d07d3ad7d9a8678a1a5b3b5a8517aa7
+  QonversionSandwich: bed974782cdbda549cfaf9cec5ae5addd814e51f
 
 PODFILE CHECKSUM: 242c9c96495f6e2485167af24bf3c99c9c37ccb2
 
