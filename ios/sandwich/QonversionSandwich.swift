@@ -196,12 +196,12 @@ public class QonversionSandwich : NSObject {
   
   // MARK: Notifications
   
+#if os(iOS)
   @objc public func setNotificationToken(_ token: String) {
     let tokenData: Data = token.toData()
     Qonversion.Automations.shared().setNotificationsToken(tokenData)
   }
   
-#if os(iOS)
   @objc public func getNotificationCustomPayload(_ notificationData: [AnyHashable: Any]) -> [AnyHashable: Any]? {
     return Qonversion.Automations.shared().getNotificationCustomPayload(notificationData)
   }

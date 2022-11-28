@@ -15,8 +15,6 @@ Pod::Spec.new do |s|
   s.platforms    = { :ios => "9.0", :osx => "10.12" }
   
   s.osx.exclude_files         = excluded_files
-  s.tvos.exclude_files        = excluded_files
-  s.watchos.exclude_files     = excluded_files
 
   s.source_files = 'ios/sandwich/**/*.{h,m,swift}'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
