@@ -193,7 +193,7 @@ public class QonversionSandwich : NSObject {
   }
 
   @objc public func attribution(providerKey: String, value: [String: Any]) {
-    guard let provider = Qonversion.AttributionProvider.fromString(providerKey) else { return}
+    guard let provider = Qonversion.AttributionProvider.fromString(providerKey) else { return }
 
     Qonversion.shared().attribution(value, from: provider)
   }
