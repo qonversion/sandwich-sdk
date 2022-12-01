@@ -56,7 +56,7 @@ fun QProduct.toMap(): BridgeData {
         "duration" to duration?.type,
         "skuDetails" to skuDetail?.toMap(),
         "prettyPrice" to prettyPrice,
-        "trialDuration" to trialDuration?.type,
+        "trialDuration" to trialDuration.type,
         "offeringId" to offeringID
     )
 }

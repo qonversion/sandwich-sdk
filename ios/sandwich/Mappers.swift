@@ -72,11 +72,21 @@ extension Qonversion.Entitlement {
     return [
       "id": entitlementID,
       "productId": productID,
-      "renewState": renewState.rawValue,
+      "renewState": renewState.toString(),
       "startedTimestamp": startedDate.toMilliseconds(),
       "expirationTimestamp": expirationDate.map { $0.toMilliseconds() },
       "active": isActive,
       "source": source.toString(),
+    ]
+  }
+}
+
+extension Qonversion.User {
+  func toMap() -> BridgeData {
+    return [
+      "qonversionId": qonversionId,
+      "identityId": identityId,
+      "originalAppVersion": originalAppVersion,
     ]
   }
 }
@@ -149,6 +159,23 @@ extension Qonversion.EntitlementSource {
   }
 }
 
+extension Qonversion.EntitlementRenewState {
+  func toString() -> String {
+    switch self {
+    case .nonRenewable:
+      return "NonRenewable"
+    case .willRenew:
+      return "WillRenew"
+    case .cancelled:
+      return "Cancelled"
+    case .billingIssue:
+      return "BillingIssue"
+    default:
+      return "Unknown"
+    }
+  }
+}
+
 extension Qonversion.Property {
   static func fromString(_ string: String) -> Self? {
     switch string {
@@ -162,7 +189,7 @@ extension Qonversion.Property {
       return .appsFlyerUserID
 
     case "AdjustAdId":
-      return .adjustUserID
+      return .adjustAdID
       
     case "KochavaDeviceId":
       return .kochavaDeviceID

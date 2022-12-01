@@ -16,6 +16,31 @@ public class AutomationsSandwich : NSObject {
     self.automationsEventListener = automationsEventListener
     Qonversion.Automations.shared().setDelegate(self)
   }
+  
+#if os(iOS)
+  @objc public func setNotificationToken(_ token: String) {
+    let tokenData: Data = token.toData()
+    Qonversion.Automations.shared().setNotificationsToken(tokenData)
+  }
+  
+  @objc public func getNotificationCustomPayload(_ notificationData: [AnyHashable: Any]) -> [AnyHashable: Any]? {
+    return Qonversion.Automations.shared().getNotificationCustomPayload(notificationData)
+  }
+  
+  @objc public func handleNotification(_ notificationData: [AnyHashable: Any]) -> Bool {
+    return Qonversion.Automations.shared().handleNotification(notificationData)
+  }
+  
+  @objc public func showScreen(_ screenId: String, completion: @escaping BridgeCompletion) {
+    Qonversion.Automations.shared().showScreen(withID: screenId) { success, error in
+      if let error = error as NSError? {
+        return completion(nil, error.toSandwichError())
+      }
+
+      completion(["success": success], nil);
+    }
+  }
+#endif
 
   @objc public func getAvailableEvents() -> [String] {
     let availableEvents: [AutomationsEvent] = [

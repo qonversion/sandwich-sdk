@@ -3,16 +3,14 @@ package io.qonversion.sandwich
 import com.qonversion.android.sdk.automations.Automations
 import com.qonversion.android.sdk.automations.AutomationsDelegate
 import com.qonversion.android.sdk.automations.dto.QActionResult
+import com.qonversion.android.sdk.dto.QonversionError
+import com.qonversion.android.sdk.listeners.QonversionShowScreenCallback
 
 class AutomationsSandwich {
 
     private lateinit var automationsDelegate: AutomationsDelegate;
 
     // region Initialization
-
-    fun initialize() {
-        Automations.initialize()
-    }
 
     fun setDelegate(eventListener: AutomationsEventListener) {
         automationsDelegate = createAutomationsDelegate(eventListener)
@@ -35,6 +33,22 @@ class AutomationsSandwich {
     fun handleNotification(notificationData: Map<String, Any?>): Boolean {
         val stringData = notificationData.toStringMap()
         return Automations.shared.handleNotification(stringData)
+    }
+
+    // endregion
+
+    // region Other
+
+    fun showScreen(screenId: String, resultListener: ResultListener) {
+        Automations.shared.showScreen(screenId, object : QonversionShowScreenCallback {
+            override fun onSuccess() {
+                resultListener.onSuccess(emptyMap())
+            }
+
+            override fun onError(error: QonversionError) {
+                resultListener.onError(error.toSandwichError())
+            }
+        });
     }
 
     // endregion
