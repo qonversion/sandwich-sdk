@@ -180,36 +180,31 @@ public class QonversionSandwich : NSObject {
     Qonversion.shared().logout()
   }
 
-  @objc public func attribution(sourceKey: String, value: [String: Any]) {
-    guard let provider = Qonversion.AttributionProvider.fromString(sourceKey) else { return}
+  @objc public func userInfo(_ completion: @escaping BridgeCompletion) {
+    Qonversion.shared().userInfo { userInfo, error in
+      if let error = error as NSError? {
+        completion(nil, error.toSandwichError())
+      }
 
-    Qonversion.shared().addAttributionData(value, from: provider)
+      let bridgeData: [String: Any]? = userInfo?.toMap().clearEmptyValues()
+      
+      completion(bridgeData, nil)
+    }
   }
-  
-  @objc public func setAppleSearchAdsAttributionEnabled(_ enable: Bool) {
+
+  @objc public func attribution(providerKey: String, value: [String: Any]) {
+    guard let provider = Qonversion.AttributionProvider.fromString(providerKey) else { return}
+
+    Qonversion.shared().attribution(value, from: provider)
+  }
+
+  @objc public func collectAppleSearchAdsAttribution() {
     Qonversion.shared().collectAppleSearchAdsAttribution()
   }
   
-  @objc public func setAdvertisingId() {
+  @objc public func collectAdvertisingId() {
     Qonversion.shared().collectAdvertisingId()
   }
-  
-  // MARK: Notifications
-  
-#if os(iOS)
-  @objc public func setNotificationToken(_ token: String) {
-    let tokenData: Data = token.toData()
-    Qonversion.Automations.shared().setNotificationsToken(tokenData)
-  }
-  
-  @objc public func getNotificationCustomPayload(_ notificationData: [AnyHashable: Any]) -> [AnyHashable: Any]? {
-    return Qonversion.Automations.shared().getNotificationCustomPayload(notificationData)
-  }
-  
-  @objc public func handleNotification(_ notificationData: [AnyHashable: Any]) -> Bool {
-    return Qonversion.Automations.shared().handleNotification(notificationData)
-  }
-#endif
   
   // MARK: - Private functions
   

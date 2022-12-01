@@ -10,7 +10,7 @@ import Foundation
 
 @objc public protocol QonversionEventListener {
 
-  @objc func qonversionDidReceiveUpdatedEntitlements(_ permissions: [String: Any])
+  @objc func qonversionDidReceiveUpdatedEntitlements(_ entitlements: [String: Any])
   
   @objc func shouldPurchasePromoProduct(with productId: String)
 }
