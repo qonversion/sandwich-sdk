@@ -163,15 +163,15 @@ extension Qonversion.EntitlementRenewState {
   func toString() -> String {
     switch self {
     case .nonRenewable:
-      return "NonRenewable"
+      return "non_renewable"
     case .willRenew:
-      return "WillRenew"
+      return "will_renew"
     case .cancelled:
-      return "Cancelled"
+      return "canceled"
     case .billingIssue:
-      return "BillingIssue"
+      return "billing_issue"
     default:
-      return "Unknown"
+      return "unknown"
     }
   }
 }
