@@ -57,7 +57,7 @@ extension Qonversion.AutomationsEventType {
   }
 }
 
-extension QONAutomationsEvent {
+extension Qonversion.AutomationsEvent {
   func toMap() -> BridgeData {
     return ["type": type.toString(),
             "timestamp": date.toMilliseconds()]
