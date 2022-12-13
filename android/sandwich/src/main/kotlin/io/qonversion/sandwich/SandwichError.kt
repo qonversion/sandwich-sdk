@@ -1,6 +1,6 @@
 package io.qonversion.sandwich
 
-import com.qonversion.android.sdk.QonversionError
+import com.qonversion.android.sdk.dto.QonversionError
 
 class SandwichError(
     val code: String,

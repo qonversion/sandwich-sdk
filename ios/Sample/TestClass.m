@@ -35,7 +35,7 @@
 
 #pragma mark - QonversionEventListener
 
-- (void)qonversionDidReceiveUpdatedPermissions:(NSDictionary<NSString *,id> *)permissions {
+- (void)qonversionDidReceiveUpdatedEntitlements:(NSDictionary<NSString *,id> *)permissions {
     
 }
 
