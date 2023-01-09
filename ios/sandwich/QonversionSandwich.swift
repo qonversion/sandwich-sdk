@@ -33,7 +33,7 @@ public class QonversionSandwich : NSObject {
   ) {
     guard let launchMode = Qonversion.LaunchMode.fromString(launchModeKey) else { return }
     
-    let config = Configuration(projectKey: projectKey, launchMode: launchMode)
+    let config = Qonversion.Configuration(projectKey: projectKey, launchMode: launchMode)
     config.setEntitlementsUpdateListener(self)
     
     if let env = Qonversion.Environment.fromString(environmentKey) {
