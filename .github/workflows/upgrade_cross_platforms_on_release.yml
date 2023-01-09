@@ -9,6 +9,7 @@ on:
 
 jobs:
   notify_cross_platforms:
+    permissions: write-all
     name: Wait for publishing and upgrade cross-platforms
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion != 'failure' }}
