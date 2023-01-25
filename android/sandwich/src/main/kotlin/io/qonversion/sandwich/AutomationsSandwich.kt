@@ -2,7 +2,9 @@ package io.qonversion.sandwich
 
 import com.qonversion.android.sdk.automations.Automations
 import com.qonversion.android.sdk.automations.AutomationsDelegate
+import com.qonversion.android.sdk.automations.ScreenCustomizationDelegate
 import com.qonversion.android.sdk.automations.dto.QActionResult
+import com.qonversion.android.sdk.automations.dto.QScreenPresentationConfig
 import com.qonversion.android.sdk.dto.QonversionError
 import com.qonversion.android.sdk.listeners.QonversionShowScreenCallback
 
@@ -10,11 +12,34 @@ class AutomationsSandwich {
 
     private lateinit var automationsDelegate: AutomationsDelegate;
 
+    private var defaultPresentationConfig: QScreenPresentationConfig? = null
+    private val screenPresentationConfigs = mutableMapOf<String, QScreenPresentationConfig>()
+    private var isCustomizationDelegateSet = false
+    private val screenCustomizationDelegate = object : ScreenCustomizationDelegate {
+        override fun getPresentationConfigurationForScreen(screenId: String): QScreenPresentationConfig {
+            return screenPresentationConfigs[screenId] ?: defaultPresentationConfig ?: QScreenPresentationConfig()
+        }
+    }
+
     // region Initialization
 
     fun setDelegate(eventListener: AutomationsEventListener) {
         automationsDelegate = createAutomationsDelegate(eventListener)
         Automations.shared.setDelegate(automationsDelegate)
+    }
+
+    fun setScreenPresentationConfig(config: QScreenPresentationConfig, screenId: String? = null) {
+        if (!isCustomizationDelegateSet) {
+            isCustomizationDelegateSet = true
+            Automations.shared.setScreenCustomizationDelegate(screenCustomizationDelegate)
+        }
+
+        screenId?.let {
+            screenPresentationConfigs[screenId] = config
+        } ?: run {
+            screenPresentationConfigs.clear()
+            defaultPresentationConfig = config
+        }
     }
 
     // endregion
