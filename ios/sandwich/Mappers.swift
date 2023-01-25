@@ -408,12 +408,13 @@ extension Qonversion.ScreenPresentationStyle {
   }
 }
 
-extension Dictionary<String, String> {
+extension Dictionary<String, Any> {
   func toScreenPresentationConfig() -> Qonversion.ScreenPresentationConfiguration {
-    guard let presentationStyle = Qonversion.ScreenPresentationStyle.fromString(self["presentationStyle"])
+    guard let presentationStyleStr = self["presentationStyle"] as? String,
+          let presentationStyle = Qonversion.ScreenPresentationStyle.fromString(presentationStyleStr)
     else { return Qonversion.ScreenPresentationConfiguration.default() }
 
-    let animated = self["animated"]?.toBool() ?? true
+    let animated = (self["animated"] as? String)?.toBool() ?? true
 
     return Qonversion.ScreenPresentationConfiguration(presentationStyle: presentationStyle, animated: animated)
   }

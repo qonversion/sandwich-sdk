@@ -21,7 +21,7 @@ public class AutomationsSandwich : NSObject {
     Qonversion.Automations.shared().setDelegate(self)
   }
 
-  @objc func setScreenPresentationConfig(_ configData: [String: String], forScreenId screenId: String? = nil) {
+  @objc func setScreenPresentationConfig(_ configData: [String: Any], forScreenId screenId: String? = nil) {
     let config = configData.toScreenPresentationConfig()
 
     if (!isCustomizationDelegateSet) {
