@@ -4,6 +4,8 @@ import com.android.billingclient.api.SkuDetails
 import com.qonversion.android.sdk.dto.QonversionError
 import com.qonversion.android.sdk.automations.dto.AutomationsEvent
 import com.qonversion.android.sdk.automations.dto.QActionResult
+import com.qonversion.android.sdk.automations.dto.QScreenPresentationConfig
+import com.qonversion.android.sdk.automations.dto.QScreenPresentationStyle
 import com.qonversion.android.sdk.dto.QEntitlement
 import com.qonversion.android.sdk.dto.QUser
 import com.qonversion.android.sdk.dto.eligibility.QEligibility
@@ -140,4 +142,16 @@ fun AutomationsEvent.toMap(): BridgeData {
 fun Map<String, Any?>.toStringMap(): Map<String, String> {
     return filterValues { it != null }
         .mapValues { it.value.toString() }
+}
+
+fun Map<String, String>.toScreenPresentationConfig(): QScreenPresentationConfig {
+    val presentationStyle = try {
+        get("presentationStyle")?.let {
+            QScreenPresentationStyle.valueOf(it)
+        }
+    } catch (e: IllegalArgumentException) {
+        null
+    }
+
+    return presentationStyle?.let { QScreenPresentationConfig(it) } ?: QScreenPresentationConfig()
 }

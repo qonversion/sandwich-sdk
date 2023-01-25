@@ -21,7 +21,9 @@ public class AutomationsSandwich : NSObject {
     Qonversion.Automations.shared().setDelegate(self)
   }
 
-  @objc func setScreenPresentationConfig(_ config: Qonversion.ScreenPresentationConfiguration, forScreenId screenId: String? = nil) {
+  @objc func setScreenPresentationConfig(_ configData: [String: String], forScreenId screenId: String? = nil) {
+    let config = configData.toScreenPresentationConfig()
+
     if (!isCustomizationDelegateSet) {
       isCustomizationDelegateSet = true
       Qonversion.Automations.shared().setScreenCustomizationDelegate(self)
@@ -74,15 +76,9 @@ public class AutomationsSandwich : NSObject {
 }
 
 extension AutomationsSandwich: Qonversion.ScreenCustomizationDelegate {
-  
+
   public func presentationConfigurationForScreen(_ screenID: String) -> Qonversion.ScreenPresentationConfiguration {
-    if let screenConfig = screenPresentationConfigs[screenID] {
-      return screenConfig
-    } else if let defaultPresentationConfig = defaultPresentationConfig {
-      return defaultPresentationConfig
-    } else {
-      return Qonversion.ScreenPresentationConfiguration()
-    }
+    return screenPresentationConfigs[screenID] ?? defaultPresentationConfig ?? Qonversion.ScreenPresentationConfiguration.default()
   }
 }
 

@@ -28,7 +28,9 @@ class AutomationsSandwich {
         Automations.shared.setDelegate(automationsDelegate)
     }
 
-    fun setScreenPresentationConfig(config: QScreenPresentationConfig, screenId: String? = null) {
+    fun setScreenPresentationConfig(configData: Map<String, String>, screenId: String? = null) {
+        val config = configData.toScreenPresentationConfig()
+
         if (!isCustomizationDelegateSet) {
             isCustomizationDelegateSet = true
             Automations.shared.setScreenCustomizationDelegate(screenCustomizationDelegate)
