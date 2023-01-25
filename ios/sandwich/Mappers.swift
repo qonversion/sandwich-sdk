@@ -409,7 +409,7 @@ extension Qonversion.ScreenPresentationStyle {
   }
 }
 
-extension Dictionary<String, Any> {
+extension Dictionary where Key == String, Value == Any  {
   func toScreenPresentationConfig() -> Qonversion.ScreenPresentationConfiguration {
     guard let presentationStyleStr = self["presentationStyle"] as? String,
           let presentationStyle = Qonversion.ScreenPresentationStyle.fromString(presentationStyleStr)
