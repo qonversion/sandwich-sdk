@@ -393,6 +393,7 @@ extension String {
   }
 }
 
+#if os(iOS)
 extension Qonversion.ScreenPresentationStyle {
   static func fromString(_ key: String?) -> Qonversion.ScreenPresentationStyle? {
     switch (key) {
@@ -419,3 +420,4 @@ extension Dictionary<String, Any> {
     return Qonversion.ScreenPresentationConfiguration(presentationStyle: presentationStyle, animated: animated)
   }
 }
+#endif

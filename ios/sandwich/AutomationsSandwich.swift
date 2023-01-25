@@ -21,6 +21,7 @@ public class AutomationsSandwich : NSObject {
     Qonversion.Automations.shared().setDelegate(self)
   }
 
+#if os(iOS)
   @objc func setScreenPresentationConfig(_ configData: [String: Any], forScreenId screenId: String? = nil) {
     let config = configData.toScreenPresentationConfig()
 
@@ -37,7 +38,6 @@ public class AutomationsSandwich : NSObject {
     }
   }
 
-#if os(iOS)
   @objc public func setNotificationToken(_ token: String) {
     let tokenData: Data = token.toData()
     Qonversion.Automations.shared().setNotificationsToken(tokenData)
