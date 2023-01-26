@@ -76,7 +76,6 @@ public class AutomationsSandwich : NSObject {
 }
 
 extension AutomationsSandwich: Qonversion.ScreenCustomizationDelegate {
-
   public func presentationConfigurationForScreen(_ screenID: String) -> Qonversion.ScreenPresentationConfiguration {
     return screenPresentationConfigs[screenID] ?? defaultPresentationConfig ?? Qonversion.ScreenPresentationConfiguration.default()
   }

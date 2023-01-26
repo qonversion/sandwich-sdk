@@ -387,9 +387,9 @@ extension String {
     
     return data
   }
-  
+
   func toBool() -> Bool {
-    return self == "true" || self == "1"
+    return self == "true" || (Int(self) ?? 0) != 0
   }
 }
 
@@ -397,11 +397,11 @@ extension String {
 extension Qonversion.ScreenPresentationStyle {
   static func fromString(_ key: String?) -> Qonversion.ScreenPresentationStyle? {
     switch (key) {
-    case "PUSH":
+    case "Push":
       return Qonversion.ScreenPresentationStyle.push
-    case "FULL_SCREEN":
+    case "FullScreen":
       return Qonversion.ScreenPresentationStyle.fullScreen
-    case "POPOVER":
+    case "Popover":
       return Qonversion.ScreenPresentationStyle.popover
     default:
       return nil
