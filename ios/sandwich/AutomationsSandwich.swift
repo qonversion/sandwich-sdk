@@ -22,7 +22,7 @@ public class AutomationsSandwich : NSObject {
   }
 
 #if os(iOS)
-  @objc func setScreenPresentationConfig(_ configData: [String: Any], forScreenId screenId: String? = nil) {
+  @objc public func setScreenPresentationConfig(_ configData: [String: Any], forScreenId screenId: String? = nil) {
     let config = configData.toScreenPresentationConfig()
 
     if (!isCustomizationDelegateSet) {
