@@ -11,13 +11,33 @@ import Qonversion
 
 public class AutomationsSandwich : NSObject {
   private var automationsEventListener: AutomationsEventListener?
+
+  private var defaultPresentationConfig: Qonversion.ScreenPresentationConfiguration? = nil
+  private var screenPresentationConfigs: [String: Qonversion.ScreenPresentationConfiguration] = [:]
+  private var isCustomizationDelegateSet = false
   
   @objc public func subscribe(_ automationsEventListener: AutomationsEventListener) {
     self.automationsEventListener = automationsEventListener
     Qonversion.Automations.shared().setDelegate(self)
   }
-  
+
 #if os(iOS)
+  @objc func setScreenPresentationConfig(_ configData: [String: Any], forScreenId screenId: String? = nil) {
+    let config = configData.toScreenPresentationConfig()
+
+    if (!isCustomizationDelegateSet) {
+      isCustomizationDelegateSet = true
+      Qonversion.Automations.shared().setScreenCustomizationDelegate(self)
+    }
+
+    if let screenId = screenId {
+      screenPresentationConfigs[screenId] = config
+    } else {
+      screenPresentationConfigs = [:]
+      defaultPresentationConfig = config
+    }
+  }
+
   @objc public func setNotificationToken(_ token: String) {
     let tokenData: Data = token.toData()
     Qonversion.Automations.shared().setNotificationsToken(tokenData)
@@ -52,6 +72,12 @@ public class AutomationsSandwich : NSObject {
     ]
 
     return availableEvents.map { $0.rawValue }
+  }
+}
+
+extension AutomationsSandwich: Qonversion.ScreenCustomizationDelegate {
+  public func presentationConfigurationForScreen(_ screenID: String) -> Qonversion.ScreenPresentationConfiguration {
+    return screenPresentationConfigs[screenID] ?? defaultPresentationConfig ?? Qonversion.ScreenPresentationConfiguration.default()
   }
 }
 

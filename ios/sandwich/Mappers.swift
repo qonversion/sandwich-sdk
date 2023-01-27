@@ -387,4 +387,37 @@ extension String {
     
     return data
   }
+
+  func toBool() -> Bool {
+    return self == "true" || (Int(self) ?? 0) != 0
+  }
 }
+
+#if os(iOS)
+extension Qonversion.ScreenPresentationStyle {
+  static func fromString(_ key: String?) -> Qonversion.ScreenPresentationStyle? {
+    switch (key) {
+    case "Push":
+      return Qonversion.ScreenPresentationStyle.push
+    case "FullScreen":
+      return Qonversion.ScreenPresentationStyle.fullScreen
+    case "Popover":
+      return Qonversion.ScreenPresentationStyle.popover
+    default:
+      return nil
+    }
+  }
+}
+
+extension Dictionary where Key == String, Value == Any  {
+  func toScreenPresentationConfig() -> Qonversion.ScreenPresentationConfiguration {
+    guard let presentationStyleStr = self["presentationStyle"] as? String,
+          let presentationStyle = Qonversion.ScreenPresentationStyle.fromString(presentationStyleStr)
+    else { return Qonversion.ScreenPresentationConfiguration.default() }
+
+    let animated = (self["animated"] as? String)?.toBool() ?? true
+
+    return Qonversion.ScreenPresentationConfiguration(presentationStyle: presentationStyle, animated: animated)
+  }
+}
+#endif
