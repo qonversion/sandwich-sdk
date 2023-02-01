@@ -29,7 +29,8 @@ public class QonversionSandwich : NSObject {
     projectKey: String,
     launchModeKey: String,
     environmentKey: String? = nil,
-    entitlementsCacheLifetimeKey: String? = nil
+    entitlementsCacheLifetimeKey: String? = nil,
+    proxyUrl: String? = nil
   ) {
     guard let launchMode = Qonversion.LaunchMode.fromString(launchModeKey) else { return }
     
@@ -43,6 +44,7 @@ public class QonversionSandwich : NSObject {
     if let cacheLifetime = Qonversion.EntitlementsCacheLifetime.fromString(entitlementsCacheLifetimeKey) {
       config.setEntitlementsCacheLifetime(cacheLifetime)
     }
+    config.setProxyURL(proxyUrl);
     
     Qonversion.initWithConfig(config)
     
