@@ -45,16 +45,20 @@ class QonversionSandwich(
         projectKey: String,
         launchModeKey: String,
         environmentKey: String? = null,
-        entitlementsCacheLifetimeKey: String? = null
+        entitlementsCacheLifetimeKey: String? = null,
+        proxyUrl: String? = null
     ) {
         val launchMode = QLaunchMode.valueOf(launchModeKey)
-        val config = QonversionConfig.Builder(context, projectKey, launchMode)
+        val configBuilder = QonversionConfig.Builder(context, projectKey, launchMode)
             .setEnvironment(environmentKey)
             .setEntitlementsCacheLifetime(entitlementsCacheLifetimeKey)
             .setEntitlementsUpdateListener()
-            .build()
 
-        Qonversion.initialize(config)
+        proxyUrl?.let {
+            configBuilder.setProxyURL(it)
+        }
+
+        Qonversion.initialize(configBuilder.build())
     }
 
     fun storeSdkInfo(source: String, version: String) {
