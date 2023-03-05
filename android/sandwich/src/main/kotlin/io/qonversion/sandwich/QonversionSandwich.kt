@@ -46,7 +46,8 @@ class QonversionSandwich(
         launchModeKey: String,
         environmentKey: String? = null,
         entitlementsCacheLifetimeKey: String? = null,
-        proxyUrl: String? = null
+        proxyUrl: String? = null,
+        kidsMode: Boolean = false
     ) {
         val launchMode = QLaunchMode.valueOf(launchModeKey)
         val configBuilder = QonversionConfig.Builder(context, projectKey, launchMode)
@@ -56,6 +57,10 @@ class QonversionSandwich(
 
         proxyUrl?.let {
             configBuilder.setProxyURL(it)
+        }
+
+        if (kidsMode) {
+            configBuilder.enableKidsMode()
         }
 
         Qonversion.initialize(configBuilder.build())
