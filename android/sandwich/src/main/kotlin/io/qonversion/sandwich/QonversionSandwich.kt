@@ -75,14 +75,6 @@ class QonversionSandwich(
 
     // endregion
 
-    // region Other
-
-    fun syncHistoricalData() {
-        Qonversion.shared.syncHistoricalData()
-    }
-
-    // endregion
-
     // region Product Center
 
     fun purchase(productId: String, resultListener: PurchaseResultListener) {
@@ -268,6 +260,14 @@ class QonversionSandwich(
         } catch (e: java.lang.IllegalArgumentException) {
             // Ignore attribution.
         }
+    }
+
+    // endregion
+
+    // region Other
+
+    fun syncHistoricalData() {
+        Qonversion.shared.syncHistoricalData()
     }
 
     // endregion
