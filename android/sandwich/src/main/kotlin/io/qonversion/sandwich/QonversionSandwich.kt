@@ -75,6 +75,14 @@ class QonversionSandwich(
 
     // endregion
 
+    // region Other
+
+    fun syncHistoricalData() {
+        Qonversion.shared.syncHistoricalData()
+    }
+
+    // endregion
+
     // region Product Center
 
     fun purchase(productId: String, resultListener: PurchaseResultListener) {
