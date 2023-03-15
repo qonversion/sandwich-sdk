@@ -60,6 +60,10 @@ public class QonversionSandwich : NSObject {
     defaults.set(version, forKey: UserDefaultsConstants.sourceVersionKey)
   }
   
+  @objc public func syncHistoricalData() {
+    Qonversion.shared().syncHistoricalData()
+  }
+  
   // MARK: Product Center
   
   @objc public func purchase(_ productId: String, completion: @escaping BridgeCompletion) {

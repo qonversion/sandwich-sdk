@@ -264,6 +264,14 @@ class QonversionSandwich(
 
     // endregion
 
+    // region Other
+
+    fun syncHistoricalData() {
+        Qonversion.shared.syncHistoricalData()
+    }
+
+    // endregion
+
     // region Private
 
     private interface ProductCallback {
