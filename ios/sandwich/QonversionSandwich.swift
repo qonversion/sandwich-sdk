@@ -64,6 +64,10 @@ public class QonversionSandwich : NSObject {
     Qonversion.shared().syncHistoricalData()
   }
   
+  @objc public func syncStoreKit2Purchases() {
+    QonversionSwift.shared.syncStoreKit2Purchases()
+  }
+  
   // MARK: Product Center
   
   @objc public func purchase(_ productId: String, completion: @escaping BridgeCompletion) {
