@@ -6,7 +6,7 @@ platform :ios, '9.0'
 use_frameworks!
 
 target 'QonversionSandwich' do
-  pod 'Qonversion', '3.4.0'
+  pod 'Qonversion', '3.4.1'
 end
 
 target 'Sample' do
