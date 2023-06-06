@@ -19,5 +19,5 @@ Pod::Spec.new do |s|
   s.source_files = 'ios/sandwich/**/*.{h,m,swift}'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
 
-  s.dependency "Qonversion", "3.4.1"
+  s.dependency "Qonversion", "3.4.2"
 end
