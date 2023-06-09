@@ -53,8 +53,17 @@ jobs:
                 sandwich_version: '${{ env.sandwich_version }}'
               },
             })
+            await github.rest.actions.createWorkflowDispatch({
+              owner: 'qonversion',
+              repo: 'cordova-plugin',
+              workflow_id: 'upgrade_sandwich.yml',
+              ref: 'main',
+              inputs: {
+                sandwich_version: '${{ env.sandwich_version }}'
+              },
+            })
   on_publishing_failed:
-    name: Cancel due to publishing faulure
+    name: Cancel due to publishing failure
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps:
