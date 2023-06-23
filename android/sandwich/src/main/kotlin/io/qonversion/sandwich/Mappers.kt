@@ -26,6 +26,7 @@ fun QonversionError.toMap(): BridgeData {
     )
 }
 
+@Suppress("DEPRECATION")
 fun SkuDetails.toMap(): BridgeData {
     return mapOf(
         "description" to description,
