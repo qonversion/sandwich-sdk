@@ -368,12 +368,16 @@ extension Qonversion.Experiment {
     return [
       "id": identifier,
       "name": name,
-      "group": [
-        "id": group.identifier,
-        "name": group.name,
-        "type": group.type.toString()
-      ]
+      "group": group.toMap()
     ]
+  }
+}
+
+extension Qonversion.ExperimentGroup {
+  func toMap() -> BridgeData {
+    return ["id": identifier,
+            "name": name,
+            "type": type.toString()]
   }
 }
 
