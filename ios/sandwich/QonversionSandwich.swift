@@ -219,7 +219,43 @@ public class QonversionSandwich : NSObject {
     Qonversion.shared().collectAdvertisingId()
   }
   
+  @objc public func remoteConfig(_ completion: @escaping BridgeCompletion) {
+    Qonversion.shared().remoteConfig { remoteConfig, error in
+      if let error = error as NSError? {
+        completion(nil, error.toSandwichError())
+      }
+      
+      let bridgeData: [String: Any]? = remoteConfig?.toMap().clearEmptyValues()
+      
+      completion(bridgeData, nil)
+    }
+  }
+  
+  @objc public func attachUserToExperiment(with experimentId: String, groupId: String, completion: @escaping BridgeCompletion) {
+    Qonversion.shared().attachUser(toExperiment: experimentId, groupId: groupId) { success, error in
+      if let error = error as NSError? {
+        return completion(nil, error.toSandwichError())
+      }
+      
+      completion(self.defaultSuccessResponse(), nil)
+    }
+  }
+  
+  @objc public func detachUserFromExperiment(with experimentId: String, completion: @escaping BridgeCompletion) {
+    Qonversion.shared().detachUser(fromExperiment: experimentId, completion: { success, error in
+      if let error = error as NSError? {
+        return completion(nil, error.toSandwichError())
+      }
+      
+      completion(self.defaultSuccessResponse(), nil)
+    })
+  }
+  
   // MARK: - Private functions
+  
+  private func defaultSuccessResponse() -> [String: Any] {
+    return ["success": true]
+  }
   
   private func loadProduct(_ productId: String, _ offeringId: String, completion: @escaping ProductCompletion) {
     Qonversion.shared().offerings() { (offerings, error) in
