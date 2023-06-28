@@ -354,14 +354,45 @@ extension SKProductDiscount {
   }
 }
 
-extension Qonversion.ExperimentInfo {
+extension Qonversion.RemoteConfig {
+  func toMap() -> BridgeData {
+    return [
+      "payload": payload,
+      "experiment": experiment?.toMap()
+    ]
+  }
+}
+
+extension Qonversion.Experiment {
   func toMap() -> BridgeData {
     return [
       "id": identifier,
-      "group": [
-        "type": group?.type
-      ]
+      "name": name,
+      "group": group.toMap()
     ]
+  }
+}
+
+extension Qonversion.ExperimentGroup {
+  func toMap() -> BridgeData {
+    return [
+        "id": identifier,
+        "name": name,
+        "type": type.toString()
+    ]
+  }
+}
+
+extension Qonversion.ExperimentGroupType {
+  func toString() -> String {
+    switch self {
+    case .treatment:
+      return "treatment"
+    case .control:
+      return "control"
+    default:
+      return "unknown"
+    }
   }
 }
 
