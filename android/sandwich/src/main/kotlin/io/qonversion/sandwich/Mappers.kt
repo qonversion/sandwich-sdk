@@ -7,9 +7,12 @@ import com.qonversion.android.sdk.automations.dto.QActionResult
 import com.qonversion.android.sdk.automations.dto.QScreenPresentationConfig
 import com.qonversion.android.sdk.automations.dto.QScreenPresentationStyle
 import com.qonversion.android.sdk.dto.QEntitlement
+import com.qonversion.android.sdk.dto.QRemoteConfig
 import com.qonversion.android.sdk.dto.QUser
 import com.qonversion.android.sdk.dto.eligibility.QEligibility
-import com.qonversion.android.sdk.dto.experiments.QExperimentInfo
+import com.qonversion.android.sdk.dto.experiments.QExperiment
+import com.qonversion.android.sdk.dto.experiments.QExperimentGroup
+import com.qonversion.android.sdk.dto.experiments.QExperimentGroupType
 import com.qonversion.android.sdk.dto.offerings.QOffering
 import com.qonversion.android.sdk.dto.offerings.QOfferings
 import com.qonversion.android.sdk.dto.products.QProduct
@@ -114,15 +117,35 @@ fun Map<String, QEligibility>.toEligibilityMap(): BridgeData {
     return mapValues { it.value.toMap() }
 }
 
-fun QExperimentInfo.toMap(): BridgeData {
+fun QRemoteConfig.toMap(): BridgeData {
     return mapOf(
-        "id" to experimentID,
-        "group" to mapOf("type" to 0)
+        "payload" to payload,
+        "experiment" to experiment?.toMap()
     )
 }
 
-fun Map<String, QExperimentInfo>.toExperimentsMap(): BridgeData {
-    return mapValues { it.value.toMap() }
+fun QExperiment.toMap(): BridgeData {
+    return mapOf(
+        "id" to id,
+        "name" to name,
+        "group" to group.toMap()
+    )
+}
+
+fun QExperimentGroup.toMap(): BridgeData {
+    return mapOf(
+        "id" to id,
+        "name" to name,
+        "type" to type.toFormattedString()
+    )
+}
+
+fun QExperimentGroupType.toFormattedString(): String {
+    return when (this) {
+        QExperimentGroupType.Treatment -> "treatment"
+        QExperimentGroupType.Control -> "control"
+        else -> "unknown"
+    }
 }
 
 fun QActionResult.toMap(): BridgeData {
