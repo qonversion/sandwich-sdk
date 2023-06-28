@@ -386,12 +386,11 @@ extension Qonversion.ExperimentGroup {
 extension Qonversion.ExperimentGroupType {
   func toString() -> String {
     switch self {
-    case .unknown:
-      return "unknown"
     case .treatment:
       return "treatment"
     case .control:
       return "control"
+    case .unknown:
     default:
       return "unknown"
     }
