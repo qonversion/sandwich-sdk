@@ -375,9 +375,11 @@ extension Qonversion.Experiment {
 
 extension Qonversion.ExperimentGroup {
   func toMap() -> BridgeData {
-    return ["id": identifier,
-            "name": name,
-            "type": type.toString()]
+    return [
+        "id": identifier,
+        "name": name,
+        "type": type.toString()
+    ]
   }
 }
 
