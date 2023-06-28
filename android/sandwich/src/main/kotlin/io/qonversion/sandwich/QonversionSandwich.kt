@@ -11,6 +11,7 @@ import com.qonversion.android.sdk.dto.QEntitlement
 import com.qonversion.android.sdk.dto.QEntitlementsCacheLifetime
 import com.qonversion.android.sdk.dto.QEnvironment
 import com.qonversion.android.sdk.dto.QLaunchMode
+import com.qonversion.android.sdk.dto.QRemoteConfig
 import com.qonversion.android.sdk.dto.QUser
 import com.qonversion.android.sdk.dto.QUserProperty
 import com.qonversion.android.sdk.dto.QonversionError
@@ -21,8 +22,10 @@ import com.qonversion.android.sdk.dto.products.QProduct
 import com.qonversion.android.sdk.listeners.QEntitlementsUpdateListener
 import com.qonversion.android.sdk.listeners.QonversionEligibilityCallback
 import com.qonversion.android.sdk.listeners.QonversionEntitlementsCallback
+import com.qonversion.android.sdk.listeners.QonversionExperimentAttachCallback
 import com.qonversion.android.sdk.listeners.QonversionOfferingsCallback
 import com.qonversion.android.sdk.listeners.QonversionProductsCallback
+import com.qonversion.android.sdk.listeners.QonversionRemoteConfigCallback
 import com.qonversion.android.sdk.listeners.QonversionUserCallback
 
 private const val TAG = "Qonversion"
@@ -264,6 +267,44 @@ class QonversionSandwich(
 
     // endregion
 
+    // region Experiments
+
+    fun remoteConfig(resultListener: ResultListener) {
+        Qonversion.shared.remoteConfig(object : QonversionRemoteConfigCallback {
+            override fun onSuccess(remoteConfig: QRemoteConfig) {
+                resultListener.onSuccess(remoteConfig.toMap())
+            }
+
+            override fun onError(error: QonversionError) {
+                resultListener.onError(error.toSandwichError())
+            }
+        })
+    }
+
+    fun attachUserToExperiment(experimentId: String, groupId: String, resultListener: ResultListener) {
+        Qonversion.shared.attachUserToExperiment(experimentId, groupId, object : QonversionExperimentAttachCallback {
+            override fun onSuccess() {
+                resultListener.onSuccess(emptySuccessResult())
+            }
+
+            override fun onError(error: QonversionError) {
+                resultListener.onError(error.toSandwichError())
+            }
+        })
+    }
+
+    fun detachUserFromExperiment(experimentId: String, resultListener: ResultListener) {
+        Qonversion.shared.detachUserFromExperiment(experimentId, object : QonversionExperimentAttachCallback {
+            override fun onSuccess() {
+                resultListener.onSuccess(emptySuccessResult())
+            }
+
+            override fun onError(error: QonversionError) {
+                resultListener.onError(error.toSandwichError())
+            }
+        })
+    }
+
     // region Other
 
     fun syncHistoricalData() {
@@ -273,6 +314,10 @@ class QonversionSandwich(
     // endregion
 
     // region Private
+
+    private fun emptySuccessResult(): BridgeData {
+        return mapOf("success" to true)
+    }
 
     private interface ProductCallback {
         fun onProductLoaded(product: QProduct)
