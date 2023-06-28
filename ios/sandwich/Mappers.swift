@@ -390,7 +390,6 @@ extension Qonversion.ExperimentGroupType {
       return "treatment"
     case .control:
       return "control"
-    case .unknown:
     default:
       return "unknown"
     }
