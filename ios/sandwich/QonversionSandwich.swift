@@ -192,7 +192,7 @@ public class QonversionSandwich : NSObject {
   @objc public func userProperties(_ completion: @escaping BridgeCompletion) {
     Qonversion.shared().userProperties { userProperties, error in
       if let error = error as NSError? {
-        completion(nil, error.toSandwichError())
+        return completion(nil, error.toSandwichError())
       }
 
       let bridgeData: [String: Any]? = userProperties?.toMap().clearEmptyValues()
@@ -208,7 +208,7 @@ public class QonversionSandwich : NSObject {
   @objc public func userInfo(_ completion: @escaping BridgeCompletion) {
     Qonversion.shared().userInfo { userInfo, error in
       if let error = error as NSError? {
-        completion(nil, error.toSandwichError())
+        return completion(nil, error.toSandwichError())
       }
 
       let bridgeData: [String: Any]? = userInfo?.toMap().clearEmptyValues()
