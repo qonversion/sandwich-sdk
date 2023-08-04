@@ -176,7 +176,7 @@ extension Qonversion.EntitlementRenewState {
   }
 }
 
-extension Qonversion.Property {
+extension Qonversion.UserPropertyKey {
   static func fromString(_ string: String) -> Self? {
     switch string {
     case "Email":
@@ -203,9 +203,36 @@ extension Qonversion.Property {
     case "FirebaseAppInstanceId":
       return .firebaseAppInstanceId
       
+    case "FacebookAttribution":
+      return .facebookAttribution
+      
+    case "AppSetId":
+      return .appSetId
+
     default:
       return nil
     }
+  }
+}
+
+extension Qonversion.UserProperties {
+  func toMap() -> BridgeData {
+    var propertiesArray: Array<BridgeData> = properties.map { userProperty in
+      userProperty.toMap()
+    }
+
+    return [
+      "properties": propertiesArray,
+    ];
+  }
+}
+
+extension Qonversion.UserProperty {
+  func toMap() -> BridgeData {
+    return [
+      "key": key,
+      "value": value,
+    ];
   }
 }
 
