@@ -217,7 +217,7 @@ extension Qonversion.UserPropertyKey {
 
 extension Qonversion.UserProperties {
   func toMap() -> BridgeData {
-    var propertiesArray: [BridgeData] = properties.map { userProperty in
+    let propertiesArray: [BridgeData] = properties.map { userProperty in
       userProperty.toMap()
     }
 
