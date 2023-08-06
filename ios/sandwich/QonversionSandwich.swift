@@ -180,13 +180,25 @@ public class QonversionSandwich : NSObject {
   }
   
   @objc public func setDefinedProperty(_ property: String, value: String) {
-    guard let parsedProperty = Qonversion.Property.fromString(property) else { return }
+    guard let parsedProperty = Qonversion.UserPropertyKey.fromString(property) else { return }
 
-    Qonversion.shared().setProperty(parsedProperty, value: value)
+    Qonversion.shared().setUserProperty(parsedProperty, value: value)
   }
   
   @objc public func setCustomProperty(_ property: String, value: String) {
-    Qonversion.shared().setUserProperty(property, value: value)
+    Qonversion.shared().setCustomUserProperty(property, value: value)
+  }
+
+  @objc public func userProperties(_ completion: @escaping BridgeCompletion) {
+    Qonversion.shared().userProperties { userProperties, error in
+      if let error = error as NSError? {
+        return completion(nil, error.toSandwichError())
+      }
+
+      let bridgeData: [String: Any]? = userProperties?.toMap().clearEmptyValues()
+      
+      completion(bridgeData, nil)
+    }
   }
   
   @objc public func logout() {
@@ -196,7 +208,7 @@ public class QonversionSandwich : NSObject {
   @objc public func userInfo(_ completion: @escaping BridgeCompletion) {
     Qonversion.shared().userInfo { userInfo, error in
       if let error = error as NSError? {
-        completion(nil, error.toSandwichError())
+        return completion(nil, error.toSandwichError())
       }
 
       let bridgeData: [String: Any]? = userInfo?.toMap().clearEmptyValues()

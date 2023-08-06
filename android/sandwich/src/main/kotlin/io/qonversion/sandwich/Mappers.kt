@@ -6,16 +6,18 @@ import com.qonversion.android.sdk.automations.dto.AutomationsEvent
 import com.qonversion.android.sdk.automations.dto.QActionResult
 import com.qonversion.android.sdk.automations.dto.QScreenPresentationConfig
 import com.qonversion.android.sdk.automations.dto.QScreenPresentationStyle
-import com.qonversion.android.sdk.dto.QEntitlement
 import com.qonversion.android.sdk.dto.QRemoteConfig
 import com.qonversion.android.sdk.dto.QUser
 import com.qonversion.android.sdk.dto.eligibility.QEligibility
+import com.qonversion.android.sdk.dto.entitlements.QEntitlement
 import com.qonversion.android.sdk.dto.experiments.QExperiment
 import com.qonversion.android.sdk.dto.experiments.QExperimentGroup
 import com.qonversion.android.sdk.dto.experiments.QExperimentGroupType
 import com.qonversion.android.sdk.dto.offerings.QOffering
 import com.qonversion.android.sdk.dto.offerings.QOfferings
 import com.qonversion.android.sdk.dto.products.QProduct
+import com.qonversion.android.sdk.dto.properties.QUserProperties
+import com.qonversion.android.sdk.dto.properties.QUserProperty
 
 fun QonversionError.toSandwichError(): SandwichError {
     return SandwichError(this)
@@ -111,6 +113,18 @@ fun QUser.toMap(): BridgeData {
         "qonversionId" to qonversionId,
         "identityId" to identityId
     )
+}
+
+fun QUserProperty.toMap(): BridgeData {
+    return mapOf(
+        "key" to key,
+        "value" to value,
+    )
+}
+
+fun QUserProperties.toMap(): BridgeData {
+    val propertiesData = properties.map { it.toMap() }
+    return mapOf("properties" to propertiesData)
 }
 
 fun Map<String, QEligibility>.toEligibilityMap(): BridgeData {
