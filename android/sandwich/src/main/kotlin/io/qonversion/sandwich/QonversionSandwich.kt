@@ -7,18 +7,19 @@ import androidx.preference.PreferenceManager
 import com.qonversion.android.sdk.Qonversion
 import com.qonversion.android.sdk.QonversionConfig
 import com.qonversion.android.sdk.dto.QAttributionProvider
-import com.qonversion.android.sdk.dto.QEntitlement
-import com.qonversion.android.sdk.dto.QEntitlementsCacheLifetime
 import com.qonversion.android.sdk.dto.QEnvironment
 import com.qonversion.android.sdk.dto.QLaunchMode
 import com.qonversion.android.sdk.dto.QRemoteConfig
 import com.qonversion.android.sdk.dto.QUser
-import com.qonversion.android.sdk.dto.QUserProperty
 import com.qonversion.android.sdk.dto.QonversionError
 import com.qonversion.android.sdk.dto.QonversionErrorCode
 import com.qonversion.android.sdk.dto.eligibility.QEligibility
+import com.qonversion.android.sdk.dto.entitlements.QEntitlement
+import com.qonversion.android.sdk.dto.entitlements.QEntitlementsCacheLifetime
 import com.qonversion.android.sdk.dto.offerings.QOfferings
 import com.qonversion.android.sdk.dto.products.QProduct
+import com.qonversion.android.sdk.dto.properties.QUserProperties
+import com.qonversion.android.sdk.dto.properties.QUserPropertyKey
 import com.qonversion.android.sdk.listeners.QEntitlementsUpdateListener
 import com.qonversion.android.sdk.listeners.QonversionEligibilityCallback
 import com.qonversion.android.sdk.listeners.QonversionEntitlementsCallback
@@ -27,6 +28,7 @@ import com.qonversion.android.sdk.listeners.QonversionOfferingsCallback
 import com.qonversion.android.sdk.listeners.QonversionProductsCallback
 import com.qonversion.android.sdk.listeners.QonversionRemoteConfigCallback
 import com.qonversion.android.sdk.listeners.QonversionUserCallback
+import com.qonversion.android.sdk.listeners.QonversionUserPropertiesCallback
 
 private const val TAG = "Qonversion"
 
@@ -241,15 +243,27 @@ class QonversionSandwich(
 
     fun setDefinedProperty(propertyKey: String, value: String) {
         try {
-            val property = QUserProperty.valueOf(propertyKey)
-            Qonversion.shared.setProperty(property, value)
+            val property = QUserPropertyKey.valueOf(propertyKey)
+            Qonversion.shared.setUserProperty(property, value)
         } catch (e: IllegalArgumentException) {
             // Ignore property.
         }
     }
 
     fun setCustomProperty(key: String, value: String) {
-        Qonversion.shared.setUserProperty(key, value)
+        Qonversion.shared.setCustomUserProperty(key, value)
+    }
+
+    fun userProperties(resultListener: ResultListener) {
+        Qonversion.shared.userProperties(object : QonversionUserPropertiesCallback {
+            override fun onSuccess(userProperties: QUserProperties) {
+                resultListener.onSuccess(userProperties.toMap())
+            }
+
+            override fun onError(error: QonversionError) {
+                resultListener.onError(error.toSandwichError())
+            }
+        })
     }
 
     fun logout() {
