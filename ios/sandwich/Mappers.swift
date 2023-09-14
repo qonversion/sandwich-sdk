@@ -385,8 +385,47 @@ extension Qonversion.RemoteConfig {
   func toMap() -> BridgeData {
     return [
       "payload": payload,
-      "experiment": experiment?.toMap()
+      "experiment": experiment?.toMap(),
+      "source": source.toMap()
     ]
+  }
+}
+
+extension Qonversion.RemoteConfigurationSource {
+  func toMap() -> BridgeData {
+    return [
+      "id": identifier,
+      "name": name,
+      "type": type.toString(),
+      "assignmentType": assignmentType.toString()]
+  }
+}
+
+extension Qonversion.RemoteConfigurationSourceType {
+  func toString() -> String {
+    switch self {
+    case .experimentControlGroup:
+      return "experiment_control_group"
+    case .experimentTreatmentGroup:
+      return "experiment_treatment_group"
+    case .remoteConfiguration:
+      return "remote_configuration"
+    default:
+      return "unknown"
+    }
+  }
+}
+
+extension Qonversion.RemoteConfigurationAssignmentType {
+  func toString() -> String {
+    switch self {
+    case .auto:
+      return "auto"
+    case .manual:
+      return "manual"
+    default:
+      return "unknown"
+    }
   }
 }
 

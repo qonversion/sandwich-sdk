@@ -7,6 +7,9 @@ import com.qonversion.android.sdk.automations.dto.QActionResult
 import com.qonversion.android.sdk.automations.dto.QScreenPresentationConfig
 import com.qonversion.android.sdk.automations.dto.QScreenPresentationStyle
 import com.qonversion.android.sdk.dto.QRemoteConfig
+import com.qonversion.android.sdk.dto.QRemoteConfigurationAssignmentType
+import com.qonversion.android.sdk.dto.QRemoteConfigurationSource
+import com.qonversion.android.sdk.dto.QRemoteConfigurationSourceType
 import com.qonversion.android.sdk.dto.QUser
 import com.qonversion.android.sdk.dto.eligibility.QEligibility
 import com.qonversion.android.sdk.dto.entitlements.QEntitlement
@@ -134,7 +137,8 @@ fun Map<String, QEligibility>.toEligibilityMap(): BridgeData {
 fun QRemoteConfig.toMap(): BridgeData {
     return mapOf(
         "payload" to payload,
-        "experiment" to experiment?.toMap()
+        "experiment" to experiment?.toMap(),
+        "source" to source.toMap()
     )
 }
 
@@ -158,6 +162,32 @@ fun QExperimentGroupType.toFormattedString(): String {
     return when (this) {
         QExperimentGroupType.Treatment -> "treatment"
         QExperimentGroupType.Control -> "control"
+        else -> "unknown"
+    }
+}
+
+fun QRemoteConfigurationSource.toMap(): BridgeData {
+    return mapOf(
+        "id" to id,
+        "name" to name,
+        "type" to type.toFormattedString(),
+        "assignmentType" to assignmentType.toFormattedString()
+    )
+}
+
+fun QRemoteConfigurationSourceType.toFormattedString(): String {
+    return when (this) {
+        QRemoteConfigurationSourceType.RemoteConfiguration -> "remote_configuration"
+        QRemoteConfigurationSourceType.ExperimentTreatmentGroup -> "experiment_treatment_group"
+        QRemoteConfigurationSourceType.ExperimentControlGroup -> "experiment_control_group"
+        else -> "unknown"
+    }
+}
+
+fun QRemoteConfigurationAssignmentType.toFormattedString(): String {
+    return when (this) {
+        QRemoteConfigurationAssignmentType.Auto -> "auto"
+        QRemoteConfigurationAssignmentType.Manual -> "manual"
         else -> "unknown"
     }
 }
