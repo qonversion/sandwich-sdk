@@ -27,6 +27,7 @@ import com.qonversion.android.sdk.listeners.QonversionExperimentAttachCallback
 import com.qonversion.android.sdk.listeners.QonversionOfferingsCallback
 import com.qonversion.android.sdk.listeners.QonversionProductsCallback
 import com.qonversion.android.sdk.listeners.QonversionRemoteConfigCallback
+import com.qonversion.android.sdk.listeners.QonversionRemoteConfigurationAttachCallback
 import com.qonversion.android.sdk.listeners.QonversionUserCallback
 import com.qonversion.android.sdk.listeners.QonversionUserPropertiesCallback
 
@@ -309,6 +310,32 @@ class QonversionSandwich(
 
     fun detachUserFromExperiment(experimentId: String, resultListener: ResultListener) {
         Qonversion.shared.detachUserFromExperiment(experimentId, object : QonversionExperimentAttachCallback {
+            override fun onSuccess() {
+                resultListener.onSuccess(emptySuccessResult())
+            }
+
+            override fun onError(error: QonversionError) {
+                resultListener.onError(error.toSandwichError())
+            }
+        })
+    }
+
+    fun attachUserToRemoteConfiguration(remoteConfigurationId: String, resultListener: ResultListener) {
+        Qonversion.shared.attachUserToRemoteConfiguration(remoteConfigurationId, object :
+            QonversionRemoteConfigurationAttachCallback {
+            override fun onSuccess() {
+                resultListener.onSuccess(emptySuccessResult())
+            }
+
+            override fun onError(error: QonversionError) {
+                resultListener.onError(error.toSandwichError())
+            }
+        })
+    }
+
+    fun detachUserFromRemoteConfiguration(remoteConfigurationId: String, resultListener: ResultListener) {
+        Qonversion.shared.detachUserFromRemoteConfiguration(remoteConfigurationId, object :
+            QonversionRemoteConfigurationAttachCallback {
             override fun onSuccess() {
                 resultListener.onSuccess(emptySuccessResult())
             }
