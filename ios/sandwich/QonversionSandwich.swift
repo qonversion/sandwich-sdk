@@ -263,6 +263,26 @@ public class QonversionSandwich : NSObject {
     })
   }
   
+  @objc public func attachUserToRemoteConfiguration(with remoteConfigurationId: String, completion: @escaping BridgeCompletion) {
+    Qonversion.shared().attachUser(toRemoteConfiguration: remoteConfigurationId) { success, error in
+      if let error = error as NSError? {
+        return completion(nil, error.toSandwichError())
+      }
+      
+      completion(self.defaultSuccessResponse(), nil)
+    }
+  }
+  
+  @objc public func detachUserFromRemoteConfiguration(with remoteConfigurationId: String, completion: @escaping BridgeCompletion) {
+    Qonversion.shared().detachUser(fromRemoteConfiguration: remoteConfigurationId, completion: { success, error in
+      if let error = error as NSError? {
+        return completion(nil, error.toSandwichError())
+      }
+      
+      completion(self.defaultSuccessResponse(), nil)
+    })
+  }
+  
   // MARK: - Private functions
   
   private func defaultSuccessResponse() -> [String: Any] {
