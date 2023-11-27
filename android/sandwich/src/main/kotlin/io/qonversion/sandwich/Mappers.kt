@@ -1,5 +1,6 @@
 package io.qonversion.sandwich
 
+import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.SkuDetails
 import com.qonversion.android.sdk.dto.QonversionError
 import com.qonversion.android.sdk.automations.dto.AutomationsEvent
@@ -19,6 +20,12 @@ import com.qonversion.android.sdk.dto.experiments.QExperimentGroupType
 import com.qonversion.android.sdk.dto.offerings.QOffering
 import com.qonversion.android.sdk.dto.offerings.QOfferings
 import com.qonversion.android.sdk.dto.products.QProduct
+import com.qonversion.android.sdk.dto.products.QProductInAppDetails
+import com.qonversion.android.sdk.dto.products.QProductOfferDetails
+import com.qonversion.android.sdk.dto.products.QProductPeriod
+import com.qonversion.android.sdk.dto.products.QProductPrice
+import com.qonversion.android.sdk.dto.products.QProductPricingPhase
+import com.qonversion.android.sdk.dto.products.QProductStoreDetails
 import com.qonversion.android.sdk.dto.properties.QUserProperties
 import com.qonversion.android.sdk.dto.properties.QUserProperty
 
@@ -68,7 +75,76 @@ fun QProduct.toMap(): BridgeData {
         "skuDetails" to skuDetail?.toMap(),
         "prettyPrice" to prettyPrice,
         "trialDuration" to trialDuration.type,
-        "offeringId" to offeringID
+        "offeringId" to offeringID,
+        "storeDetails" to storeDetails?.toMap()
+    )
+}
+
+fun QProductPeriod.toMap(): BridgeData {
+    return mapOf(
+        "count" to count,
+        "iso" to iso,
+        "unit" to unit.name
+    )
+}
+
+fun QProductPricingPhase.toMap(): BridgeData {
+    return mapOf(
+        "billingCycleCount" to billingCycleCount,
+        "billingPeriod" to billingPeriod.toMap(),
+        "isBasePlan" to isBasePlan,
+        "isIntro" to isIntro,
+        "isTrial" to isTrial,
+        "price" to price.toMap(),
+        "recurrenceMode" to recurrenceMode.name,
+        "type" to type.name
+    )
+}
+fun QProductOfferDetails.toMap(): BridgeData {
+    return mapOf(
+        "basePlanId" to basePlanId,
+        "hasIntro" to hasIntro,
+        "hasTrial" to hasTrial,
+        "hasTrialOrIntro" to hasTrialOrIntro,
+        "introPhase" to introPhase?.toMap(),
+        "pricingPhases" to pricingPhases.map { it.toMap() },
+        "offerId" to offerId,
+        "offerToken" to offerToken,
+        "tags" to tags,
+        "trialPhase" to trialPhase?.toMap()
+    )
+}
+
+fun QProductPrice.toMap(): BridgeData {
+    return mapOf(
+        "currencySymbol" to currencySymbol,
+        "formattedPrice" to formattedPrice,
+        "isFree" to isFree,
+        "priceAmountMicros" to priceAmountMicros,
+        "priceCurrencyCode" to priceCurrencyCode
+    )
+}
+
+fun QProductInAppDetails.toMap(): BridgeData {
+    return mapOf(
+        "price" to price.toMap()
+    )
+}
+
+fun QProductStoreDetails.toMap(): BridgeData {
+    return mapOf(
+        "basePlanId" to basePlanId,
+        "defaultOfferDetails" to defaultOfferDetails?.toMap(),
+        "description" to description,
+        "hasIntroOffer" to hasIntroOffer,
+        "hasTrialOffer" to hasTrialOffer,
+        "hasTrialOrIntroOffer" to hasTrialOrIntroOffer,
+        "inAppOfferDetails" to inAppOfferDetails?.toMap(),
+        "name" to name,
+        "productId" to productId,
+        "productType" to productType.type,
+        "subscriptionOfferDetails" to subscriptionOfferDetails?.map { it.toMap() },
+        "title" to title
     )
 }
 
