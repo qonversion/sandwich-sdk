@@ -70,13 +70,13 @@ fun QProduct.toMap(): BridgeData {
         "id" to qonversionID,
         "storeId" to storeID,
         "basePlanId" to basePlanID,
-        "type" to type.type,
-        "duration" to duration?.type,
+        "type" to type.name,
+        "subscriptionPeriod" to subscriptionPeriod?.toMap(),
+        "trialPeriod" to trialPeriod?.toMap(),
         "skuDetails" to skuDetail?.toMap(),
+        "storeDetails" to storeDetails?.toMap(),
         "prettyPrice" to prettyPrice,
-        "trialDuration" to trialDuration.type,
-        "offeringId" to offeringID,
-        "storeDetails" to storeDetails?.toMap()
+        "offeringId" to offeringID
     )
 }
 
@@ -146,7 +146,7 @@ fun QProductStoreDetails.toMap(): BridgeData {
         "hasTrialOffer" to hasTrialOffer,
         "hasIntroOffer" to hasIntroOffer,
         "hasTrialOrIntroOffer" to hasTrialOrIntroOffer,
-        "productType" to productType.type,
+        "productType" to productType.name,
         "isInApp" to isInApp,
         "isSubscription" to isSubscription,
     )
