@@ -9,6 +9,9 @@ import com.qonversion.android.sdk.QonversionConfig
 import com.qonversion.android.sdk.dto.QAttributionProvider
 import com.qonversion.android.sdk.dto.QEnvironment
 import com.qonversion.android.sdk.dto.QLaunchMode
+import com.qonversion.android.sdk.dto.QPurchaseModel
+import com.qonversion.android.sdk.dto.QPurchaseUpdateModel
+import com.qonversion.android.sdk.dto.QPurchaseUpdatePolicy
 import com.qonversion.android.sdk.dto.QRemoteConfig
 import com.qonversion.android.sdk.dto.QUser
 import com.qonversion.android.sdk.dto.QonversionError
@@ -81,46 +84,35 @@ class QonversionSandwich(
 
     // endregion
 
-    // region Product Center
+    // region Entitlements and Products
 
-    fun purchase(productId: String, resultListener: PurchaseResultListener) {
+    fun purchase(
+        productId: String,
+        offerId: String?,
+        applyOffer: Boolean?,
+        resultListener: PurchaseResultListener
+    ) {
         val currentActivity = activityProvider.currentActivity
             ?: run {
                 resultListener.onError(noActivityForPurchaseError.toSandwichError(), false)
                 return
             }
 
+        val purchaseModel = QPurchaseModel(productId, offerId)
+        if (applyOffer == false) {
+            purchaseModel.removeOffer()
+        }
+
         val purchaseCallback = getPurchaseCallback(resultListener)
-        Qonversion.shared.purchase(currentActivity, productId, purchaseCallback)
-    }
-
-    fun purchaseProduct(
-        productId: String,
-        offeringId: String?,
-        resultListener: PurchaseResultListener
-    ) {
-        val purchaseCallback = getPurchaseCallback(resultListener)
-        loadProduct(productId, offeringId, object : ProductCallback {
-            override fun onProductLoaded(product: QProduct) {
-                val currentActivity = activityProvider.currentActivity
-                    ?: run {
-                        resultListener.onError(noActivityForPurchaseError.toSandwichError(), false)
-                        return
-                    }
-
-                Qonversion.shared.purchase(currentActivity, product, purchaseCallback)
-            }
-
-            override fun onLoadingFailed() {
-                purchase(productId, resultListener)
-            }
-        })
+        Qonversion.shared.purchase(currentActivity, purchaseModel, purchaseCallback)
     }
 
     fun updatePurchase(
         productId: String,
+        offerId: String?,
+        applyOffer: Boolean?,
         oldProductId: String,
-        prorationMode: Int?,
+        updatePolicyKey: String?,
         resultListener: PurchaseResultListener
     ) {
         val currentActivity = activityProvider.currentActivity
@@ -129,44 +121,24 @@ class QonversionSandwich(
                 return
             }
 
+        val updatePolicy = updatePolicyKey?.let {
+            try {
+                QPurchaseUpdatePolicy.valueOf(it)
+            } catch (e: IllegalArgumentException) {
+                null
+            }
+        }
+        val purchaseUpdateModel = QPurchaseUpdateModel(productId, oldProductId, updatePolicy, offerId)
+        if (applyOffer == false) {
+            purchaseUpdateModel.removeOffer()
+        }
+
         val purchaseCallback = getPurchaseCallback(resultListener)
         Qonversion.shared.updatePurchase(
             currentActivity,
-            productId,
-            oldProductId,
-            prorationMode,
+            purchaseUpdateModel,
             purchaseCallback
         )
-    }
-
-    fun updatePurchaseWithProduct(
-        productId: String,
-        offeringId: String?,
-        oldProductId: String,
-        prorationMode: Int?,
-        resultListener: PurchaseResultListener
-    ) {
-        val purchaseCallback = getPurchaseCallback(resultListener)
-        loadProduct(productId, offeringId, object : ProductCallback {
-            override fun onProductLoaded(product: QProduct) {
-                val currentActivity = activityProvider.currentActivity
-                    ?: run {
-                        resultListener.onError(noActivityForPurchaseError.toSandwichError(), false)
-                        return
-                    }
-                Qonversion.shared.updatePurchase(
-                    currentActivity,
-                    product,
-                    oldProductId,
-                    prorationMode,
-                    purchaseCallback
-                )
-            }
-
-            override fun onLoadingFailed() {
-                updatePurchase(productId, oldProductId, prorationMode, resultListener)
-            }
-        })
     }
 
     fun checkEntitlements(resultListener: ResultListener) {

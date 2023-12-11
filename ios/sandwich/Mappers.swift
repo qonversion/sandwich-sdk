@@ -57,7 +57,7 @@ extension Qonversion.Product {
     return [
         "id": qonversionID,
         "storeId": storeID,
-        "type": type.rawValue,
+        "type": type.toString(),
         "duration": duration.rawValue,
         "skProduct": skProduct?.toMap(),
         "prettyPrice": prettyPrice,
@@ -153,6 +153,23 @@ extension Qonversion.EntitlementSource {
       return "Stripe"
     case .manual:
       return "Manual"
+    default:
+      return "Unknown"
+    }
+  }
+}
+
+extension Qonversion.ProductType {
+  func toString() -> String {
+    switch self {
+    case .unknown:
+      return "Unknown"
+    case .trial:
+      return "Trial"
+    case .directSubscription:
+      return "Subscription"
+    case .oneTime:
+      return "InApp"
     default:
       return "Unknown"
     }
