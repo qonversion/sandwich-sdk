@@ -149,6 +149,7 @@ fun QProductStoreDetails.toMap(): BridgeData {
         "productType" to productType.name,
         "isInApp" to isInApp,
         "isSubscription" to isSubscription,
+        "isPrepaid" to isPrepaid,
     )
 }
 
