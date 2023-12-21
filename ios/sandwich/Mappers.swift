@@ -56,7 +56,7 @@ extension Qonversion.Product {
   func toMap() -> BridgeData {
       var subscriptionPeriodMap: BridgeData? = nil
       var trialPeriodMap: BridgeData? = nil;
-      if #available(iOS 11.2, *) {
+      if #available(iOS 11.2, macOS 10.13.2, watchOS 6.2, tvOS 11.2, *) {
           subscriptionPeriodMap = subscriptionPeriod?.toMap()
           trialPeriodMap = trialPeriod?.toMap();
       };
