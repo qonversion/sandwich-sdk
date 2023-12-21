@@ -191,6 +191,8 @@ extension Qonversion.SubscriptionPeriodUnit {
       return "Month"
     case .year:
       return "Year"
+    @unknown default:
+      return "Unknown"
     }
   }
 }
