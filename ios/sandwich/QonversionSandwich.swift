@@ -100,7 +100,7 @@ public class QonversionSandwich : NSObject {
         self?.handlePurchaseResult(entitlements, error, isCancelled, completion: completion)
       }
     } else {
-      let error = NSError.init(domain: keyQONErrorDomain, code: Qonversion.Error.productNotFound.rawValue, userInfo: nil)
+      let error = NSError.init(domain: QonversionErrorDomain, code: Qonversion.Error.productNotFound.rawValue, userInfo: nil)
       
       completion(nil, error.toSandwichError())
     }
