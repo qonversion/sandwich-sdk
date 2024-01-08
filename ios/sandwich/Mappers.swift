@@ -93,14 +93,14 @@ extension Qonversion.EntitlementGrantType {
   func toString() -> String {
     switch self {
     case .purchase:
-      return "purchase"
+      return "Purchase"
     case .familySharing:
-      return "family_sharing"
+      return "FamilySharing"
     case .offerCode:
-      return "offer_code"
+      return "OfferCode"
     case .manual:
-      return "manual"
-    default: return "unknown"
+      return "Manual"
+    default: return "Unknown"
     }
   }
 }
@@ -125,11 +125,11 @@ extension Qonversion.TransactionEnvironment {
   func toString() -> String {
     switch self {
     case .sandbox:
-      return "sandbox"
+      return "Sandbox"
     case .production:
-      return "production"
+      return "Production"
     default:
-      return "production"
+      return "Production"
     }
   }
 }
@@ -138,11 +138,11 @@ extension Qonversion.TransactionOwnershipType {
   func toString() -> String {
     switch self {
     case .owner:
-      return "owner"
+      return "Owner"
     case .familySharing:
-      return "family_sharing"
+      return "FamilySharing"
     default:
-      return "owner"
+      return "Owner"
     }
   }
 }
@@ -151,19 +151,19 @@ extension Qonversion.TransactionType {
   func toString() -> String {
     switch self {
     case .subscriptionStarted:
-      return "subscription_started"
+      return "SubscriptionStarted"
     case .subscriptionRenewed:
-      return "subscription_renewed"
+      return "SubscriptionRenewed"
     case .trialStrated:
-      return "trial_started"
+      return "TrialStrated"
     case .introStarted:
-      return "intro_started"
+      return "IntroStarted"
     case .introRenewed:
-      return "intro_renewed"
+      return "IntroRenewed"
     case .nonConsumablePurchase:
-      return "non_consumable_purchase"
+      return "NonConsumablePurchase"
     default:
-      return "unknown"
+      return "Unknown"
     }
   }
 }

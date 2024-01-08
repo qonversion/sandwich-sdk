@@ -93,7 +93,7 @@ fun QEntitlement.toMap(): BridgeData {
         "lastPurchaseTimestamp" to lastPurchaseDate?.time?.toDouble(),
         "lastActivatedOfferCode" to lastActivatedOfferCode,
         "autoRenewDisableTimestamp" to autoRenewDisableDate?.time?.toDouble(),
-        "grantType" to grantType.type,
+        "grantType" to grantType.name,
         "transactions" to transactions.map { it.toMap() }
     )
 }
@@ -106,9 +106,9 @@ fun QTransaction.toMap(): BridgeData {
         "transactionTimestamp" to transactionDate.time.toDouble(),
         "expirationTimestamp" to transactionRevocationDate?.time?.toDouble(),
         "transactionRevocationTimestamp" to transactionRevocationDate?.time?.toDouble(),
-        "ownershipType" to ownershipType.type,
-        "type" to type.type,
-        "environment" to environment.type
+        "ownershipType" to ownershipType.name,
+        "type" to type.name,
+        "environment" to environment.name
     )
 }
 
