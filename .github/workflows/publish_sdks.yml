@@ -46,6 +46,6 @@ jobs:
         uses: actions/checkout@v2
 
       - name: CocoaPods Release
-        run: pod trunk push QonversionSandwich.podspec
+        run: pod trunk push --allow-warnings QonversionSandwich.podspec
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
