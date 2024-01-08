@@ -100,7 +100,8 @@ extension Qonversion.EntitlementGrantType {
       return "OfferCode"
     case .manual:
       return "Manual"
-    default: return "Unknown"
+    default:
+        return "Unknown"
     }
   }
 }
