@@ -77,7 +77,95 @@ extension Qonversion.Entitlement {
       "expirationTimestamp": expirationDate.map { $0.toMilliseconds() },
       "active": isActive,
       "source": source.toString(),
+      "renewsCount": renewsCount,
+      "trialStartDate": trialStartDate.map { $0.toMilliseconds() },
+      "firstPurchaseDate": firstPurchaseDate.map { $0.toMilliseconds() },
+      "lastPurchaseDate": lastPurchaseDate.map { $0.toMilliseconds() },
+      "lastActivatedOfferCode": lastActivatedOfferCode,
+      "grantType": grantType.toString(),
+      "autoRenewDisableDate": autoRenewDisableDate.map { $0.toMilliseconds() },
+      "transactions": transactions.map { $0.toMap() }
     ]
+  }
+}
+
+extension Qonversion.EntitlementGrantType {
+  func toString() -> String {
+    switch self {
+    case .purchase:
+      return "Purchase"
+    case .familySharing:
+      return "FamilySharing"
+    case .offerCode:
+      return "OfferCode"
+    case .manual:
+      return "Manual"
+    default:
+        return "Unknown"
+    }
+  }
+}
+
+extension Qonversion.Transaction {
+  func toMap() -> BridgeData {
+    return [
+      "originalTransactionId": originalTransactionId,
+      "transactionId": transactionId,
+      "offerCode": offerCode,
+      "transactionTimestamp": transactionDate.toMilliseconds(),
+      "expirationTimestamp": expirationDate.map { $0.toMilliseconds() },
+      "transactionRevocationTimestamp": transactionRevocationDate.map { $0.toMilliseconds() },
+      "environment": environment.toString(),
+      "ownershipType": ownershipType.toString(),
+      "type": type.toString()
+    ]
+  }
+}
+
+extension Qonversion.TransactionEnvironment {
+  func toString() -> String {
+    switch self {
+    case .sandbox:
+      return "Sandbox"
+    case .production:
+      return "Production"
+    default:
+      return "Production"
+    }
+  }
+}
+
+extension Qonversion.TransactionOwnershipType {
+  func toString() -> String {
+    switch self {
+    case .owner:
+      return "Owner"
+    case .familySharing:
+      return "FamilySharing"
+    default:
+      return "Owner"
+    }
+  }
+}
+
+extension Qonversion.TransactionType {
+  func toString() -> String {
+    switch self {
+    case .subscriptionStarted:
+      return "SubscriptionStarted"
+    case .subscriptionRenewed:
+      return "SubscriptionRenewed"
+    case .trialStrated:
+      return "TrialStrated"
+    case .introStarted:
+      return "IntroStarted"
+    case .introRenewed:
+      return "IntroRenewed"
+    case .nonConsumablePurchase:
+      return "NonConsumablePurchase"
+    default:
+      return "Unknown"
+    }
   }
 }
 
