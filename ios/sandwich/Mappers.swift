@@ -95,9 +95,9 @@ extension Qonversion.EntitlementGrantType {
     case .purchase:
       return "purchase"
     case .familySharing:
-      return "familySharing"
+      return "family_sharing"
     case .offerCode:
-      return "offerCode"
+      return "offer_code"
     case .manual:
       return "manual"
     default: return "unknown"
@@ -140,7 +140,7 @@ extension Qonversion.TransactionOwnershipType {
     case .owner:
       return "owner"
     case .familySharing:
-      return "familySharing"
+      return "family_sharing"
     default:
       return "owner"
     }
@@ -151,17 +151,17 @@ extension Qonversion.TransactionType {
   func toString() -> String {
     switch self {
     case .subscriptionStarted:
-      return "subscriptionStarted"
+      return "subscription_started"
     case .subscriptionRenewed:
-      return "subscriptionRenewed"
+      return "subscription_renewed"
     case .trialStrated:
-      return "trialStrated"
+      return "trial_started"
     case .introStarted:
-      return "introStarted"
+      return "intro_started"
     case .introRenewed:
-      return "introRenewed"
+      return "intro_renewed"
     case .nonConsumablePurchase:
-      return "nonConsumablePurchase"
+      return "non_consumable_purchase"
     default:
       return "unknown"
     }
