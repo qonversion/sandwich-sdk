@@ -78,12 +78,12 @@ extension Qonversion.Entitlement {
       "active": isActive,
       "source": source.toString(),
       "renewsCount": renewsCount,
-      "trialStartDate": trialStartDate.map { $0.toMilliseconds() },
-      "firstPurchaseDate": firstPurchaseDate.map { $0.toMilliseconds() },
-      "lastPurchaseDate": lastPurchaseDate.map { $0.toMilliseconds() },
+      "trialStartTimestamp": trialStartDate.map { $0.toMilliseconds() },
+      "firstPurchaseTimestamp": firstPurchaseDate.map { $0.toMilliseconds() },
+      "lastPurchaseTimestamp": lastPurchaseDate.map { $0.toMilliseconds() },
       "lastActivatedOfferCode": lastActivatedOfferCode,
       "grantType": grantType.toString(),
-      "autoRenewDisableDate": autoRenewDisableDate.map { $0.toMilliseconds() },
+      "autoRenewDisableTimestamp": autoRenewDisableDate.map { $0.toMilliseconds() },
       "transactions": transactions.map { $0.toMap() }
     ]
   }
@@ -155,8 +155,8 @@ extension Qonversion.TransactionType {
       return "SubscriptionStarted"
     case .subscriptionRenewed:
       return "SubscriptionRenewed"
-    case .trialStrated:
-      return "TrialStrated"
+    case .trialStarted:
+      return "TrialStarted"
     case .introStarted:
       return "IntroStarted"
     case .introRenewed:
