@@ -100,11 +100,11 @@ fun QEntitlement.toMap(): BridgeData {
 
 fun QTransaction.toMap(): BridgeData {
     return mapOf(
-        "original_transaction_id" to originalTransactionId,
+        "originalTransactionId" to originalTransactionId,
         "transactionId" to transactionId,
         "offerCode" to offerCode,
         "transactionTimestamp" to transactionDate.time.toDouble(),
-        "expirationTimestamp" to transactionRevocationDate?.time?.toDouble(),
+        "expirationTimestamp" to expirationDate?.time?.toDouble(),
         "transactionRevocationTimestamp" to transactionRevocationDate?.time?.toDouble(),
         "ownershipType" to ownershipType.name,
         "type" to type.name,
