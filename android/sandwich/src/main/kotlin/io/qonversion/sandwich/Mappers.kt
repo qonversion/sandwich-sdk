@@ -12,6 +12,7 @@ import com.qonversion.android.sdk.dto.QRemoteConfigurationSourceType
 import com.qonversion.android.sdk.dto.QUser
 import com.qonversion.android.sdk.dto.eligibility.QEligibility
 import com.qonversion.android.sdk.dto.entitlements.QEntitlement
+import com.qonversion.android.sdk.dto.entitlements.QTransaction
 import com.qonversion.android.sdk.dto.experiments.QExperiment
 import com.qonversion.android.sdk.dto.experiments.QExperimentGroup
 import com.qonversion.android.sdk.dto.experiments.QExperimentGroupType
@@ -26,6 +27,7 @@ import com.qonversion.android.sdk.dto.products.QProductPricingPhase
 import com.qonversion.android.sdk.dto.products.QProductStoreDetails
 import com.qonversion.android.sdk.dto.properties.QUserProperties
 import com.qonversion.android.sdk.dto.properties.QUserProperty
+import java.util.Date
 
 fun QonversionError.toSandwichError(): SandwichError {
     return SandwichError(this)
@@ -165,7 +167,29 @@ fun QEntitlement.toMap(): BridgeData {
         "active" to isActive,
         "source" to source.name,
         "productId" to productId,
-        "renewState" to renewState.type
+        "renewState" to renewState.type,
+        "renewsCount" to renewsCount,
+        "trialStartTimestamp" to trialStartDate?.time?.toDouble(),
+        "firstPurchaseTimestamp" to firstPurchaseDate?.time?.toDouble(),
+        "lastPurchaseTimestamp" to lastPurchaseDate?.time?.toDouble(),
+        "lastActivatedOfferCode" to lastActivatedOfferCode,
+        "autoRenewDisableTimestamp" to autoRenewDisableDate?.time?.toDouble(),
+        "grantType" to grantType.name,
+        "transactions" to transactions.map { it.toMap() }
+    )
+}
+
+fun QTransaction.toMap(): BridgeData {
+    return mapOf(
+        "originalTransactionId" to originalTransactionId,
+        "transactionId" to transactionId,
+        "offerCode" to offerCode,
+        "transactionTimestamp" to transactionDate.time.toDouble(),
+        "expirationTimestamp" to expirationDate?.time?.toDouble(),
+        "transactionRevocationTimestamp" to transactionRevocationDate?.time?.toDouble(),
+        "ownershipType" to ownershipType.name,
+        "type" to type.name,
+        "environment" to environment.name
     )
 }
 
