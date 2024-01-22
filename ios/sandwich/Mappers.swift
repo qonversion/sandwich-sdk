@@ -54,15 +54,36 @@ extension NSError {
 
 extension Qonversion.Product {
   func toMap() -> BridgeData {
+      var subscriptionPeriodMap: BridgeData? = nil
+      var trialPeriodMap: BridgeData? = nil;
+      if #available(iOS 11.2, macOS 10.13.2, watchOS 6.2, tvOS 11.2, *) {
+          subscriptionPeriodMap = subscriptionPeriod?.toMap()
+          trialPeriodMap = trialPeriod?.toMap();
+      };
+
     return [
-        "id": qonversionID,
-        "storeId": storeID,
-        "type": type.rawValue,
-        "duration": duration.rawValue,
-        "skProduct": skProduct?.toMap(),
-        "prettyPrice": prettyPrice,
-        "trialDuration": trialDuration.rawValue,
-        "offeringId": offeringID
+      "id": qonversionID,
+      "storeId": storeID,
+      "type": type.toString(),
+      "subscriptionPeriod": subscriptionPeriodMap,
+      "skProduct": skProduct?.toMap(),
+      "prettyPrice": prettyPrice,
+      "trialPeriod": trialPeriodMap,
+      "offeringId": offeringID
+    ]
+  }
+}
+
+@available(iOS 11.2, macOS 10.13.2, watchOS 6.2, tvOS 11.2, *)
+extension Qonversion.SubscriptionPeriod {
+  func toMap() -> BridgeData {
+    let unitStr = unit.toString()
+    let firstLetter = unitStr.prefix(1)
+
+    return [
+      "unit": unitStr,
+      "unitCount": unitCount,
+      "iso": "P\(unitCount)\(firstLetter)"
     ]
   }
 }
@@ -241,6 +262,40 @@ extension Qonversion.EntitlementSource {
       return "Stripe"
     case .manual:
       return "Manual"
+    default:
+      return "Unknown"
+    }
+  }
+}
+
+extension Qonversion.SubscriptionPeriodUnit {
+  func toString() -> String {
+    switch self {
+    case .day:
+      return "Day"
+    case .week:
+      return "Week"
+    case .month:
+      return "Month"
+    case .year:
+      return "Year"
+    @unknown default:
+      return "Unknown"
+    }
+  }
+}
+
+extension Qonversion.ProductType {
+  func toString() -> String {
+    switch self {
+    case .unknown:
+      return "Unknown"
+    case .trial:
+      return "Trial"
+    case .directSubscription:
+      return "Subscription"
+    case .oneTime:
+      return "InApp"
     default:
       return "Unknown"
     }
