@@ -351,6 +351,18 @@ extension Qonversion.UserPropertyKey {
       
     case "AppSetId":
       return .appSetId
+      
+    case "AppMetricaDeviceId":
+      return .appMetricaDeviceId
+      
+    case "AppMetricaUserProfileId":
+      return .appMetricaUserProfileId
+      
+    case "PushWooshHwId":
+      return .pushWooshHwId
+      
+    case "pushWooshUserId":
+      return .pushWooshUserId
 
     default:
       return nil
