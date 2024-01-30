@@ -361,7 +361,7 @@ extension Qonversion.UserPropertyKey {
     case "PushWooshHwId":
       return .pushWooshHwId
       
-    case "pushWooshUserId":
+    case "PushWooshUserId":
       return .pushWooshUserId
 
     default:
