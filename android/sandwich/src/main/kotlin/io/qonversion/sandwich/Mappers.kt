@@ -27,7 +27,6 @@ import com.qonversion.android.sdk.dto.products.QProductPricingPhase
 import com.qonversion.android.sdk.dto.products.QProductStoreDetails
 import com.qonversion.android.sdk.dto.properties.QUserProperties
 import com.qonversion.android.sdk.dto.properties.QUserProperty
-import java.util.Date
 
 fun QonversionError.toSandwichError(): SandwichError {
     return SandwichError(this)
