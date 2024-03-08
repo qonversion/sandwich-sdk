@@ -234,15 +234,14 @@ public class QonversionSandwich : NSObject {
   @objc public func remoteConfig(_ contextKey: String?, _ completion: @escaping BridgeCompletion) {
     let sandwichCompletion: Qonversion.RemoteConfigCompletionHandler = { remoteConfig, error in
       if let error = error as NSError? {
-        completion(nil, error.toSandwichError())
+        return completion(nil, error.toSandwichError())
       }
 
       let bridgeData: [String: Any]? = remoteConfig?.toMap().clearEmptyValues()
-        
       completion(bridgeData, nil)
     }
 
-    if let contextKey = contextKey {
+    if let contextKey {
       return Qonversion.shared().remoteConfig(contextKey: contextKey, completion: sandwichCompletion)
     }
     
