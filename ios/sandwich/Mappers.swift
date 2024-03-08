@@ -552,7 +552,9 @@ extension Qonversion.RemoteConfigurationSource {
       "id": identifier,
       "name": name,
       "type": type.toString(),
-      "assignmentType": assignmentType.toString()]
+      "assignmentType": assignmentType.toString(),
+      "contextKey": contextKey
+    ]
   }
 }
 

@@ -275,7 +275,8 @@ fun QRemoteConfigurationSource.toMap(): BridgeData {
         "id" to id,
         "name" to name,
         "type" to type.toFormattedString(),
-        "assignmentType" to assignmentType.toFormattedString()
+        "assignmentType" to assignmentType.toFormattedString(),
+        "contextKey" to contextKey
     )
 }
 
