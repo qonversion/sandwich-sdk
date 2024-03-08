@@ -256,8 +256,8 @@ class QonversionSandwich(
 
     // region Experiments
 
-    fun remoteConfig(resultListener: ResultListener) {
-        Qonversion.shared.remoteConfig(object : QonversionRemoteConfigCallback {
+    fun remoteConfig(contextKey: String?, resultListener: ResultListener) {
+        Qonversion.shared.remoteConfig(contextKey, object : QonversionRemoteConfigCallback {
             override fun onSuccess(remoteConfig: QRemoteConfig) {
                 resultListener.onSuccess(remoteConfig.toMap())
             }

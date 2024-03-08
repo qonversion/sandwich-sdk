@@ -231,8 +231,8 @@ public class QonversionSandwich : NSObject {
     Qonversion.shared().collectAdvertisingId()
   }
   
-  @objc public func remoteConfig(_ completion: @escaping BridgeCompletion) {
-    Qonversion.shared().remoteConfig { remoteConfig, error in
+  @objc public func remoteConfig(contextKey: contextKey, _ completion: @escaping BridgeCompletion) {
+    Qonversion.shared().remoteConfig(contextKey: contextKey) { remoteConfig, error in
       if let error = error as NSError? {
         completion(nil, error.toSandwichError())
       }
