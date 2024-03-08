@@ -241,7 +241,7 @@ public class QonversionSandwich : NSObject {
       completion(bridgeData, nil)
     }
 
-    if let contextKey {
+    if let contextKey = contextKey {
       return Qonversion.shared().remoteConfig(contextKey: contextKey, completion: sandwichCompletion)
     }
     
