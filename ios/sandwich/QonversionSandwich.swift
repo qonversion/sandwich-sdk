@@ -231,16 +231,21 @@ public class QonversionSandwich : NSObject {
     Qonversion.shared().collectAdvertisingId()
   }
   
-  @objc public func remoteConfig(_ completion: @escaping BridgeCompletion) {
-    Qonversion.shared().remoteConfig { remoteConfig, error in
+  @objc public func remoteConfig(_ contextKey: String?, _ completion: @escaping BridgeCompletion) {
+    let sandwichCompletion: Qonversion.RemoteConfigCompletionHandler = { remoteConfig, error in
       if let error = error as NSError? {
-        completion(nil, error.toSandwichError())
+        return completion(nil, error.toSandwichError())
       }
-      
+
       let bridgeData: [String: Any]? = remoteConfig?.toMap().clearEmptyValues()
-      
       completion(bridgeData, nil)
     }
+
+    if let contextKey = contextKey {
+      return Qonversion.shared().remoteConfig(contextKey: contextKey, completion: sandwichCompletion)
+    }
+    
+    Qonversion.shared().remoteConfig(sandwichCompletion)
   }
   
   @objc public func attachUserToExperiment(with experimentId: String, groupId: String, completion: @escaping BridgeCompletion) {
