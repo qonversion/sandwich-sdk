@@ -257,7 +257,7 @@ class QonversionSandwich(
     // region Experiments
 
     fun remoteConfig(contextKey: String?, resultListener: ResultListener) {
-        Qonversion.shared.remoteConfig(contextKey, object : QonversionRemoteConfigCallback {
+        val callback = object : QonversionRemoteConfigCallback {
             override fun onSuccess(remoteConfig: QRemoteConfig) {
                 resultListener.onSuccess(remoteConfig.toMap())
             }
@@ -265,7 +265,12 @@ class QonversionSandwich(
             override fun onError(error: QonversionError) {
                 resultListener.onError(error.toSandwichError())
             }
-        })
+        }
+        contextKey?.let {
+            Qonversion.shared.remoteConfig(it, callback)
+        } ?: run {
+            Qonversion.shared.remoteConfig(callback)
+        }
     }
 
     fun attachUserToExperiment(experimentId: String, groupId: String, resultListener: ResultListener) {
