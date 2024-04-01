@@ -248,7 +248,7 @@ public class QonversionSandwich : NSObject {
     Qonversion.shared().remoteConfig(sandwichCompletion)
   }
   
-  @objc public func remoteConfigList(_ contextKeys: Array<String>, includeEmptyContextKey: Bool, _ completion: @escaping BridgeCompletion) {
+  @objc public func remoteConfigList(_ contextKeys: [String], includeEmptyContextKey: Bool, _ completion: @escaping BridgeCompletion) {
     let sandwichCompletion: Qonversion.RemoteConfigListCompletionHandler = { remoteConfigList, error in
       if let error = error as NSError? {
         return completion(nil, error.toSandwichError())
