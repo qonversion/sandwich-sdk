@@ -248,6 +248,32 @@ public class QonversionSandwich : NSObject {
     Qonversion.shared().remoteConfig(sandwichCompletion)
   }
   
+  @objc public func remoteConfigList(_ contextKeys: Array<String>, includeEmptyContextKey: Bool, _ completion: @escaping BridgeCompletion) {
+    let sandwichCompletion: Qonversion.RemoteConfigListCompletionHandler = { remoteConfigList, error in
+      if let error = error as NSError? {
+        return completion(nil, error.toSandwichError())
+      }
+
+      let bridgeData: [String: Any]? = remoteConfigList?.toMap().clearEmptyValues()
+      completion(bridgeData, nil)
+    }
+    
+    Qonversion.shared().remoteConfigList(contextKeys: contextKeys, includeEmptyContextKey: includeEmptyContextKey, completion: sandwichCompletion)
+  }
+  
+  @objc public func remoteConfigList(_ completion: @escaping BridgeCompletion) {
+    let sandwichCompletion: Qonversion.RemoteConfigListCompletionHandler = { remoteConfigList, error in
+      if let error = error as NSError? {
+        return completion(nil, error.toSandwichError())
+      }
+
+      let bridgeData: [String: Any]? = remoteConfigList?.toMap().clearEmptyValues()
+      completion(bridgeData, nil)
+    }
+    
+    Qonversion.shared().remoteConfigList(sandwichCompletion)
+  }
+  
   @objc public func attachUserToExperiment(with experimentId: String, groupId: String, completion: @escaping BridgeCompletion) {
     Qonversion.shared().attachUser(toExperiment: experimentId, groupId: groupId) { success, error in
       if let error = error as NSError? {
