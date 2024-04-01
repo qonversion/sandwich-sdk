@@ -13,6 +13,7 @@ import com.qonversion.android.sdk.dto.QPurchaseModel
 import com.qonversion.android.sdk.dto.QPurchaseUpdateModel
 import com.qonversion.android.sdk.dto.QPurchaseUpdatePolicy
 import com.qonversion.android.sdk.dto.QRemoteConfig
+import com.qonversion.android.sdk.dto.QRemoteConfigList
 import com.qonversion.android.sdk.dto.QUser
 import com.qonversion.android.sdk.dto.QonversionError
 import com.qonversion.android.sdk.dto.QonversionErrorCode
@@ -30,6 +31,7 @@ import com.qonversion.android.sdk.listeners.QonversionExperimentAttachCallback
 import com.qonversion.android.sdk.listeners.QonversionOfferingsCallback
 import com.qonversion.android.sdk.listeners.QonversionProductsCallback
 import com.qonversion.android.sdk.listeners.QonversionRemoteConfigCallback
+import com.qonversion.android.sdk.listeners.QonversionRemoteConfigListCallback
 import com.qonversion.android.sdk.listeners.QonversionRemoteConfigurationAttachCallback
 import com.qonversion.android.sdk.listeners.QonversionUserCallback
 import com.qonversion.android.sdk.listeners.QonversionUserPropertiesCallback
@@ -271,6 +273,34 @@ class QonversionSandwich(
         } ?: run {
             Qonversion.shared.remoteConfig(callback)
         }
+    }
+
+    fun remoteConfigList(contextKeys: List<String>, includeEmptyContextKey: Boolean, resultListener: ResultListener) {
+        val callback = object : QonversionRemoteConfigListCallback {
+            override fun onSuccess(remoteConfigList: QRemoteConfigList) {
+                resultListener.onSuccess(remoteConfigList.toMap())
+            }
+
+            override fun onError(error: QonversionError) {
+                resultListener.onError(error.toSandwichError())
+            }
+        }
+
+        Qonversion.shared.remoteConfigList(contextKeys, includeEmptyContextKey, callback)
+    }
+
+    fun remoteConfigList(resultListener: ResultListener) {
+        val callback = object : QonversionRemoteConfigListCallback {
+            override fun onSuccess(remoteConfigList: QRemoteConfigList) {
+                resultListener.onSuccess(remoteConfigList.toMap())
+            }
+
+            override fun onError(error: QonversionError) {
+                resultListener.onError(error.toSandwichError())
+            }
+        }
+
+        Qonversion.shared.remoteConfigList(callback)
     }
 
     fun attachUserToExperiment(experimentId: String, groupId: String, resultListener: ResultListener) {
