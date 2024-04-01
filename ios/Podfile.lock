@@ -1,12 +1,12 @@
 PODS:
-  - Qonversion (5.7.0):
-    - Qonversion/Main (= 5.7.0)
-  - Qonversion/Main (5.7.0)
-  - QonversionSandwich (4.1.0):
-    - Qonversion (= 5.7.0)
+  - Qonversion (5.8.2):
+    - Qonversion/Main (= 5.8.2)
+  - Qonversion/Main (5.8.2)
+  - QonversionSandwich (4.1.1):
+    - Qonversion (= 5.8.2)
 
 DEPENDENCIES:
-  - Qonversion (= 5.7.0)
+  - Qonversion (= 5.8.2)
   - QonversionSandwich (from `../`)
 
 SPEC REPOS:
@@ -18,9 +18,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Qonversion: 28eb7795cb52b83de3461898cf1c2b527545f860
-  QonversionSandwich: 97cf70512ef460c11e86a793eddc34a2d18cac7e
+  Qonversion: db2c1948a0a27523e2c913858347a019bdebb82c
+  QonversionSandwich: cb26638883fbf1ad79671aecbd431174cf99b972
 
-PODFILE CHECKSUM: 581ca77b0f4843311f8495ef4e66e0dac6016e85
+PODFILE CHECKSUM: 4bda1bc024feeec34eb5a152d592c2e039f14c41
 
 COCOAPODS: 1.13.0

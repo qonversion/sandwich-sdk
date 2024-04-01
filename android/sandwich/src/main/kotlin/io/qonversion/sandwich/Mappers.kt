@@ -6,6 +6,7 @@ import com.qonversion.android.sdk.automations.dto.QActionResult
 import com.qonversion.android.sdk.automations.dto.QScreenPresentationConfig
 import com.qonversion.android.sdk.automations.dto.QScreenPresentationStyle
 import com.qonversion.android.sdk.dto.QRemoteConfig
+import com.qonversion.android.sdk.dto.QRemoteConfigList
 import com.qonversion.android.sdk.dto.QRemoteConfigurationAssignmentType
 import com.qonversion.android.sdk.dto.QRemoteConfigurationSource
 import com.qonversion.android.sdk.dto.QRemoteConfigurationSourceType
@@ -236,6 +237,12 @@ fun QUserProperties.toMap(): BridgeData {
 
 fun Map<String, QEligibility>.toEligibilityMap(): BridgeData {
     return mapValues { it.value.toMap() }
+}
+
+fun QRemoteConfigList.toMap(): BridgeData {
+    return mapOf(
+        "remoteConfigs" to remoteConfigs.map { it.toMap() }
+    )
 }
 
 fun QRemoteConfig.toMap(): BridgeData {

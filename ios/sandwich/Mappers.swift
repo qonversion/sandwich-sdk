@@ -536,6 +536,14 @@ extension SKProductDiscount {
   }
 }
 
+extension Qonversion.RemoteConfigList {
+  func toMap() -> BridgeData {
+    return [
+      "remoteConfigs": remoteConfigs.map { $0.toMap() }
+    ]
+  }
+}
+
 extension Qonversion.RemoteConfig {
   func toMap() -> BridgeData {
     return [
