@@ -175,8 +175,16 @@ public class QonversionSandwich : NSObject {
   
   // MARK: User Info
   
-  @objc public func identify(_ userId: String) {
-    Qonversion.shared().identify(userId)
+  @objc public func identify(_ userId: String, _ completion: @escaping BridgeCompletion) {
+    Qonversion.shared().identify(userId) { userInfo, error in
+      if let error = error as NSError? {
+        return completion(nil, error.toSandwichError())
+      }
+
+      let bridgeData: [String: Any]? = userInfo?.toMap().clearEmptyValues()
+      
+      completion(bridgeData, nil)
+    }
   }
   
   @objc public func setDefinedProperty(_ property: String, value: String) {
