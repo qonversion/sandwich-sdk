@@ -201,19 +201,11 @@ class QonversionSandwich(
     // region User Info
 
     fun userInfo(resultListener: ResultListener) {
-        Qonversion.shared.userInfo(object : QonversionUserCallback {
-            override fun onSuccess(user: QUser) {
-                resultListener.onSuccess(user.toMap())
-            }
-
-            override fun onError(error: QonversionError) {
-                resultListener.onError(error.toSandwichError())
-            }
-        })
+        Qonversion.shared.userInfo(getUserCallback(resultListener))
     }
 
-    fun identify(userId: String) {
-        Qonversion.shared.identify(userId)
+    fun identify(userId: String, resultListener: ResultListener) {
+        Qonversion.shared.identify(userId, getUserCallback(resultListener))
     }
 
     fun setDefinedProperty(propertyKey: String, value: String) {
@@ -451,6 +443,17 @@ class QonversionSandwich(
             override fun onError(error: QonversionError) {
                 val isCancelled = error.code == QonversionErrorCode.CanceledPurchase
                 resultListener.onError(error.toSandwichError(), isCancelled)
+            }
+        }
+
+    private fun getUserCallback(resultListener: ResultListener) =
+        object : QonversionUserCallback {
+            override fun onSuccess(user: QUser) {
+                resultListener.onSuccess(user.toMap())
+            }
+
+            override fun onError(error: QonversionError) {
+                resultListener.onError(error.toSandwichError())
             }
         }
 
