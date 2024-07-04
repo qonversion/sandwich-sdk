@@ -97,7 +97,7 @@ public class QonversionSandwich : NSObject {
       promoPurchasesExecutionBlocks[productId] = nil
 
       executionBlock { [weak self] (entitlements, error, isCancelled) in
-        self?.handlePurchaseResult(entitlements, error, isCancelled, completion: completion)
+        self?.handleEntitlementsResult(entitlements, error, completion: completion)
       }
     } else {
       let error = NSError.init(domain: QonversionErrorDomain, code: Qonversion.Error.productNotFound.rawValue, userInfo: nil)
@@ -107,14 +107,8 @@ public class QonversionSandwich : NSObject {
   }
   
   @objc public func checkEntitlements(_ completion: @escaping BridgeCompletion) {
-    Qonversion.shared().checkEntitlements { (entitlements, error) in
-      if let error = error as NSError? {
-        return completion(nil, error.toSandwichError())
-      }
-      
-      let entitlementsDict: [String: Any] = entitlements.mapValues { $0.toMap() }.clearEmptyValues()
-      
-      completion(entitlementsDict, nil)
+    Qonversion.shared().checkEntitlements { [weak self] (entitlements, error) in
+      self?.handleEntitlementsResult(entitlements, error, completion: completion)
     }
   }
   
@@ -143,14 +137,8 @@ public class QonversionSandwich : NSObject {
   }
   
   @objc public func restore(_ completion: @escaping BridgeCompletion) {
-    Qonversion.shared().restore { (entitlements, error) in
-      if let error = error as NSError? {
-        return completion(nil, error.toSandwichError())
-      }
-      
-      let entitlementsDict: [String: Any] = entitlements.mapValues { $0.toMap() }.clearEmptyValues()
-      
-      completion(entitlementsDict, nil)
+    Qonversion.shared().restore { [weak self] (entitlements, error) in
+      self?.handleEntitlementsResult(entitlements, error, completion: completion)
     }
   }
   
@@ -339,23 +327,19 @@ public class QonversionSandwich : NSObject {
   
   private func getPurchaseCompletionHandler(for completion: @escaping BridgeCompletion) -> Qonversion.PurchaseCompletionHandler {
     let purchaseCompletion: Qonversion.PurchaseCompletionHandler = { [weak self] (entitlements, error, isCancelled) in
-      self?.handlePurchaseResult(entitlements, error, isCancelled, completion: completion)
+      self?.handleEntitlementsResult(entitlements, error, completion: completion)
     }
     
     return purchaseCompletion
   }
   
-  private func handlePurchaseResult(
+  private func handleEntitlementsResult(
     _ entitlements: [String: Qonversion.Entitlement],
     _ error: Error?,
-    _ isCancelled: Bool,
     completion: @escaping BridgeCompletion
   ) {
     if let error = error as NSError? {
-      let wrappedError = error.toSandwichError()
-      wrappedError.additionalInfo["isCancelled"] = isCancelled
-      
-      return completion(nil, wrappedError)
+      return completion(nil, error.toSandwichError())
     }
     
     let entitlementsDict: [String: Any] = entitlements.mapValues { $0.toMap() }.clearEmptyValues()
