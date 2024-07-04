@@ -276,7 +276,7 @@ public class QonversionSandwich : NSObject {
         return completion(nil, error.toSandwichError())
       }
       
-      completion(self.defaultSuccessResponse(), nil)
+      completion(self.defaultResponse(success: true), nil)
     }
   }
   
@@ -286,7 +286,7 @@ public class QonversionSandwich : NSObject {
         return completion(nil, error.toSandwichError())
       }
       
-      completion(self.defaultSuccessResponse(), nil)
+      completion(self.defaultResponse(success: true), nil)
     })
   }
   
@@ -296,7 +296,7 @@ public class QonversionSandwich : NSObject {
         return completion(nil, error.toSandwichError())
       }
       
-      completion(self.defaultSuccessResponse(), nil)
+      completion(self.defaultResponse(success: true), nil)
     }
   }
   
@@ -306,14 +306,20 @@ public class QonversionSandwich : NSObject {
         return completion(nil, error.toSandwichError())
       }
       
-      completion(self.defaultSuccessResponse(), nil)
+      completion(self.defaultResponse(success: true), nil)
     })
+  }
+  
+  @objc public func isFallbackFileAccessible(completion: @escaping BridgeCompletion) {
+    let isAccessible: Bool = Qonversion.shared().isFallbackFileAccessible()
+    
+    completion(self.defaultResponse(success: isAccessible), nil)
   }
   
   // MARK: - Private functions
   
-  private func defaultSuccessResponse() -> [String: Any] {
-    return ["success": true]
+  private func defaultResponse(success: Bool) -> [String: Any] {
+    return ["success": success]
   }
   
   private func loadProduct(_ productId: String, _ offeringId: String, completion: @escaping ProductCompletion) {

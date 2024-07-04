@@ -298,7 +298,7 @@ class QonversionSandwich(
     fun attachUserToExperiment(experimentId: String, groupId: String, resultListener: ResultListener) {
         Qonversion.shared.attachUserToExperiment(experimentId, groupId, object : QonversionExperimentAttachCallback {
             override fun onSuccess() {
-                resultListener.onSuccess(emptySuccessResult())
+                resultListener.onSuccess(emptyResult(success = true))
             }
 
             override fun onError(error: QonversionError) {
@@ -310,7 +310,7 @@ class QonversionSandwich(
     fun detachUserFromExperiment(experimentId: String, resultListener: ResultListener) {
         Qonversion.shared.detachUserFromExperiment(experimentId, object : QonversionExperimentAttachCallback {
             override fun onSuccess() {
-                resultListener.onSuccess(emptySuccessResult())
+                resultListener.onSuccess(emptyResult(success = true))
             }
 
             override fun onError(error: QonversionError) {
@@ -323,7 +323,7 @@ class QonversionSandwich(
         Qonversion.shared.attachUserToRemoteConfiguration(remoteConfigurationId, object :
             QonversionRemoteConfigurationAttachCallback {
             override fun onSuccess() {
-                resultListener.onSuccess(emptySuccessResult())
+                resultListener.onSuccess(emptyResult(success = true))
             }
 
             override fun onError(error: QonversionError) {
@@ -336,7 +336,7 @@ class QonversionSandwich(
         Qonversion.shared.detachUserFromRemoteConfiguration(remoteConfigurationId, object :
             QonversionRemoteConfigurationAttachCallback {
             override fun onSuccess() {
-                resultListener.onSuccess(emptySuccessResult())
+                resultListener.onSuccess(emptyResult(success = true))
             }
 
             override fun onError(error: QonversionError) {
@@ -351,12 +351,18 @@ class QonversionSandwich(
         Qonversion.shared.syncHistoricalData()
     }
 
+    fun isFallbackFileAccessible(resultListener: ResultListener) {
+        val isAccessible = Qonversion.shared.isFallbackFileAccessible()
+
+        resultListener.onSuccess(emptyResult(success = isAccessible))
+    }
+
     // endregion
 
     // region Private
 
-    private fun emptySuccessResult(): BridgeData {
-        return mapOf("success" to true)
+    private fun emptyResult(success: Boolean): BridgeData {
+        return mapOf("success" to success)
     }
 
     private interface ProductCallback {
