@@ -2,7 +2,7 @@ PODS:
   - Qonversion (5.9.0):
     - Qonversion/Main (= 5.9.0)
   - Qonversion/Main (5.9.0)
-  - QonversionSandwich (4.3.2):
+  - QonversionSandwich (4.4.0):
     - Qonversion (= 5.9.0)
 
 DEPENDENCIES:
@@ -19,7 +19,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Qonversion: 2bba69076355a256e12ef372ff7ea4c1a3d5a054
-  QonversionSandwich: 7d6f636d56d7c528e69583daa7f326f087da3985
+  QonversionSandwich: 4138589480629a27f2b9f40586f59c4adc5d3ea6
 
 PODFILE CHECKSUM: 753d63bea09faa4a3992e32875b4a89660c6dc82
 

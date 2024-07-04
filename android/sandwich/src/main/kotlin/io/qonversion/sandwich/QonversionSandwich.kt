@@ -92,11 +92,11 @@ class QonversionSandwich(
         productId: String,
         offerId: String?,
         applyOffer: Boolean?,
-        resultListener: PurchaseResultListener
+        resultListener: ResultListener
     ) {
         val currentActivity = activityProvider.currentActivity
             ?: run {
-                resultListener.onError(noActivityForPurchaseError.toSandwichError(), false)
+                resultListener.onError(noActivityForPurchaseError.toSandwichError())
                 return
             }
 
@@ -105,7 +105,7 @@ class QonversionSandwich(
             purchaseModel.removeOffer()
         }
 
-        val purchaseCallback = getPurchaseCallback(resultListener)
+        val purchaseCallback = getEntitlementsCallback(resultListener)
         Qonversion.shared.purchase(currentActivity, purchaseModel, purchaseCallback)
     }
 
@@ -115,11 +115,11 @@ class QonversionSandwich(
         applyOffer: Boolean?,
         oldProductId: String,
         updatePolicyKey: String?,
-        resultListener: PurchaseResultListener
+        resultListener: ResultListener
     ) {
         val currentActivity = activityProvider.currentActivity
             ?: run {
-                resultListener.onError(noActivityForPurchaseError.toSandwichError(), false)
+                resultListener.onError(noActivityForPurchaseError.toSandwichError())
                 return
             }
 
@@ -135,7 +135,7 @@ class QonversionSandwich(
             purchaseUpdateModel.removeOffer()
         }
 
-        val purchaseCallback = getPurchaseCallback(resultListener)
+        val purchaseCallback = getEntitlementsCallback(resultListener)
         Qonversion.shared.updatePurchase(
             currentActivity,
             purchaseUpdateModel,
@@ -431,18 +431,6 @@ class QonversionSandwich(
 
             override fun onError(error: QonversionError) {
                 resultListener.onError(error.toSandwichError())
-            }
-        }
-
-    private fun getPurchaseCallback(resultListener: PurchaseResultListener) =
-        object : QonversionEntitlementsCallback {
-            override fun onSuccess(entitlements: Map<String, QEntitlement>) {
-                resultListener.onSuccess(entitlements.toEntitlementsMap())
-            }
-
-            override fun onError(error: QonversionError) {
-                val isCancelled = error.code == QonversionErrorCode.CanceledPurchase
-                resultListener.onError(error.toSandwichError(), isCancelled)
             }
         }
 

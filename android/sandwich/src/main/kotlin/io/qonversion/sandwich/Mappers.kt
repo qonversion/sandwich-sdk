@@ -21,6 +21,7 @@ import com.qonversion.android.sdk.dto.offerings.QOffering
 import com.qonversion.android.sdk.dto.offerings.QOfferings
 import com.qonversion.android.sdk.dto.products.QProduct
 import com.qonversion.android.sdk.dto.products.QProductInAppDetails
+import com.qonversion.android.sdk.dto.products.QProductInstallmentPlanDetails
 import com.qonversion.android.sdk.dto.products.QProductOfferDetails
 import com.qonversion.android.sdk.dto.products.QSubscriptionPeriod
 import com.qonversion.android.sdk.dto.products.QProductPrice
@@ -102,6 +103,7 @@ fun QProductPricingPhase.toMap(): BridgeData {
         "isBasePlan" to isBasePlan
     )
 }
+
 fun QProductOfferDetails.toMap(): BridgeData {
     return mapOf(
         "basePlanId" to basePlanId,
@@ -110,11 +112,19 @@ fun QProductOfferDetails.toMap(): BridgeData {
         "tags" to tags,
         "pricingPhases" to pricingPhases.map { it.toMap() },
         "basePlan" to basePlan?.toMap(),
+        "installmentPlanDetails" to installmentPlanDetails?.toMap(),
         "trialPhase" to trialPhase?.toMap(),
         "introPhase" to introPhase?.toMap(),
         "hasTrial" to hasTrial,
         "hasIntro" to hasIntro,
         "hasTrialOrIntro" to hasTrialOrIntro
+    )
+}
+
+fun QProductInstallmentPlanDetails.toMap(): BridgeData {
+    return mapOf(
+        "commitmentPaymentsCount" to commitmentPaymentsCount,
+        "subsequentCommitmentPaymentsCount" to subsequentCommitmentPaymentsCount
     )
 }
 
@@ -152,6 +162,7 @@ fun QProductStoreDetails.toMap(): BridgeData {
         "isInApp" to isInApp,
         "isSubscription" to isSubscription,
         "isPrepaid" to isPrepaid,
+        "isInstallment" to isInstallment
     )
 }
 
