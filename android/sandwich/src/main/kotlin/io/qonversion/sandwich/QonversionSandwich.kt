@@ -92,11 +92,11 @@ class QonversionSandwich(
         productId: String,
         offerId: String?,
         applyOffer: Boolean?,
-        resultListener: PurchaseResultListener
+        resultListener: ResultListener
     ) {
         val currentActivity = activityProvider.currentActivity
             ?: run {
-                resultListener.onError(noActivityForPurchaseError.toSandwichError(), false)
+                resultListener.onError(noActivityForPurchaseError.toSandwichError())
                 return
             }
 
@@ -105,7 +105,7 @@ class QonversionSandwich(
             purchaseModel.removeOffer()
         }
 
-        val purchaseCallback = getPurchaseCallback(resultListener)
+        val purchaseCallback = getEntitlementsCallback(resultListener)
         Qonversion.shared.purchase(currentActivity, purchaseModel, purchaseCallback)
     }
 
@@ -115,11 +115,11 @@ class QonversionSandwich(
         applyOffer: Boolean?,
         oldProductId: String,
         updatePolicyKey: String?,
-        resultListener: PurchaseResultListener
+        resultListener: ResultListener
     ) {
         val currentActivity = activityProvider.currentActivity
             ?: run {
-                resultListener.onError(noActivityForPurchaseError.toSandwichError(), false)
+                resultListener.onError(noActivityForPurchaseError.toSandwichError())
                 return
             }
 
@@ -135,7 +135,7 @@ class QonversionSandwich(
             purchaseUpdateModel.removeOffer()
         }
 
-        val purchaseCallback = getPurchaseCallback(resultListener)
+        val purchaseCallback = getEntitlementsCallback(resultListener)
         Qonversion.shared.updatePurchase(
             currentActivity,
             purchaseUpdateModel,
@@ -298,7 +298,7 @@ class QonversionSandwich(
     fun attachUserToExperiment(experimentId: String, groupId: String, resultListener: ResultListener) {
         Qonversion.shared.attachUserToExperiment(experimentId, groupId, object : QonversionExperimentAttachCallback {
             override fun onSuccess() {
-                resultListener.onSuccess(emptySuccessResult())
+                resultListener.onSuccess(emptyResult(success = true))
             }
 
             override fun onError(error: QonversionError) {
@@ -310,7 +310,7 @@ class QonversionSandwich(
     fun detachUserFromExperiment(experimentId: String, resultListener: ResultListener) {
         Qonversion.shared.detachUserFromExperiment(experimentId, object : QonversionExperimentAttachCallback {
             override fun onSuccess() {
-                resultListener.onSuccess(emptySuccessResult())
+                resultListener.onSuccess(emptyResult(success = true))
             }
 
             override fun onError(error: QonversionError) {
@@ -323,7 +323,7 @@ class QonversionSandwich(
         Qonversion.shared.attachUserToRemoteConfiguration(remoteConfigurationId, object :
             QonversionRemoteConfigurationAttachCallback {
             override fun onSuccess() {
-                resultListener.onSuccess(emptySuccessResult())
+                resultListener.onSuccess(emptyResult(success = true))
             }
 
             override fun onError(error: QonversionError) {
@@ -336,7 +336,7 @@ class QonversionSandwich(
         Qonversion.shared.detachUserFromRemoteConfiguration(remoteConfigurationId, object :
             QonversionRemoteConfigurationAttachCallback {
             override fun onSuccess() {
-                resultListener.onSuccess(emptySuccessResult())
+                resultListener.onSuccess(emptyResult(success = true))
             }
 
             override fun onError(error: QonversionError) {
@@ -351,12 +351,18 @@ class QonversionSandwich(
         Qonversion.shared.syncHistoricalData()
     }
 
+    fun isFallbackFileAccessible(resultListener: ResultListener) {
+        val isAccessible = Qonversion.shared.isFallbackFileAccessible()
+
+        resultListener.onSuccess(emptyResult(success = isAccessible))
+    }
+
     // endregion
 
     // region Private
 
-    private fun emptySuccessResult(): BridgeData {
-        return mapOf("success" to true)
+    private fun emptyResult(success: Boolean): BridgeData {
+        return mapOf("success" to success)
     }
 
     private interface ProductCallback {
@@ -431,18 +437,6 @@ class QonversionSandwich(
 
             override fun onError(error: QonversionError) {
                 resultListener.onError(error.toSandwichError())
-            }
-        }
-
-    private fun getPurchaseCallback(resultListener: PurchaseResultListener) =
-        object : QonversionEntitlementsCallback {
-            override fun onSuccess(entitlements: Map<String, QEntitlement>) {
-                resultListener.onSuccess(entitlements.toEntitlementsMap())
-            }
-
-            override fun onError(error: QonversionError) {
-                val isCancelled = error.code == QonversionErrorCode.CanceledPurchase
-                resultListener.onError(error.toSandwichError(), isCancelled)
             }
         }
 
