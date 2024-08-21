@@ -10,6 +10,7 @@ import com.qonversion.android.sdk.dto.QAttributionProvider
 import com.qonversion.android.sdk.dto.QEnvironment
 import com.qonversion.android.sdk.dto.QLaunchMode
 import com.qonversion.android.sdk.dto.QPurchaseModel
+import com.qonversion.android.sdk.dto.QPurchaseOptions
 import com.qonversion.android.sdk.dto.QPurchaseUpdateModel
 import com.qonversion.android.sdk.dto.QPurchaseUpdatePolicy
 import com.qonversion.android.sdk.dto.QRemoteConfig
@@ -92,6 +93,7 @@ class QonversionSandwich(
         productId: String,
         offerId: String?,
         applyOffer: Boolean?,
+        contextKeys: List<String>?,
         resultListener: ResultListener
     ) {
         val currentActivity = activityProvider.currentActivity
@@ -100,13 +102,24 @@ class QonversionSandwich(
                 return
             }
 
-        val purchaseModel = QPurchaseModel(productId, offerId)
-        if (applyOffer == false) {
-            purchaseModel.removeOffer()
-        }
-
         val purchaseCallback = getEntitlementsCallback(resultListener)
-        Qonversion.shared.purchase(currentActivity, purchaseModel, purchaseCallback)
+
+        Qonversion.shared.products(object: QonversionProductsCallback {
+            override fun onSuccess(products: Map<String, QProduct>) {
+                val product = products[productId]
+                if (product != null) {
+                    val purchaseOptions = configurePurchaseOptions(offerId, applyOffer, contextKeys = contextKeys)
+
+                    Qonversion.shared.purchase(currentActivity, product, purchaseOptions, purchaseCallback)
+                } else {
+                    purchaseCallback.onError(QonversionError(QonversionErrorCode.ProductNotFound))
+                }
+            }
+
+            override fun onError(error: QonversionError) {
+                purchaseCallback.onError(error)
+            }
+        })
     }
 
     fun updatePurchase(
@@ -115,6 +128,7 @@ class QonversionSandwich(
         applyOffer: Boolean?,
         oldProductId: String,
         updatePolicyKey: String?,
+        contextKeys: List<String>?,
         resultListener: ResultListener
     ) {
         val currentActivity = activityProvider.currentActivity
@@ -123,24 +137,25 @@ class QonversionSandwich(
                 return
             }
 
-        val updatePolicy = updatePolicyKey?.let {
-            try {
-                QPurchaseUpdatePolicy.valueOf(it)
-            } catch (e: IllegalArgumentException) {
-                null
-            }
-        }
-        val purchaseUpdateModel = QPurchaseUpdateModel(productId, oldProductId, updatePolicy, offerId)
-        if (applyOffer == false) {
-            purchaseUpdateModel.removeOffer()
-        }
-
         val purchaseCallback = getEntitlementsCallback(resultListener)
-        Qonversion.shared.updatePurchase(
-            currentActivity,
-            purchaseUpdateModel,
-            purchaseCallback
-        )
+
+        Qonversion.shared.products(object: QonversionProductsCallback {
+            override fun onSuccess(products: Map<String, QProduct>) {
+                val product = products[productId]
+                val oldProduct = products[oldProductId]
+                if (product != null && oldProduct != null) {
+                    val purchaseOptions = configurePurchaseOptions(offerId, applyOffer, oldProduct, updatePolicyKey, contextKeys)
+
+                    Qonversion.shared.updatePurchase(currentActivity, product, purchaseOptions, purchaseCallback)
+                } else {
+                    purchaseCallback.onError(QonversionError(QonversionErrorCode.ProductNotFound))
+                }
+            }
+
+            override fun onError(error: QonversionError) {
+                purchaseCallback.onError(error)
+            }
+        })
     }
 
     fun checkEntitlements(resultListener: ResultListener) {
@@ -363,6 +378,48 @@ class QonversionSandwich(
 
     private fun emptyResult(success: Boolean): BridgeData {
         return mapOf("success" to success)
+    }
+
+    private fun configurePurchaseOptions(
+        offerId: String? = null,
+        applyOffer: Boolean? = null,
+        oldProduct: QProduct? = null,
+        updatePolicyKey: String? = null,
+        contextKeys: List<String>? = null,
+    ): QPurchaseOptions {
+        val builder = QPurchaseOptions.Builder()
+
+        if (oldProduct != null) {
+            builder.setOldProduct(oldProduct)
+        }
+
+        val updatePolicy = updatePolicyKey?.let {
+            try {
+                QPurchaseUpdatePolicy.valueOf(it)
+            } catch (e: IllegalArgumentException) {
+                null
+            }
+        }
+
+        if (updatePolicy != null) {
+            builder.setUpdatePolicy(updatePolicy)
+        }
+
+        if (offerId != null) {
+            builder.setOfferId(offerId)
+        }
+
+        if (applyOffer == false) {
+            builder.removeOffer()
+        }
+
+        if (contextKeys != null) {
+            builder.setContextKeys(contextKeys)
+        }
+
+        val purchaseOptions = builder.build()
+
+        return purchaseOptions
     }
 
     private interface ProductCallback {
