@@ -81,10 +81,11 @@ public class QonversionSandwich : NSObject {
     contextKeys: [String],
     completion: @escaping BridgeCompletion
   ) {
-    let purchaseCompletion = getPurchaseCompletionHandler(for: completion)
-    let purchaseOptions = Qonversion.PurchaseOptions(quantity: quantity, contextKeys: contextKeys)
     Qonversion.shared().products { [weak self] result, err in
       guard let self = self else { return }
+     
+      let purchaseCompletion = getPurchaseCompletionHandler(for: completion)
+      let purchaseOptions = Qonversion.PurchaseOptions(quantity: quantity, contextKeys: contextKeys)
       
       guard let product: Qonversion.Product = result[productId] else {
         let error = self.productNotFoundError()
