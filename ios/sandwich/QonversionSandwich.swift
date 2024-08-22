@@ -75,6 +75,27 @@ public class QonversionSandwich : NSObject {
     Qonversion.shared().purchase(productId, completion: purchaseCompletion)
   }
   
+  @objc public func purchase(
+    _ productId: String,
+    quantity: Int,
+    contextKeys: [String],
+    completion: @escaping BridgeCompletion
+  ) {
+    Qonversion.shared().products { [weak self] result, err in
+      guard let self = self else { return }
+     
+      let purchaseCompletion = getPurchaseCompletionHandler(for: completion)
+      let purchaseOptions = Qonversion.PurchaseOptions(quantity: quantity, contextKeys: contextKeys)
+      
+      guard let product: Qonversion.Product = result[productId] else {
+        let error = self.productNotFoundError()
+        return purchaseCompletion([:], error, false)
+      }
+      
+      Qonversion.shared().purchaseProduct(product, options: purchaseOptions, completion: purchaseCompletion)
+    }
+  }
+  
   @objc public func purchaseProduct(_ productId: String, offeringId: String?, completion: @escaping BridgeCompletion) {
     guard let offeringId = offeringId else {
       return purchase(productId, completion: completion)
@@ -100,7 +121,7 @@ public class QonversionSandwich : NSObject {
         self?.handleEntitlementsResult(entitlements, error, completion: completion)
       }
     } else {
-      let error = NSError.init(domain: QonversionErrorDomain, code: Qonversion.Error.productNotFound.rawValue, userInfo: nil)
+      let error = productNotFoundError()
       
       completion(nil, error.toSandwichError())
     }
@@ -361,6 +382,12 @@ public class QonversionSandwich : NSObject {
     
     isSubscribedOnAsyncEvents = true
   }
+      
+    private func productNotFoundError() -> NSError {
+      let error = NSError.init(domain: QonversionErrorDomain, code: Qonversion.Error.productNotFound.rawValue, userInfo: nil)
+      
+      return error
+    }
 }
 
 // MARK: - PurchasesDelegate
