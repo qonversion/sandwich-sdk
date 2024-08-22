@@ -381,40 +381,38 @@ class QonversionSandwich(
     }
 
     private fun configurePurchaseOptions(
-        offerId: String? = null,
-        applyOffer: Boolean? = null,
+        offerId: String?,
+        applyOffer: Boolean?,
         oldProduct: QProduct? = null,
         updatePolicyKey: String? = null,
         contextKeys: List<String>? = null,
     ): QPurchaseOptions {
         val builder = QPurchaseOptions.Builder()
 
-        if (oldProduct != null) {
-            builder.setOldProduct(oldProduct)
+        oldProduct?.let {
+            builder.setOldProduct(it)
         }
 
-        val updatePolicy = updatePolicyKey?.let {
+        updatePolicyKey?.let {
             try {
                 QPurchaseUpdatePolicy.valueOf(it)
             } catch (e: IllegalArgumentException) {
                 null
             }
+        }?.let {
+            builder.setUpdatePolicy(it)
         }
 
-        if (updatePolicy != null) {
-            builder.setUpdatePolicy(updatePolicy)
-        }
-
-        if (offerId != null) {
-            builder.setOfferId(offerId)
+        offerId?.let {
+            builder.setOfferId(it)
         }
 
         if (applyOffer == false) {
             builder.removeOffer()
         }
 
-        if (contextKeys != null) {
-            builder.setContextKeys(contextKeys)
+        contextKeys?.let {
+            builder.setContextKeys(it)
         }
 
         val purchaseOptions = builder.build()
