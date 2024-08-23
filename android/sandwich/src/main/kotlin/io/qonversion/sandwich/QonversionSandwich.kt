@@ -93,39 +93,6 @@ class QonversionSandwich(
         productId: String,
         offerId: String?,
         applyOffer: Boolean?,
-        contextKeys: List<String>?,
-        resultListener: ResultListener
-    ) {
-        val currentActivity = activityProvider.currentActivity
-            ?: run {
-                resultListener.onError(noActivityForPurchaseError.toSandwichError())
-                return
-            }
-
-        val purchaseCallback = getEntitlementsCallback(resultListener)
-
-        Qonversion.shared.products(object: QonversionProductsCallback {
-            override fun onSuccess(products: Map<String, QProduct>) {
-                val product = products[productId]
-                if (product != null) {
-                    val purchaseOptions = configurePurchaseOptions(offerId, applyOffer, contextKeys = contextKeys)
-
-                    Qonversion.shared.purchase(currentActivity, product, purchaseOptions, purchaseCallback)
-                } else {
-                    purchaseCallback.onError(QonversionError(QonversionErrorCode.ProductNotFound))
-                }
-            }
-
-            override fun onError(error: QonversionError) {
-                purchaseCallback.onError(error)
-            }
-        })
-    }
-
-    fun updatePurchase(
-        productId: String,
-        offerId: String?,
-        applyOffer: Boolean?,
         oldProductId: String,
         updatePolicyKey: String?,
         contextKeys: List<String>?,
@@ -143,10 +110,12 @@ class QonversionSandwich(
             override fun onSuccess(products: Map<String, QProduct>) {
                 val product = products[productId]
                 val oldProduct = products[oldProductId]
-                if (product != null && oldProduct != null) {
-                    val purchaseOptions = configurePurchaseOptions(offerId, applyOffer, oldProduct, updatePolicyKey, contextKeys)
+                val purchaseOptions = configurePurchaseOptions(offerId, applyOffer, oldProduct, updatePolicyKey, contextKeys)
 
+                if (product != null && oldProduct != null) {
                     Qonversion.shared.updatePurchase(currentActivity, product, purchaseOptions, purchaseCallback)
+                } else if (product != null) {
+                    Qonversion.shared.purchase(currentActivity, product, purchaseOptions, purchaseCallback)
                 } else {
                     purchaseCallback.onError(QonversionError(QonversionErrorCode.ProductNotFound))
                 }
