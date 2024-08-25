@@ -93,7 +93,7 @@ class QonversionSandwich(
         productId: String,
         offerId: String?,
         applyOffer: Boolean?,
-        oldProductId: String,
+        oldProductId: String?,
         updatePolicyKey: String?,
         contextKeys: List<String>?,
         resultListener: ResultListener
