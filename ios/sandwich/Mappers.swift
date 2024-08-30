@@ -104,10 +104,25 @@ extension NSError {
       Qonversion.APIError.rateLimitExceeded.rawValue: "ApiRateLimitExceeded",
     ]
 
-    let strCode = (domain == QonversionApiErrorDomain ? apiErrorCodes[code] : codes[code]) ?? "Unknown"
+    var strCode = domain == QonversionApiErrorDomain ? apiErrorCodes[code] : codes[code]
+
+    // The below workarounds would be fixed in the coming major release.
+    if (strCode == nil && domain == NSURLErrorDomain) {
+      strCode = "NetworkConnectionFailed"
+    }
+
+    if (strCode == nil && domain == QonversionErrorDomain) {
+      let authErrorCodes = QNUtils.authErrorsCodes() as? [NSNumber] ?? []
+
+      if (500 <= code && code < 600) {
+        strCode = "BackendError"
+      } else if (authErrorCodes.contains { $0.intValue == code }) {
+        strCode = "InvalidCredentials"
+      }
+    }
 
     return SandwichError(
-      code: strCode,
+      code: strCode ?? "Unknown",
       domain: domain,
       details: localizedDescription,
       additionalMessage: userInfo[NSDebugDescriptionErrorKey] as? String
