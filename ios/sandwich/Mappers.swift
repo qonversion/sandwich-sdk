@@ -108,16 +108,16 @@ extension NSError {
 
     // The below workarounds would be fixed in the coming major release.
     if (strCode == nil && domain == NSURLErrorDomain) {
-      strCode = "NetworkConnectionFailed"
+      strCode = apiErrorCodes[Qonversion.Error.connectionFailed.rawValue]
     }
 
     if (strCode == nil && domain == QonversionErrorDomain) {
       let authErrorCodes = QNUtils.authErrorsCodes() as? [NSNumber] ?? []
 
-      if (500 <= code && code < 600) {
-        strCode = "BackendError"
+      if (code >= 500 && code < 600) {
+      strCode = apiErrorCodes[Qonversion.APIError.internalError.rawValue]
       } else if (authErrorCodes.contains { $0.intValue == code }) {
-        strCode = "InvalidCredentials"
+      strCode = apiErrorCodes[Qonversion.APIError.invalidCredentials.rawValue]
       }
     }
 
