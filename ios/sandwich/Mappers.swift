@@ -115,9 +115,9 @@ extension NSError {
       let authErrorCodes = QNUtils.authErrorsCodes() as? [NSNumber] ?? []
 
       if (code >= 500 && code < 600) {
-      strCode = apiErrorCodes[Qonversion.APIError.internalError.rawValue]
+        strCode = apiErrorCodes[Qonversion.APIError.internalError.rawValue]
       } else if (authErrorCodes.contains { $0.intValue == code }) {
-      strCode = apiErrorCodes[Qonversion.APIError.invalidCredentials.rawValue]
+        strCode = apiErrorCodes[Qonversion.APIError.invalidCredentials.rawValue]
       }
     }
 
