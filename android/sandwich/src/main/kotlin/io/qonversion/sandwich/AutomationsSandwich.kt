@@ -53,10 +53,12 @@ class AutomationsSandwich {
         return Automations.shared.getNotificationCustomPayload(stringData)
     }
 
+    @Deprecated("Consider removing this method calls. Qonversion is not working with push notifications anymore")
     fun setNotificationToken(token: String) {
         Automations.shared.setNotificationsToken(token)
     }
 
+    @Deprecated("Consider removing this method calls. Qonversion is not working with push notifications anymore")
     fun handleNotification(notificationData: Map<String, Any?>): Boolean {
         val stringData = notificationData.toStringMap()
         return Automations.shared.handleNotification(stringData)

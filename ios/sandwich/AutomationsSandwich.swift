@@ -38,6 +38,7 @@ public class AutomationsSandwich : NSObject {
     }
   }
 
+  @available(*, deprecated, message: "Consider removing this method calls. Qonversion is not working with push notifications anymore")
   @objc public func setNotificationToken(_ token: String) {
     let tokenData: Data = token.toData()
     Qonversion.Automations.shared().setNotificationsToken(tokenData)
@@ -47,6 +48,7 @@ public class AutomationsSandwich : NSObject {
     return Qonversion.Automations.shared().getNotificationCustomPayload(notificationData)
   }
   
+  @available(*, deprecated, message: "Consider removing this method calls. Qonversion is not working with push notifications anymore")
   @objc public func handleNotification(_ notificationData: [AnyHashable: Any]) -> Bool {
     return Qonversion.Automations.shared().handleNotification(notificationData)
   }
