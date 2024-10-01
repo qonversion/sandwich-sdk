@@ -176,7 +176,7 @@ public class QonversionSandwich : NSObject {
   }
   
 #if os(iOS)
-  @available (iOS 14.0, *)
+  @available(iOS 14.0, *)
   @objc public func presentCodeRedemptionSheet() {
     Qonversion.shared().presentCodeRedemptionSheet()
   }
