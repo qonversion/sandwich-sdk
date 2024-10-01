@@ -54,11 +54,13 @@ class AutomationsSandwich {
     }
 
     fun setNotificationToken(token: String) {
+        @Suppress("DEPRECATION")
         Automations.shared.setNotificationsToken(token)
     }
 
     fun handleNotification(notificationData: Map<String, Any?>): Boolean {
         val stringData = notificationData.toStringMap()
+        @Suppress("DEPRECATION")
         return Automations.shared.handleNotification(stringData)
     }
 
