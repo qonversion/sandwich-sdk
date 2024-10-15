@@ -4,9 +4,8 @@
 # Gradle files
 .gradle/
 app/.gradle/
-app/.idea
+.idea
 /build
-.idea/caches/build_file_checksums.ser
 .project
 ReactAndroid/.project
 ReactAndroid/bin/
