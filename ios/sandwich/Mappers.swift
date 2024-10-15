@@ -451,6 +451,9 @@ extension Qonversion.UserPropertyKey {
       
     case "PushWooshUserId":
       return .pushWooshUserId
+      
+    case "TenjinAnalyticsInstallationId":
+      return .tenjinAnalyticsInstallationId
 
     default:
       return nil
