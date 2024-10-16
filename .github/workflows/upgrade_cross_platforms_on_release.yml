@@ -70,6 +70,15 @@ jobs:
                 sandwich_version: '${{ needs.prepare.outputs.sandwich_version }}'
               },
             })
+            await github.rest.actions.createWorkflowDispatch({
+              owner: 'qonversion',
+              repo: 'capacitor-plugin',
+              workflow_id: 'upgrade_sandwich.yml',
+              ref: 'main',
+              inputs: {
+                sandwich_version: '${{ needs.prepare.outputs.sandwich_version }}'
+              },
+            })
 
   on_publishing_failed:
     name: Cancel due to publishing failure
