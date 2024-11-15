@@ -176,6 +176,14 @@ extension Qonversion.SubscriptionPeriod {
   }
 }
 
+@available(iOS 12.2, macOS 10.14.4, watchOS 6.2, tvOS 12.2, visionOS 1.0, *)
+extension Qonversion.PromotionalOffer {
+  func toMap() -> BridgeData {
+    return ["productDiscount": productDiscount.toMap(),
+            "paymentDiscount": paymentDiscount.toMap()]
+  }
+}
+
 extension Qonversion.Entitlement {
   func toMap() -> BridgeData {
     return [
@@ -226,7 +234,8 @@ extension Qonversion.Transaction {
       "transactionRevocationTimestamp": transactionRevocationDate.map { $0.toMilliseconds() },
       "environment": environment.toString(),
       "ownershipType": ownershipType.toString(),
-      "type": type.toString()
+      "type": type.toString(),
+      "promoOfferId": promoOfferId
     ]
   }
 }
@@ -604,6 +613,17 @@ extension SKProductSubscriptionPeriod {
       "numberOfUnits": numberOfUnits,
       "unit": unit.rawValue
     ]
+  }
+}
+
+@available(iOS 12.2, macOS 10.14.4, watchOS 6.2, tvOS 12.2, visionOS 1.0, *)
+extension SKPaymentDiscount {
+  func toMap() -> BridgeData {
+    return ["identifier": identifier,
+            "nonce": nonce.uuidString,
+            "signature": signature,
+            "keyIdentifier": keyIdentifier,
+            "timestamp": timestamp]
   }
 }
 
