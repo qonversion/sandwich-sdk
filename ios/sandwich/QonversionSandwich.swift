@@ -90,7 +90,8 @@ public class QonversionSandwich : NSObject {
         let error = self.productNotFoundError()
         return purchaseCompletion([:], error, false)
       }
-      var purchaseOptions = Qonversion.PurchaseOptions(quantity: quantity, contextKeys: contextKeys)
+     
+      let purchaseOptions: Qonversion.PurchaseOptions
       
       if #available(iOS 12.2, macOS 10.14.4, watchOS 6.2, tvOS 12.2, visionOS 1.0, *),
          let productDiscountId = promoOffer["productDiscountId"] as? String,
@@ -104,7 +105,9 @@ public class QonversionSandwich : NSObject {
         let paymentDiscount = SKPaymentDiscount(identifier: productDiscountId, keyIdentifier: keyIdentifier, nonce: nonceUUID, signature: signature, timestamp: timestampNumber)
         
         let promotionalOffer = Qonversion.PromotionalOffer(productDiscount: productDiscount, paymentDiscount: paymentDiscount)
-        purchaseOptions = Qonversion.PurchaseOptions(quantity: purchaseOptions.quantity, contextKeys: purchaseOptions.contextKeys, promoOffer: promotionalOffer)
+        purchaseOptions = Qonversion.PurchaseOptions(quantity: quantity, contextKeys: contextKeys, promoOffer: promotionalOffer)
+      } else {
+        purchaseOptions = Qonversion.PurchaseOptions(quantity: quantity, contextKeys: contextKeys)
       }
       
       Qonversion.shared().purchaseProduct(product, options: purchaseOptions, completion: purchaseCompletion)
