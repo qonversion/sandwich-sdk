@@ -79,20 +79,63 @@ public class QonversionSandwich : NSObject {
     _ productId: String,
     quantity: Int,
     contextKeys: [String],
+    promoOffer: [String: Any],
     completion: @escaping BridgeCompletion
   ) {
     Qonversion.shared().products { [weak self] result, err in
       guard let self = self else { return }
      
       let purchaseCompletion = getPurchaseCompletionHandler(for: completion)
-      let purchaseOptions = Qonversion.PurchaseOptions(quantity: quantity, contextKeys: contextKeys)
-      
       guard let product: Qonversion.Product = result[productId] else {
         let error = self.productNotFoundError()
         return purchaseCompletion([:], error, false)
       }
+      var purchaseOptions = Qonversion.PurchaseOptions(quantity: quantity, contextKeys: contextKeys)
+      
+      if #available(iOS 12.2, macOS 10.14.4, watchOS 6.2, tvOS 12.2, visionOS 1.0, *),
+         let productDiscountId = promoOffer["productDiscountId"] as? String,
+         let productDiscount = product.skProduct?.discounts.first(where: { $0.identifier == productDiscountId }),
+         let keyIdentifier = promoOffer["keyIdentifier"] as? String,
+         let nonce = promoOffer["nonce"] as? String,
+         let nonceUUID = UUID(uuidString: nonce),
+         let signature = promoOffer["signature"] as? String,
+         let timestamp = promoOffer["timestamp"] as? Int {
+        let timestampNumber = NSNumber(value: timestamp)
+        let paymentDiscount = SKPaymentDiscount(identifier: productDiscountId, keyIdentifier: keyIdentifier, nonce: nonceUUID, signature: signature, timestamp: timestampNumber)
+        
+        let promotionalOffer = Qonversion.PromotionalOffer(productDiscount: productDiscount, paymentDiscount: paymentDiscount)
+        purchaseOptions = Qonversion.PurchaseOptions(quantity: purchaseOptions.quantity, contextKeys: purchaseOptions.contextKeys, promoOffer: promotionalOffer)
+      }
       
       Qonversion.shared().purchaseProduct(product, options: purchaseOptions, completion: purchaseCompletion)
+    }
+  }
+  
+  @objc public func getPromotionalOffer(_ productId: String, productDiscountId: String, completion: @escaping BridgeCompletion) {
+    if #available(iOS 12.2, macOS 10.14.4, watchOS 6.2, tvOS 12.2, visionOS 1.0, *) {
+      Qonversion.shared().products { [weak self] result, err in
+        guard let self = self else { return }
+        
+        guard let product: Qonversion.Product = result[productId],
+              let discount: SKProductDiscount = product.skProduct?.discounts.first(where: { $0.identifier == productDiscountId }) else {
+          let error = productNotFoundError()
+          
+          return completion(nil, error.toSandwichError())
+        }
+        Qonversion.shared().getPromotionalOffer(for: product, discount: discount) { promoOffer, error in
+          if let error = error as NSError? {
+            return completion(nil, error.toSandwichError())
+          }
+          
+          let bridgeData: [String: Any]? = promoOffer?.toMap().clearEmptyValues()
+          
+          completion(bridgeData, nil)
+        }
+      }
+    } else {
+      let error = productNotFoundError()
+      
+      completion(nil, error.toSandwichError())
     }
   }
   
