@@ -1,5 +1,6 @@
 buildscript {
     ext.qonversion_version = '8.2.1'
+    ext.nocodes_version = '0.0.1'
 }
 
 plugins {
@@ -44,6 +45,7 @@ ext {
 
 dependencies {
     api "io.qonversion.android.sdk:sdk:$qonversion_version"
+    api "io.qonversion:no-codes:$nocodes_version"
     implementation 'androidx.preference:preference:1.2.0'
 }
 

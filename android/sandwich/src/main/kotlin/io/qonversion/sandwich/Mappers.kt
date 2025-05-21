@@ -29,6 +29,8 @@ import com.qonversion.android.sdk.dto.products.QProductPricingPhase
 import com.qonversion.android.sdk.dto.products.QProductStoreDetails
 import com.qonversion.android.sdk.dto.properties.QUserProperties
 import com.qonversion.android.sdk.dto.properties.QUserProperty
+import io.qonversion.nocodes.dto.QAction
+import io.qonversion.nocodes.error.NoCodesError
 
 fun QonversionError.toSandwichError(): SandwichError {
     return SandwichError(this)
@@ -338,4 +340,34 @@ fun Map<String, Any?>.toScreenPresentationConfig(): QScreenPresentationConfig {
     }
 
     return presentationStyle?.let { QScreenPresentationConfig(it) } ?: QScreenPresentationConfig()
+}
+
+fun QAction.toMap(): BridgeData {
+    val parametersMap = parameters?.mapKeys { it.key.key }?.mapValues { it.value }
+    return mapOf(
+        "type" to type.type,
+        "parameters" to parametersMap,
+        "error" to error?.toMap()
+    )
+}
+
+fun Map<String, Any?>.toNoCodesScreenPresentationConfig(): io.qonversion.nocodes.dto.QScreenPresentationConfig {
+    val presentationStyle = try {
+        get("presentationStyle")?.takeIf { it is String }?.let {
+            io.qonversion.nocodes.dto.QScreenPresentationStyle.valueOf(it as String)
+        }
+    } catch (e: IllegalArgumentException) {
+        null
+    }
+
+    return presentationStyle?.let { io.qonversion.nocodes.dto.QScreenPresentationConfig(it) } 
+        ?: io.qonversion.nocodes.dto.QScreenPresentationConfig()
+}
+
+fun NoCodesError.toMap(): BridgeData {
+    return mapOf(
+        "code" to code.toString(),
+        "description" to details,
+        "additionalMessage" to qonversionError?.additionalMessage
+    )
 }

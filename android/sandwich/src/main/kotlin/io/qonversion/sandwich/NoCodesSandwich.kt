@@ -1,0 +1,159 @@
+package io.qonversion.sandwich
+
+import android.app.Application
+import android.content.Context
+import io.qonversion.nocodes.NoCodes
+import io.qonversion.nocodes.NoCodesConfig
+import io.qonversion.nocodes.dto.LogLevel
+import io.qonversion.nocodes.interfaces.NoCodesDelegate
+import io.qonversion.nocodes.interfaces.ScreenCustomizationDelegate
+import io.qonversion.nocodes.dto.QScreenPresentationConfig
+import io.qonversion.nocodes.dto.QScreenPresentationStyle
+import io.qonversion.nocodes.dto.QAction
+import io.qonversion.nocodes.error.NoCodesError
+import io.qonversion.nocodes.error.NoCodesException
+
+class NoCodesSandwich(
+    private val application: Application,
+    private val activityProvider: ActivityProvider
+) {
+
+    private var defaultPresentationConfig: QScreenPresentationConfig? = null
+    private val screenPresentationConfigs = mutableMapOf<String, QScreenPresentationConfig>()
+    private var isCustomizationDelegateSet = false
+    private val screenCustomizationDelegate = object : ScreenCustomizationDelegate {
+        override fun getPresentationConfigurationForScreen(screenId: String): QScreenPresentationConfig {
+            return screenPresentationConfigs[screenId] ?: defaultPresentationConfig ?: QScreenPresentationConfig()
+        }
+    }
+
+    // region Initialization
+
+    fun initialize(
+        context: Context,
+        projectKey: String,
+        proxyUrl: String? = null,
+        logLevelKey: String? = null,
+        logTag: String? = null
+    ) {
+        val configBuilder = NoCodesConfig.Builder(context, projectKey)
+
+        proxyUrl?.let {
+            configBuilder.setProxyURL(it)
+        }
+
+        logLevelKey?.let {
+            try {
+                val logLevel = LogLevel.valueOf(it)
+                configBuilder.setLogLevel(logLevel)
+            } catch (e: IllegalArgumentException) {
+                // Ignore invalid log level
+            }
+        }
+
+        logTag?.let {
+            configBuilder.setLogTag(it)
+        }
+
+        NoCodes.initialize(configBuilder.build())
+    }
+
+    // endregion
+
+    // region Delegate
+
+    fun setDelegate(eventListener: NoCodesEventListener) {
+        NoCodes.shared.setDelegate(createNoCodesDelegate(eventListener))
+    }
+
+    fun setScreenCustomizationDelegate() {
+        if (!isCustomizationDelegateSet) {
+            isCustomizationDelegateSet = true
+            NoCodes.shared.setScreenCustomizationDelegate(screenCustomizationDelegate)
+        }
+    }
+
+    fun setScreenPresentationConfig(configData: Map<String, Any?>, screenId: String? = null) {
+        val config = configData.toNoCodesScreenPresentationConfig()
+
+        if (!isCustomizationDelegateSet) {
+            isCustomizationDelegateSet = true
+            NoCodes.shared.setScreenCustomizationDelegate(screenCustomizationDelegate)
+        }
+
+        screenId?.let {
+            screenPresentationConfigs[screenId] = config
+        } ?: run {
+            screenPresentationConfigs.clear()
+            defaultPresentationConfig = config
+        }
+    }
+
+    // endregion
+
+    // region Screen Management
+
+    fun showScreen(screenId: String) {
+        NoCodes.shared.showScreen(screenId)
+    }
+
+    fun close() {
+        NoCodes.shared.close()
+    }
+
+    // endregion
+
+    // region Configuration
+
+    fun setLogLevel(logLevelKey: String) {
+        val logLevel = LogLevel.valueOf(logLevelKey)
+        NoCodes.shared.setLogLevel(logLevel)
+    }
+
+    fun setLogTag(logTag: String) {
+        NoCodes.shared.setLogTag(logTag)
+    }
+
+    // endregion
+
+    // region Private
+
+    private fun createNoCodesDelegate(eventListener: NoCodesEventListener): NoCodesDelegate {
+        return object : NoCodesDelegate {
+            override fun onScreenShown(screenId: String) {
+                val payload = mapOf("screenId" to screenId)
+                eventListener.onNoCodesEvent(NoCodesEventListener.Event.ScreenShown, payload)
+            }
+
+            override fun onActionStartedExecuting(action: QAction) {
+                val payload = mapOf("action" to action.toMap())
+                eventListener.onNoCodesEvent(NoCodesEventListener.Event.ActionStarted, payload)
+            }
+
+            override fun onActionFailedToExecute(action: QAction) {
+                val payload = mapOf("action" to action.toMap())
+                eventListener.onNoCodesEvent(NoCodesEventListener.Event.ActionFailed, payload)
+            }
+
+            override fun onActionFinishedExecuting(action: QAction) {
+                val payload = mapOf("action" to action.toMap())
+                eventListener.onNoCodesEvent(NoCodesEventListener.Event.ActionFinished, payload)
+            }
+
+            override fun onFinished() {
+                eventListener.onNoCodesEvent(NoCodesEventListener.Event.ScreenClosed)
+            }
+
+            override fun onScreenFailedToLoad(error: NoCodesError) {
+                val payload = mapOf(
+                    "code" to error.code.toString(),
+                    "description" to error.details,
+                    "additionalMessage" to error.qonversionError?.additionalMessage
+                )
+                eventListener.onNoCodesEvent(NoCodesEventListener.Event.ScreenFailedToLoad, payload)
+            }
+        }
+    }
+
+    // endregion
+} 
