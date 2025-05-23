@@ -66,7 +66,7 @@ public class NoCodesSandwich: NSObject {
             .actionStarted,
             .actionFailed,
             .actionFinished,
-            .screenLoadFailed
+            .screenFailedToLoad
         ]
         
         return availableEvents.map { $0.rawValue }

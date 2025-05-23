@@ -2,9 +2,6 @@ package io.qonversion.sandwich
 
 import com.android.billingclient.api.*
 import com.qonversion.android.sdk.dto.QonversionError
-import com.qonversion.android.sdk.automations.dto.QActionResult
-import com.qonversion.android.sdk.automations.dto.QScreenPresentationConfig
-import com.qonversion.android.sdk.automations.dto.QScreenPresentationStyle
 import com.qonversion.android.sdk.dto.QRemoteConfig
 import com.qonversion.android.sdk.dto.QRemoteConfigList
 import com.qonversion.android.sdk.dto.QRemoteConfigurationAssignmentType
@@ -31,6 +28,8 @@ import com.qonversion.android.sdk.dto.properties.QUserProperties
 import com.qonversion.android.sdk.dto.properties.QUserProperty
 import io.qonversion.nocodes.dto.QAction
 import io.qonversion.nocodes.error.NoCodesError
+import io.qonversion.nocodes.dto.QScreenPresentationConfig
+import io.qonversion.nocodes.dto.QScreenPresentationStyle
 
 fun QonversionError.toSandwichError(): SandwichError {
     return SandwichError(this)
@@ -317,14 +316,6 @@ fun QRemoteConfigurationAssignmentType.toFormattedString(): String {
     }
 }
 
-fun QActionResult.toMap(): BridgeData {
-    return mapOf(
-        "type" to type.type,
-        "value" to value,
-        "error" to error?.toMap()
-    )
-}
-
 fun Map<String, Any?>.toStringMap(): Map<String, String> {
     return filterValues { it != null }
         .mapValues { it.value.toString() }
@@ -351,17 +342,17 @@ fun QAction.toMap(): BridgeData {
     )
 }
 
-fun Map<String, Any?>.toNoCodesScreenPresentationConfig(): io.qonversion.nocodes.dto.QScreenPresentationConfig {
+fun Map<String, Any?>.toNoCodesScreenPresentationConfig(): QScreenPresentationConfig {
     val presentationStyle = try {
         get("presentationStyle")?.takeIf { it is String }?.let {
-            io.qonversion.nocodes.dto.QScreenPresentationStyle.valueOf(it as String)
+            QScreenPresentationStyle.valueOf(it as String)
         }
     } catch (e: IllegalArgumentException) {
         null
     }
 
-    return presentationStyle?.let { io.qonversion.nocodes.dto.QScreenPresentationConfig(it) } 
-        ?: io.qonversion.nocodes.dto.QScreenPresentationConfig()
+    return presentationStyle?.let { QScreenPresentationConfig(it) } 
+        ?: QScreenPresentationConfig()
 }
 
 fun NoCodesError.toMap(): BridgeData {
@@ -369,5 +360,17 @@ fun NoCodesError.toMap(): BridgeData {
         "code" to code.toString(),
         "description" to details,
         "additionalMessage" to qonversionError?.additionalMessage
+    )
+}
+
+fun QScreenPresentationConfig.toMap(): BridgeData {
+    return mapOf(
+        "style" to presentationStyle.toMap()
+    )
+}
+
+fun QScreenPresentationStyle.toMap(): BridgeData {
+    return mapOf(
+        "name" to name
     )
 }

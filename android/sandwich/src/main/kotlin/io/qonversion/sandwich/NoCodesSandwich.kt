@@ -2,6 +2,7 @@ package io.qonversion.sandwich
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import io.qonversion.nocodes.NoCodes
 import io.qonversion.nocodes.NoCodesConfig
 import io.qonversion.nocodes.dto.LogLevel
