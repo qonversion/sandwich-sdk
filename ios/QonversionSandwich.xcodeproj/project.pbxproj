@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		231D01FA03F3714069810E63 /* Pods_QonversionSandwich.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D2CD1F5CB476BE16B710E1 /* Pods_QonversionSandwich.framework */; };
 		6A439CA42807112400019344 /* SandwichError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A439CA32807112400019344 /* SandwichError.swift */; };
 		6A8EB5D128046BAA00DCCD9E /* Mappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8EB5D028046BAA00DCCD9E /* Mappers.swift */; };
 		6ACDA8F6280586460003AC8F /* QonversionSandwich.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACDA8F5280586460003AC8F /* QonversionSandwich.swift */; };
@@ -19,6 +18,7 @@
 		701E6970280764480005C35D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 701E696F280764480005C35D /* Podfile */; };
 		701E697428082C700005C35D /* QonversionSandwich.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 701E697228082C700005C35D /* QonversionSandwich.podspec */; };
 		701E69BB28099E380005C35D /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 701E69BA28099E380005C35D /* LICENSE.txt */; };
+		7026BCC62DDF574A00559DBA /* NoCodesMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7026BCC52DDF574A00559DBA /* NoCodesMapper.swift */; };
 		706C3C452DCCEB1F00AF131F /* NoCodesSandwich.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706C3C442DCCEB1F00AF131F /* NoCodesSandwich.swift */; };
 		706C3C472DCCF0EE00AF131F /* NoCodesEventListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706C3C462DCCF0EE00AF131F /* NoCodesEventListener.swift */; };
 		70F78C6328104E81004974DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F78C6228104E81004974DA /* AppDelegate.swift */; };
@@ -38,7 +38,6 @@
 		03DC1C5835B481208404B922 /* Pods-Sample Obj-C.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample Obj-C.release.xcconfig"; path = "Target Support Files/Pods-Sample Obj-C/Pods-Sample Obj-C.release.xcconfig"; sourceTree = "<group>"; };
 		1418B352B6EF3C07ADC38F76 /* Pods-Sample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample.debug.xcconfig"; path = "Target Support Files/Pods-Sample/Pods-Sample.debug.xcconfig"; sourceTree = "<group>"; };
 		21CAC3433A13DC36E3217981 /* Pods-Sample Obj-C.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample Obj-C.debug.xcconfig"; path = "Target Support Files/Pods-Sample Obj-C/Pods-Sample Obj-C.debug.xcconfig"; sourceTree = "<group>"; };
-		252AEE546F067E745BF835ED /* Pods-QonversionSandwich.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QonversionSandwich.debug.xcconfig"; path = "Target Support Files/Pods-QonversionSandwich/Pods-QonversionSandwich.debug.xcconfig"; sourceTree = "<group>"; };
 		2978A890248F68C3F7FC8AB4 /* Pods_Sample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		670A4F21CF8A1ECAF5528B99 /* Pods_Sample_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sample_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A439CA32807112400019344 /* SandwichError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SandwichError.swift; sourceTree = "<group>"; };
@@ -53,6 +52,7 @@
 		701E696F280764480005C35D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		701E697228082C700005C35D /* QonversionSandwich.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = QonversionSandwich.podspec; path = ../QonversionSandwich.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		701E69BA28099E380005C35D /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE.txt; path = ../LICENSE.txt; sourceTree = "<group>"; };
+		7026BCC52DDF574A00559DBA /* NoCodesMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCodesMapper.swift; sourceTree = "<group>"; };
 		706C3C442DCCEB1F00AF131F /* NoCodesSandwich.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCodesSandwich.swift; sourceTree = "<group>"; };
 		706C3C462DCCF0EE00AF131F /* NoCodesEventListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCodesEventListener.swift; sourceTree = "<group>"; };
 		70F78C6028104E81004974DA /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,8 +68,6 @@
 		70F78C7628104EAD004974DA /* TestClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestClass.m; sourceTree = "<group>"; };
 		70F78C7828104F8F004974DA /* TestSwiftClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSwiftClass.swift; sourceTree = "<group>"; };
 		70F78C7A2810658D004974DA /* AutomationsMappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationsMappers.swift; sourceTree = "<group>"; };
-		84D2CD1F5CB476BE16B710E1 /* Pods_QonversionSandwich.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QonversionSandwich.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9C93BE416EE55DCB6619C1FB /* Pods-QonversionSandwich.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QonversionSandwich.release.xcconfig"; path = "Target Support Files/Pods-QonversionSandwich/Pods-QonversionSandwich.release.xcconfig"; sourceTree = "<group>"; };
 		BD5E002836B9B98F76E4FFE5 /* Pods-Sample Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample Swift.debug.xcconfig"; path = "Target Support Files/Pods-Sample Swift/Pods-Sample Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		E06D87679C44EE198805A5C3 /* Pods-Sample Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample Swift.release.xcconfig"; path = "Target Support Files/Pods-Sample Swift/Pods-Sample Swift.release.xcconfig"; sourceTree = "<group>"; };
 		FC7022C807F2F121E1338D7F /* Pods_Sample_Obj_C.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sample_Obj_C.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,7 +78,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				231D01FA03F3714069810E63 /* Pods_QonversionSandwich.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +116,7 @@
 		6A8EB5C827FD896400DCCD9E /* sandwich */ = {
 			isa = PBXGroup;
 			children = (
+				7026BCC52DDF574A00559DBA /* NoCodesMapper.swift */,
 				706C3C462DCCF0EE00AF131F /* NoCodesEventListener.swift */,
 				6A8EB5D028046BAA00DCCD9E /* Mappers.swift */,
 				70F78C7A2810658D004974DA /* AutomationsMappers.swift */,
@@ -171,8 +169,6 @@
 				E06D87679C44EE198805A5C3 /* Pods-Sample Swift.release.xcconfig */,
 				1418B352B6EF3C07ADC38F76 /* Pods-Sample.debug.xcconfig */,
 				0084C9E227919BFE710C6C7F /* Pods-Sample.release.xcconfig */,
-				252AEE546F067E745BF835ED /* Pods-QonversionSandwich.debug.xcconfig */,
-				9C93BE416EE55DCB6619C1FB /* Pods-QonversionSandwich.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -183,7 +179,6 @@
 				FC7022C807F2F121E1338D7F /* Pods_Sample_Obj_C.framework */,
 				670A4F21CF8A1ECAF5528B99 /* Pods_Sample_Swift.framework */,
 				2978A890248F68C3F7FC8AB4 /* Pods_Sample.framework */,
-				84D2CD1F5CB476BE16B710E1 /* Pods_QonversionSandwich.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -205,7 +200,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6A8EB5CD27FD896400DCCD9E /* Build configuration list for PBXNativeTarget "QonversionSandwich" */;
 			buildPhases = (
-				0B79C6A3FE5033CE2A29B3E4 /* [CP] Check Pods Manifest.lock */,
 				6A8EB5C127FD896400DCCD9E /* Headers */,
 				6A8EB5C227FD896400DCCD9E /* Sources */,
 				6A8EB5C327FD896400DCCD9E /* Frameworks */,
@@ -325,28 +319,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		0B79C6A3FE5033CE2A29B3E4 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-QonversionSandwich-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C06AD826107E6AD2880D2D5E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -355,13 +327,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Sample/Pods-Sample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Sample/Pods-Sample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -381,6 +349,7 @@
 				706C3C472DCCF0EE00AF131F /* NoCodesEventListener.swift in Sources */,
 				6ACDA8FE2806D6750003AC8F /* AutomationsEventListener.swift in Sources */,
 				706C3C452DCCEB1F00AF131F /* NoCodesSandwich.swift in Sources */,
+				7026BCC62DDF574A00559DBA /* NoCodesMapper.swift in Sources */,
 				6ACDA8F6280586460003AC8F /* QonversionSandwich.swift in Sources */,
 				6A8EB5D128046BAA00DCCD9E /* Mappers.swift in Sources */,
 				6ACDA8F8280587A20003AC8F /* Constants.swift in Sources */,
@@ -547,7 +516,6 @@
 		};
 		6A8EB5CE27FD896400DCCD9E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 252AEE546F067E745BF835ED /* Pods-QonversionSandwich.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -580,7 +548,6 @@
 		};
 		6A8EB5CF27FD896400DCCD9E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9C93BE416EE55DCB6619C1FB /* Pods-QonversionSandwich.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;

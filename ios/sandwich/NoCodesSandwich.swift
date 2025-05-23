@@ -7,18 +7,26 @@
 //
 
 import Foundation
+#if os(iOS)
 import NoCodes
 import UIKit
+#endif
 
 public class NoCodesSandwich: NSObject {
+    #if os(iOS)
     private var noCodesEventListener: NoCodesEventListener?
     private var defaultPresentationConfig: NoCodes.PresentationConfiguration? = nil
     private var screenPresentationConfigs: [String: NoCodes.PresentationConfiguration] = [:]
     private var isCustomizationDelegateSet = false
+    #endif
     
     @objc public init(noCodesEventListener: NoCodesEventListener) {
+        #if os(iOS)
         self.noCodesEventListener = noCodesEventListener
+        #endif
     }
+    
+#if os(iOS)
     
     @objc public func initialize(projectKey: String) {
         let noCodesConfig = NoCodes.Configuration(projectKey: projectKey)
@@ -44,7 +52,7 @@ public class NoCodesSandwich: NSObject {
     }
     
     @MainActor @objc public func showScreen(_ contextKey: String) {
-        NoCodes.shared.showNoCode(withContextKey: contextKey)
+        NoCodes.shared.showScreen(withContextKey: contextKey)
     }
     
     @MainActor @objc public func close() {
@@ -63,8 +71,11 @@ public class NoCodesSandwich: NSObject {
         
         return availableEvents.map { $0.rawValue }
     }
+    
+#endif
 }
 
+#if os(iOS)
 extension NoCodesSandwich: NoCodes.ScreenCustomizationDelegate {
     public func presentationConfigurationForScreen(contextKey: String) -> NoCodes.PresentationConfiguration {
         return screenPresentationConfigs[contextKey] ?? defaultPresentationConfig ?? .defaultConfiguration()
@@ -115,3 +126,4 @@ extension NoCodesSandwich: NoCodes.Delegate {
         noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.screenLoadFailed.rawValue, payload: nil)
     }
 }
+#endif
