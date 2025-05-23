@@ -342,27 +342,6 @@ fun QAction.toMap(): BridgeData {
     )
 }
 
-fun Map<String, Any?>.toNoCodesScreenPresentationConfig(): QScreenPresentationConfig {
-    val presentationStyle = try {
-        get("presentationStyle")?.takeIf { it is String }?.let {
-            QScreenPresentationStyle.valueOf(it as String)
-        }
-    } catch (e: IllegalArgumentException) {
-        null
-    }
-
-    return presentationStyle?.let { QScreenPresentationConfig(it) } 
-        ?: QScreenPresentationConfig()
-}
-
-fun NoCodesError.toMap(): BridgeData {
-    return mapOf(
-        "code" to code.toString(),
-        "description" to details,
-        "additionalMessage" to qonversionError?.additionalMessage
-    )
-}
-
 fun QScreenPresentationConfig.toMap(): BridgeData {
     return mapOf(
         "style" to presentationStyle.toMap()
@@ -372,5 +351,13 @@ fun QScreenPresentationConfig.toMap(): BridgeData {
 fun QScreenPresentationStyle.toMap(): BridgeData {
     return mapOf(
         "name" to name
+    )
+}
+
+fun NoCodesError.toMap(): BridgeData {
+    return mapOf(
+        "code" to code.toString(),
+        "description" to details,
+        "additionalMessage" to qonversionError?.additionalMessage
     )
 }

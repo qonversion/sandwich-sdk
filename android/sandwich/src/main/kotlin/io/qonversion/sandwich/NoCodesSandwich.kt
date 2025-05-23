@@ -75,7 +75,7 @@ class NoCodesSandwich(
     }
 
     fun setScreenPresentationConfig(configData: Map<String, Any?>, screenId: String? = null) {
-        val config = configData.toNoCodesScreenPresentationConfig()
+        val config = configData.toScreenPresentationConfig()
 
         if (!isCustomizationDelegateSet) {
             isCustomizationDelegateSet = true
