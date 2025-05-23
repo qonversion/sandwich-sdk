@@ -42,7 +42,7 @@ class NoCodesSandwich {
                 val logLevel = LogLevel.valueOf(it)
                 configBuilder.setLogLevel(logLevel)
             } catch (e: IllegalArgumentException) {
-                Log.w("No-Codes Sandwich", "Invalid log level provided: $it")
+                Log.w("No-Codes Sandwich", "Invalid log level provided: " + it)
             }
         }
 
@@ -68,7 +68,7 @@ class NoCodesSandwich {
         }
     }
 
-    fun setScreenPresentationConfig(configData: Map<String, Any?>, screenId: String? = null) {
+    fun setScreenPresentationConfig(configData: Map<String, Any?>, contextKey: String? = null) {
         val config = configData.toScreenPresentationConfig()
 
         if (!isCustomizationDelegateSet) {
@@ -76,8 +76,8 @@ class NoCodesSandwich {
             NoCodes.shared.setScreenCustomizationDelegate(screenCustomizationDelegate)
         }
 
-        screenId?.let {
-            screenPresentationConfigs[screenId] = config
+        contextKey?.let {
+            screenPresentationConfigs[contextKey] = config
         } ?: run {
             screenPresentationConfigs.clear()
             defaultPresentationConfig = config
@@ -88,8 +88,8 @@ class NoCodesSandwich {
 
     // region Screen Management
 
-    fun showScreen(screenId: String) {
-        NoCodes.shared.showScreen(screenId)
+    fun showScreen(contextKey: String) {
+        NoCodes.shared.showScreen(contextKey)
     }
 
     fun close() {
