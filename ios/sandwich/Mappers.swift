@@ -8,6 +8,9 @@
 
 import Foundation
 import Qonversion
+#if os(iOS)
+import NoCodes
+#endif
 
 extension BridgeData {
     func clearEmptyValues() -> [String: Any] {
