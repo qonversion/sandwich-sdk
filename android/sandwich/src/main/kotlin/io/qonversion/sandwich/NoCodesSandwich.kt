@@ -17,8 +17,8 @@ class NoCodesSandwich {
     private val screenPresentationConfigs = mutableMapOf<String, QScreenPresentationConfig>()
     private var isCustomizationDelegateSet = false
     private val screenCustomizationDelegate = object : ScreenCustomizationDelegate {
-        override fun getPresentationConfigurationForScreen(screenId: String): QScreenPresentationConfig {
-            return screenPresentationConfigs[screenId] ?: defaultPresentationConfig ?: QScreenPresentationConfig()
+        override fun getPresentationConfigurationForScreen(contextKey: String): QScreenPresentationConfig {
+            return screenPresentationConfigs[contextKey] ?: defaultPresentationConfig ?: QScreenPresentationConfig()
         }
     }
 
