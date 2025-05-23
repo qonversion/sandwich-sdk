@@ -145,12 +145,7 @@ class NoCodesSandwich(
             }
 
             override fun onScreenFailedToLoad(error: NoCodesError) {
-                val payload = mapOf(
-                    "code" to error.code.toString(),
-                    "description" to error.details,
-                    "additionalMessage" to error.qonversionError?.additionalMessage
-                )
-                eventListener.onNoCodesEvent(NoCodesEventListener.Event.ScreenFailedToLoad, payload)
+                eventListener.onNoCodesEvent(NoCodesEventListener.Event.ScreenFailedToLoad, error.toMap())
             }
         }
     }

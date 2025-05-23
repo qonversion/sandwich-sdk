@@ -36,7 +36,7 @@ public class NoCodesSandwich: NSObject {
     }
     
     @MainActor @objc public func setScreenPresentationConfig(_ configData: [String: Any], forContextKey contextKey: String? = nil) {
-        let config = configData.toNoCodesPresentationConfig()
+        let config = configData.toPresentationConfig()
         
         if (!isCustomizationDelegateSet) {
             isCustomizationDelegateSet = true
@@ -123,7 +123,7 @@ extension NoCodesSandwich: NoCodes.Delegate {
     }
     
     public func noCodesFailedToLoadScreen() {
-        noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.screenLoadFailed.rawValue, payload: nil)
+        noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.screenFailedToLoad.rawValue, payload: nil)
     }
 }
 #endif

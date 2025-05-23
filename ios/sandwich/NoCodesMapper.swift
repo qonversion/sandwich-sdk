@@ -20,6 +20,7 @@ extension NoCodes.ActionType {
         case .purchase: return "purchase"
         case .restore: return "restore"
         case .close: return "close"
+        case .closeAll: return "closeAll"
         default: return "unknown"
         }
     }
@@ -41,7 +42,7 @@ extension NoCodes.PresentationStyle {
 }
 
 extension Dictionary where Key == String, Value == Any {
-    func toNoCodesPresentationConfig() -> NoCodes.PresentationConfiguration {
+    func toPresentationConfig() -> NoCodes.PresentationConfiguration {
         guard let presentationStyleStr = self["presentationStyle"] as? String,
               let presentationStyle = NoCodes.PresentationStyle.fromString(presentationStyleStr)
         else { return NoCodes.PresentationConfiguration.defaultConfiguration() }

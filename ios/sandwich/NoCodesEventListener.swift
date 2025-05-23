@@ -18,5 +18,5 @@ public enum NoCodesEvent: String {
     case actionStarted = "nocodes_action_started"
     case actionFailed = "nocodes_action_failed"
     case actionFinished = "nocodes_action_finished"
-    case screenLoadFailed = "nocodes_screen_load_failed"
-} 
+    case screenFailedToLoad = "nocodes_screen_failed_to_load"
+}
