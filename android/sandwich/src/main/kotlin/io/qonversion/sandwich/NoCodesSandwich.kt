@@ -8,15 +8,10 @@ import io.qonversion.nocodes.dto.LogLevel
 import io.qonversion.nocodes.interfaces.NoCodesDelegate
 import io.qonversion.nocodes.interfaces.ScreenCustomizationDelegate
 import io.qonversion.nocodes.dto.QScreenPresentationConfig
-import io.qonversion.nocodes.dto.QScreenPresentationStyle
 import io.qonversion.nocodes.dto.QAction
 import io.qonversion.nocodes.error.NoCodesError
-import io.qonversion.nocodes.error.NoCodesException
 
-class NoCodesSandwich(
-    private val application: Application,
-    private val activityProvider: ActivityProvider
-) {
+class NoCodesSandwich {
 
     private var defaultPresentationConfig: QScreenPresentationConfig? = null
     private val screenPresentationConfigs = mutableMapOf<String, QScreenPresentationConfig>()
@@ -47,7 +42,7 @@ class NoCodesSandwich(
                 val logLevel = LogLevel.valueOf(it)
                 configBuilder.setLogLevel(logLevel)
             } catch (e: IllegalArgumentException) {
-                Log.w("No-Codes Sandwich", "Invalid log level provided: " + it)
+                Log.w("No-Codes Sandwich", "Invalid log level provided: $it")
             }
         }
 

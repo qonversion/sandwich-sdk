@@ -342,18 +342,6 @@ fun QAction.toMap(): BridgeData {
     )
 }
 
-fun QScreenPresentationConfig.toMap(): BridgeData {
-    return mapOf(
-        "style" to presentationStyle.toMap()
-    )
-}
-
-fun QScreenPresentationStyle.toMap(): BridgeData {
-    return mapOf(
-        "name" to name
-    )
-}
-
 fun NoCodesError.toMap(): BridgeData {
     return mapOf(
         "code" to code.toString(),
