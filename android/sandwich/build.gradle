@@ -1,5 +1,6 @@
 buildscript {
     ext.qonversion_version = '8.2.1'
+    ext.nocodes_version = '0.0.1'
 }
 
 plugins {
@@ -11,12 +12,13 @@ android {
     compileSdk 33
 
     defaultConfig {
-        minSdk 19
+        minSdk 21
         targetSdk 33
 
         group = 'io.qonversion.sandwich'
         version = release.versionName
         versionName = release.versionName
+        namespace = 'io.qonversion.sandwich'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -38,12 +40,13 @@ android {
 }
 
 ext {
-    PUBLISH_GROUP_ID = 'io.qonversion.sandwich'
+    PUBLISH_GROUP_ID = 'io.qonversion'
     PUBLISH_ARTIFACT_ID = 'sandwich'
 }
 
 dependencies {
     api "io.qonversion.android.sdk:sdk:$qonversion_version"
+    api "io.qonversion:no-codes:$nocodes_version"
     implementation 'androidx.preference:preference:1.2.0'
 }
 
