@@ -122,8 +122,12 @@ extension NoCodesSandwich: NoCodes.Delegate {
         noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.screenClosed.rawValue, payload: nil)
     }
     
-    public func noCodesFailedToLoadScreen() {
-        noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.screenFailedToLoad.rawValue, payload: nil)
+    public func noCodesFailedToLoadScreen(error: Error?) {
+        var payload: BridgeData = [:]
+        if let error = error as NSError? {
+            payload["error"] = error.toMap()
+        }
+        noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.screenFailedToLoad.rawValue, payload: payload.clearEmptyValues())
     }
 }
 #endif
