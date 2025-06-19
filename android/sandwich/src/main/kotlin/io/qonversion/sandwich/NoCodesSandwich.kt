@@ -21,6 +21,7 @@ class NoCodesSandwich {
             return screenPresentationConfigs[contextKey] ?: defaultPresentationConfig ?: QScreenPresentationConfig()
         }
     }
+    private lateinit var noCodesDelegate: NoCodesDelegate
 
     // region Initialization
 
@@ -58,7 +59,8 @@ class NoCodesSandwich {
     // region Delegate
 
     fun setDelegate(eventListener: NoCodesEventListener) {
-        NoCodes.shared.setDelegate(createNoCodesDelegate(eventListener))
+        noCodesDelegate = createNoCodesDelegate(eventListener)
+        NoCodes.shared.setDelegate(noCodesDelegate)
     }
 
     fun setScreenCustomizationDelegate() {
