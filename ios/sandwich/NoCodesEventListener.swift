@@ -14,7 +14,7 @@ import Foundation
 
 public enum NoCodesEvent: String {
     case screenShown = "nocodes_screen_shown"
-    case screenClosed = "nocodes_screen_closed"
+    case finished = "nocodes_finished"
     case actionStarted = "nocodes_action_started"
     case actionFailed = "nocodes_action_failed"
     case actionFinished = "nocodes_action_finished"
