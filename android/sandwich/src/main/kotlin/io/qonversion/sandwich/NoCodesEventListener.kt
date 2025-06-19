@@ -5,7 +5,7 @@ interface NoCodesEventListener {
     
     enum class Event(val key: String) {
         ScreenShown("nocodes_screen_shown"),
-        ScreenClosed("nocodes_screen_closed"),
+        Finished("nocodes_finished"),
         ActionStarted("nocodes_action_started"),
         ActionFinished("nocodes_action_finished"),
         ActionFailed("nocodes_action_failed"),

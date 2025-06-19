@@ -138,7 +138,7 @@ class NoCodesSandwich {
             }
 
             override fun onFinished() {
-                eventListener.onNoCodesEvent(NoCodesEventListener.Event.ScreenClosed)
+                eventListener.onNoCodesEvent(NoCodesEventListener.Event.Finished)
             }
 
             override fun onScreenFailedToLoad(error: NoCodesError) {

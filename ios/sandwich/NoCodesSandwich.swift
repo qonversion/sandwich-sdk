@@ -62,7 +62,7 @@ public class NoCodesSandwich: NSObject {
     @objc public func getAvailableEvents() -> [String] {
         let availableEvents: [NoCodesEvent] = [
             .screenShown,
-            .screenClosed,
+            .finished,
             .actionStarted,
             .actionFailed,
             .actionFinished,
@@ -119,7 +119,7 @@ extension NoCodesSandwich: NoCodes.Delegate {
     }
     
     public func noCodesFinished() {
-        noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.screenClosed.rawValue, payload: nil)
+        noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.finished.rawValue, payload: nil)
     }
     
     public func noCodesFailedToLoadScreen(error: Error?) {
