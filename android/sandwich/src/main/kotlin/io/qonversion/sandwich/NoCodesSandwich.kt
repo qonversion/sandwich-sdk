@@ -123,18 +123,15 @@ class NoCodesSandwich {
             }
 
             override fun onActionStartedExecuting(action: QAction) {
-                val payload = mapOf("action" to action.toMap())
-                eventListener.onNoCodesEvent(NoCodesEventListener.Event.ActionStarted, payload)
+                eventListener.onNoCodesEvent(NoCodesEventListener.Event.ActionStarted, action.toMap())
             }
 
             override fun onActionFailedToExecute(action: QAction) {
-                val payload = mapOf("action" to action.toMap())
-                eventListener.onNoCodesEvent(NoCodesEventListener.Event.ActionFailed, payload)
+                eventListener.onNoCodesEvent(NoCodesEventListener.Event.ActionFailed, action.toMap())
             }
 
             override fun onActionFinishedExecuting(action: QAction) {
-                val payload = mapOf("action" to action.toMap())
-                eventListener.onNoCodesEvent(NoCodesEventListener.Event.ActionFinished, payload)
+                eventListener.onNoCodesEvent(NoCodesEventListener.Event.ActionFinished, action.toMap())
             }
 
             override fun onFinished() {
