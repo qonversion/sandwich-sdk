@@ -1,6 +1,6 @@
 buildscript {
     ext.qonversion_version = '8.2.1'
-    ext.nocodes_version = '0.0.2'
+    ext.nocodes_version = '0.0.3'
 }
 
 plugins {
