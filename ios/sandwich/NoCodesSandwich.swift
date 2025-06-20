@@ -107,9 +107,7 @@ extension NoCodesSandwich: NoCodes.Delegate {
     
     public func noCodesFailedToExecute(action: NoCodes.Action, error: Error?) {
         var payload: BridgeData = action.toMap()
-        if let error = error as NSError? {
-            payload["error"] = error.toMap()
-        }
+        payload["error"] = errorToMap(error)
         noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.actionFailed.rawValue, payload: payload.clearEmptyValues())
     }
     
@@ -123,11 +121,7 @@ extension NoCodesSandwich: NoCodes.Delegate {
     }
     
     public func noCodesFailedToLoadScreen(error: Error?) {
-        var payload: BridgeData = [:]
-        if let error = error as NSError? {
-            payload["error"] = error.toMap()
-        }
-        noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.screenFailedToLoad.rawValue, payload: payload.clearEmptyValues())
+        noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.screenFailedToLoad.rawValue, payload: errorToMap(error)?.clearEmptyValues())
     }
 }
 #endif

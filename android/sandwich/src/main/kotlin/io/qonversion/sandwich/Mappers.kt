@@ -346,6 +346,6 @@ fun NoCodesError.toMap(): BridgeData {
     return mapOf(
         "code" to code.toString(),
         "description" to details,
-        "additionalMessage" to qonversionError?.additionalMessage
+        "qonversionError" to qonversionError?.toMap()
     )
 }
