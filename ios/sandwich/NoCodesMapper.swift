@@ -6,7 +6,7 @@ extension NoCodes.Action {
     func toMap() -> BridgeData {
         return [
             "type": type.toString(),
-            "value": parameters
+            "parameters": parameters
         ]
     }
 }

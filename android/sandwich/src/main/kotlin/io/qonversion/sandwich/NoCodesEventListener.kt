@@ -11,4 +11,4 @@ interface NoCodesEventListener {
         ActionFailed("nocodes_action_failed"),
         ScreenFailedToLoad("nocodes_screen_failed_to_load")
     }
-} 
+}
