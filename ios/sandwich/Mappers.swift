@@ -8,9 +8,6 @@
 
 import Foundation
 import Qonversion
-#if os(iOS)
-import NoCodes
-#endif
 
 extension BridgeData {
     func clearEmptyValues() -> [String: Any] {
@@ -35,97 +32,102 @@ extension BridgeData {
 }
 
 extension NSError {
-  func toSandwichError() -> SandwichError {
-// The commented codes below are for the next major iOS SDK version.
-// After upgrading to that major replace two dictionaries of codes with this single one.
-//    let codes = [
-//      Qonversion.Error.unknown.rawValue: "Unknown",
-//      Qonversion.Error.purchaseCanceled.rawValue: "PurchaseCanceled",
-//      Qonversion.Error.productNotFound.rawValue: "ProductNotFound",
-//      Qonversion.Error.clientInvalid.rawValue: "ClientInvalid",
-//      Qonversion.Error.paymentInvalid.rawValue: "PaymentInvalid",
-//      Qonversion.Error.paymentNotAllowed.rawValue: "PaymentNotAllowed",
-//      Qonversion.Error.storeProductNotAvailable.rawValue: "StoreProductNotAvailable",
-//      Qonversion.Error.cloudServicePermissionDenied.rawValue: "CloudServicePermissionDenied",
-//      Qonversion.Error.cloudServiceNetworkConnectionFailed.rawValue: "CloudServiceNetworkConnectionFailed",
-//      Qonversion.Error.cloudServiceRevoked.rawValue: "CloudServiceRevoked",
-//      Qonversion.Error.privacyAcknowledgementRequired.rawValue: "PrivacyAcknowledgementRequired",
-//      Qonversion.Error.unauthorizedRequestData.rawValue: "UnauthorizedRequestData",
-//      Qonversion.Error.networkConnectionFailed.rawValue: "NetworkConnectionFailed",
-//      Qonversion.Error.internalError.rawValue: "InternalError",
-//      Qonversion.Error.purchasePending.rawValue: "PurchasePending",
-//      Qonversion.Error.remoteConfigurationNotAvailable.rawValue: "RemoteConfigurationNotAvailable",
-//      Qonversion.Error.failedToReceiveData.rawValue: "FailedToReceiveData",
-//      Qonversion.Error.responseParsingFailed.rawValue: "ResponseParsingFailed",
-//      Qonversion.Error.incorrectRequest.rawValue: "IncorrectRequest",
-//      Qonversion.Error.backendError.rawValue: "BackendError",
-//      Qonversion.Error.invalidCredentials.rawValue: "InvalidCredentials",
-//      Qonversion.Error.invalidClientUID.rawValue: "InvalidClientUid",
-//      Qonversion.Error.unknownClientPlatform.rawValue: "UnknownClientPlatform",
-//      Qonversion.Error.fraudPurchase.rawValue: "FraudPurchase",
-//      Qonversion.Error.featureNotSupported.rawValue: "FeatureNotSupported",
-//      Qonversion.Error.appleStoreError.rawValue: "AppleStoreError",
-//      Qonversion.Error.purchaseInvalid.rawValue: "PurchaseInvalid",
-//      Qonversion.Error.projectConfigError.rawValue: "ProjectConfigError",
-//      Qonversion.Error.invalidStoreCredentials.rawValue: "InvalidStoreCredentials",
-//      Qonversion.Error.receiptValidationError.rawValue: "ReceiptValidationError",
-//      Qonversion.Error.apiRateLimitExceeded.rawValue: "ApiRateLimitExceeded",
-//    ]
-    let codes = [
-      Qonversion.Error.unknown.rawValue: "Unknown",
-      Qonversion.Error.cancelled.rawValue: "PurchaseCanceled",
-      Qonversion.Error.productNotFound.rawValue: "ProductNotFound",
-      Qonversion.Error.clientInvalid.rawValue: "ClientInvalid",
-      Qonversion.Error.paymentInvalid.rawValue: "PaymentInvalid",
-      Qonversion.Error.paymentNotAllowed.rawValue: "PaymentNotAllowed",
-      Qonversion.Error.storeProductNotAvailable.rawValue: "StoreProductNotAvailable",
-      Qonversion.Error.cloudServicePermissionDenied.rawValue: "CloudServicePermissionDenied",
-      Qonversion.Error.cloudServiceNetworkConnectionFailed.rawValue: "CloudServiceNetworkConnectionFailed",
-      Qonversion.Error.cloudServiceRevoked.rawValue: "CloudServiceRevoked",
-      Qonversion.Error.privacyAcknowledgementRequired.rawValue: "PrivacyAcknowledgementRequired",
-      Qonversion.Error.unauthorizedRequestData.rawValue: "UnauthorizedRequestData",
-      Qonversion.Error.connectionFailed.rawValue: "NetworkConnectionFailed",
-      Qonversion.Error.internalError.rawValue: "InternalError",
-      Qonversion.Error.storePaymentDeferred.rawValue: "PurchasePending",
-      Qonversion.Error.remoteConfigurationNotAvailable.rawValue: "RemoteConfigurationNotAvailable",
-    ]
-    let apiErrorCodes = [
-      Qonversion.APIError.failedReceiveData.rawValue: "FailedToReceiveData",
-      Qonversion.APIError.failedParseResponse.rawValue: "ResponseParsingFailed",
-      Qonversion.APIError.incorrectRequest.rawValue: "IncorrectRequest",
-      Qonversion.APIError.internalError.rawValue: "BackendError",
-      Qonversion.APIError.invalidCredentials.rawValue: "InvalidCredentials",
-      Qonversion.APIError.invalidClientUID.rawValue: "InvalidClientUid",
-      Qonversion.APIError.unknownClientPlatform.rawValue: "UnknownClientPlatform",
-      Qonversion.APIError.fraudPurchase.rawValue: "FraudPurchase",
-      Qonversion.APIError.featureNotSupported.rawValue: "FeatureNotSupported",
-      Qonversion.APIError.appleStoreError.rawValue: "AppleStoreError",
-      Qonversion.APIError.purchaseInvalid.rawValue: "PurchaseInvalid",
-      Qonversion.APIError.projectConfigError.rawValue: "ProjectConfigError",
-      Qonversion.APIError.invalidStoreCredentials.rawValue: "InvalidStoreCredentials",
-      Qonversion.APIError.receiptValidation.rawValue: "ReceiptValidationError",
-      Qonversion.APIError.rateLimitExceeded.rawValue: "ApiRateLimitExceeded",
-    ]
+  func stringCode() -> String {
+  // The commented codes below are for the next major iOS SDK version.
+  // After upgrading to that major replace two dictionaries of codes with this single one.
+  //    let codes = [
+  //      Qonversion.Error.unknown.rawValue: "Unknown",
+  //      Qonversion.Error.purchaseCanceled.rawValue: "PurchaseCanceled",
+  //      Qonversion.Error.productNotFound.rawValue: "ProductNotFound",
+  //      Qonversion.Error.clientInvalid.rawValue: "ClientInvalid",
+  //      Qonversion.Error.paymentInvalid.rawValue: "PaymentInvalid",
+  //      Qonversion.Error.paymentNotAllowed.rawValue: "PaymentNotAllowed",
+  //      Qonversion.Error.storeProductNotAvailable.rawValue: "StoreProductNotAvailable",
+  //      Qonversion.Error.cloudServicePermissionDenied.rawValue: "CloudServicePermissionDenied",
+  //      Qonversion.Error.cloudServiceNetworkConnectionFailed.rawValue: "CloudServiceNetworkConnectionFailed",
+  //      Qonversion.Error.cloudServiceRevoked.rawValue: "CloudServiceRevoked",
+  //      Qonversion.Error.privacyAcknowledgementRequired.rawValue: "PrivacyAcknowledgementRequired",
+  //      Qonversion.Error.unauthorizedRequestData.rawValue: "UnauthorizedRequestData",
+  //      Qonversion.Error.networkConnectionFailed.rawValue: "NetworkConnectionFailed",
+  //      Qonversion.Error.internalError.rawValue: "InternalError",
+  //      Qonversion.Error.purchasePending.rawValue: "PurchasePending",
+  //      Qonversion.Error.remoteConfigurationNotAvailable.rawValue: "RemoteConfigurationNotAvailable",
+  //      Qonversion.Error.failedToReceiveData.rawValue: "FailedToReceiveData",
+  //      Qonversion.Error.responseParsingFailed.rawValue: "ResponseParsingFailed",
+  //      Qonversion.Error.incorrectRequest.rawValue: "IncorrectRequest",
+  //      Qonversion.Error.backendError.rawValue: "BackendError",
+  //      Qonversion.Error.invalidCredentials.rawValue: "InvalidCredentials",
+  //      Qonversion.Error.invalidClientUID.rawValue: "InvalidClientUid",
+  //      Qonversion.Error.unknownClientPlatform.rawValue: "UnknownClientPlatform",
+  //      Qonversion.Error.fraudPurchase.rawValue: "FraudPurchase",
+  //      Qonversion.Error.featureNotSupported.rawValue: "FeatureNotSupported",
+  //      Qonversion.Error.appleStoreError.rawValue: "AppleStoreError",
+  //      Qonversion.Error.purchaseInvalid.rawValue: "PurchaseInvalid",
+  //      Qonversion.Error.projectConfigError.rawValue: "ProjectConfigError",
+  //      Qonversion.Error.invalidStoreCredentials.rawValue: "InvalidStoreCredentials",
+  //      Qonversion.Error.receiptValidationError.rawValue: "ReceiptValidationError",
+  //      Qonversion.Error.apiRateLimitExceeded.rawValue: "ApiRateLimitExceeded",
+  //    ]
+      let codes = [
+        Qonversion.Error.unknown.rawValue: "Unknown",
+        Qonversion.Error.cancelled.rawValue: "PurchaseCanceled",
+        Qonversion.Error.productNotFound.rawValue: "ProductNotFound",
+        Qonversion.Error.clientInvalid.rawValue: "ClientInvalid",
+        Qonversion.Error.paymentInvalid.rawValue: "PaymentInvalid",
+        Qonversion.Error.paymentNotAllowed.rawValue: "PaymentNotAllowed",
+        Qonversion.Error.storeProductNotAvailable.rawValue: "StoreProductNotAvailable",
+        Qonversion.Error.cloudServicePermissionDenied.rawValue: "CloudServicePermissionDenied",
+        Qonversion.Error.cloudServiceNetworkConnectionFailed.rawValue: "CloudServiceNetworkConnectionFailed",
+        Qonversion.Error.cloudServiceRevoked.rawValue: "CloudServiceRevoked",
+        Qonversion.Error.privacyAcknowledgementRequired.rawValue: "PrivacyAcknowledgementRequired",
+        Qonversion.Error.unauthorizedRequestData.rawValue: "UnauthorizedRequestData",
+        Qonversion.Error.connectionFailed.rawValue: "NetworkConnectionFailed",
+        Qonversion.Error.internalError.rawValue: "InternalError",
+        Qonversion.Error.storePaymentDeferred.rawValue: "PurchasePending",
+        Qonversion.Error.remoteConfigurationNotAvailable.rawValue: "RemoteConfigurationNotAvailable",
+      ]
+      let apiErrorCodes = [
+        Qonversion.APIError.failedReceiveData.rawValue: "FailedToReceiveData",
+        Qonversion.APIError.failedParseResponse.rawValue: "ResponseParsingFailed",
+        Qonversion.APIError.incorrectRequest.rawValue: "IncorrectRequest",
+        Qonversion.APIError.internalError.rawValue: "BackendError",
+        Qonversion.APIError.invalidCredentials.rawValue: "InvalidCredentials",
+        Qonversion.APIError.invalidClientUID.rawValue: "InvalidClientUid",
+        Qonversion.APIError.unknownClientPlatform.rawValue: "UnknownClientPlatform",
+        Qonversion.APIError.fraudPurchase.rawValue: "FraudPurchase",
+        Qonversion.APIError.featureNotSupported.rawValue: "FeatureNotSupported",
+        Qonversion.APIError.appleStoreError.rawValue: "AppleStoreError",
+        Qonversion.APIError.purchaseInvalid.rawValue: "PurchaseInvalid",
+        Qonversion.APIError.projectConfigError.rawValue: "ProjectConfigError",
+        Qonversion.APIError.invalidStoreCredentials.rawValue: "InvalidStoreCredentials",
+        Qonversion.APIError.receiptValidation.rawValue: "ReceiptValidationError",
+        Qonversion.APIError.rateLimitExceeded.rawValue: "ApiRateLimitExceeded",
+      ]
 
-    var strCode = domain == QonversionApiErrorDomain ? apiErrorCodes[code] : codes[code]
+      var strCode = domain == QonversionApiErrorDomain ? apiErrorCodes[code] : codes[code]
 
-    // The below workarounds would be fixed in the coming major release.
-    if (strCode == nil && domain == NSURLErrorDomain) {
-      strCode = apiErrorCodes[Qonversion.Error.connectionFailed.rawValue]
-    }
-
-    if (strCode == nil && domain == QonversionErrorDomain) {
-      let authErrorCodes = QNUtils.authErrorsCodes() as? [NSNumber] ?? []
-
-      if (code >= 500 && code < 600) {
-        strCode = apiErrorCodes[Qonversion.APIError.internalError.rawValue]
-      } else if (authErrorCodes.contains { $0.intValue == code }) {
-        strCode = apiErrorCodes[Qonversion.APIError.invalidCredentials.rawValue]
+      // The below workarounds would be fixed in the coming major release.
+      if (strCode == nil && domain == NSURLErrorDomain) {
+        strCode = apiErrorCodes[Qonversion.Error.connectionFailed.rawValue]
       }
-    }
+
+      if (strCode == nil && domain == QonversionErrorDomain) {
+        let authErrorCodes = QNUtils.authErrorsCodes() as? [NSNumber] ?? []
+
+        if (code >= 500 && code < 600) {
+          strCode = apiErrorCodes[Qonversion.APIError.internalError.rawValue]
+        } else if (authErrorCodes.contains { $0.intValue == code }) {
+          strCode = apiErrorCodes[Qonversion.APIError.invalidCredentials.rawValue]
+        }
+      }
+    
+      return strCode ?? "Unknown"
+  }
+  
+  func toSandwichError() -> SandwichError {
 
     return SandwichError(
-      code: strCode ?? "Unknown",
+      code: stringCode(),
       domain: domain,
       details: localizedDescription,
       additionalMessage: userInfo[NSDebugDescriptionErrorKey] as? String
@@ -133,24 +135,23 @@ extension NSError {
   }
   
   func toMap() -> BridgeData {
-    let errorMap = [
-      "code": String(code),
+    return [
+      "code": stringCode(),
       "domain": domain,
       "description": localizedDescription,
-      "additionalMessage": userInfo[NSDebugDescriptionErrorKey]]
-    
-    return errorMap
+      "additionalMessage": "Original code: " + String(code) + ". " + (userInfo[NSDebugDescriptionErrorKey] as? String ?? "")
+    ]
   }
 }
 
 extension Qonversion.Product {
   func toMap() -> BridgeData {
     var subscriptionPeriodMap: BridgeData? = nil
-    var trialPeriodMap: BridgeData? = nil;
+    var trialPeriodMap: BridgeData? = nil
     if #available(iOS 11.2, macOS 10.13.2, watchOS 6.2, tvOS 11.2, *) {
         subscriptionPeriodMap = subscriptionPeriod?.toMap()
-        trialPeriodMap = trialPeriod?.toMap();
-    };
+        trialPeriodMap = trialPeriod?.toMap()
+    }
 
     return [
       "id": qonversionID,
