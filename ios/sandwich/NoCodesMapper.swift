@@ -1,6 +1,7 @@
 import Foundation
 #if os(iOS)
 import NoCodes
+import Qonversion
 
 extension NoCodes.Action {
     func toMap() -> BridgeData {
@@ -52,4 +53,50 @@ extension Dictionary where Key == String, Value == Any {
         return NoCodes.PresentationConfiguration(animated: animated, presentationStyle: presentationStyle)
     }
 }
-#endif 
+
+extension NoCodesError {
+
+  func toMap() -> BridgeData {
+    let codes = [
+      NoCodesErrorType.unknown: "Unknown",
+      NoCodesErrorType.`internal`: "Internal",
+      NoCodesErrorType.authorizationFailed: "AuthorizationFailed",
+      NoCodesErrorType.critical: "Critical",
+      NoCodesErrorType.invalidRequest: "BadNetworkRequest",
+      NoCodesErrorType.invalidResponse: "BadResponse",
+      NoCodesErrorType.productNotFound: "ProductNotFound",
+      NoCodesErrorType.productsLoadingFailed: "ProductsLoadingFailed",
+      NoCodesErrorType.rateLimitExceeded: "RateLimitExceeded",
+      NoCodesErrorType.screenLoadingFailed: "ScreenLoadingFailed",
+      NoCodesErrorType.sdkInitializationError: "SDKInitializationError"
+    ]
+    
+    var code = codes[type]
+    var errorData: BridgeData? = nil
+    
+    if let nsError = error as? NSError, nsError.domain == QonversionErrorDomain || nsError.domain == QonversionApiErrorDomain {
+      code = "QonversionError"
+      errorData = nsError.toMap()
+    }
+
+    return [
+      "code": code,
+      "description": message,
+      "additionalMessage": additionalInfo?.map { "\($0.key): \($0.value)" }.joined(separator: ", ") ?? "",
+      "qonversionError": errorData,
+    ]
+  }
+}
+
+public func errorToMap(_ error: Error?) -> BridgeData? {
+    var payload: BridgeData? = nil
+    if let error = error as? NoCodesError {
+        payload = error.toMap()
+    } else if let error = error as? NSError {
+        payload = error.toMap()
+    }
+    
+    return payload
+}
+
+#endif
