@@ -17,6 +17,7 @@ android {
         group = 'io.qonversion.sandwich'
         version = release.versionName
         versionName = release.versionName
+        namespace = 'io.qonversion.sandwich'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -38,7 +39,7 @@ android {
 }
 
 ext {
-    PUBLISH_GROUP_ID = 'io.qonversion.sandwich'
+    PUBLISH_GROUP_ID = 'io.qonversion'
     PUBLISH_ARTIFACT_ID = 'sandwich'
 }
 

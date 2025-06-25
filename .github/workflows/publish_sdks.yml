@@ -26,13 +26,11 @@ jobs:
           echo "signing.keyId=${{ secrets.SONATYPE_GPG_ID }}" >> ~/.gradle/gradle.properties
           echo "signing.password=${{ secrets.SONATYPE_GPG_PASSWORD }}" >> ~/.gradle/gradle.properties
           echo "signing.secretKeyRingFile=$HOME/.gradle/key.gpg" >> ~/.gradle/gradle.properties
-          echo "sonatypeStagingProfileId=${{ secrets.SONATYPE_STAGING_PROFILE_ID }}" >> ~/.gradle/gradle.properties
+          echo "mavenCentralUsername=${{ secrets.MAVEN_CENTRAL_USERNAME }}" >> ~/.gradle/gradle.properties
+          echo "mavenCentralPassword=${{ secrets.MAVEN_CENTRAL_PASSWORD }}" >> ~/.gradle/gradle.properties
 
       - name: Publish to MavenCentral
-        run: ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
-        env:
-          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
-          OSSRH_TOKEN_PASSWORD: ${{ secrets.OSSRH_TOKEN_PASSWORD }}
+        run: ./gradlew :sandwich:publishAndReleaseToMavenCentral
 
   iOS_publish:
     name: Publish iOS release
