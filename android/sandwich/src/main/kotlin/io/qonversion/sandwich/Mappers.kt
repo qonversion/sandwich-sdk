@@ -322,6 +322,17 @@ fun Map<String, Any?>.toStringMap(): Map<String, String> {
 }
 
 fun Map<String, Any?>.toScreenPresentationConfig(): QScreenPresentationConfig {
+    val animated = when (val animatedValue = get("animated")) {
+        is String -> animatedValue.toIntOrNull() != 0
+        is Int -> animatedValue != 0
+        is Boolean -> animatedValue
+        else -> true
+    }
+    
+    if (!animated) {
+        return QScreenPresentationConfig(QScreenPresentationStyle.NoAnimation)
+    }
+    
     val presentationStyle = try {
         get("presentationStyle")?.takeIf { it is String }?.let {
             QScreenPresentationStyle.valueOf(it as String)
