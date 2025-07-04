@@ -48,7 +48,13 @@ extension Dictionary where Key == String, Value == Any {
               let presentationStyle = NoCodes.PresentationStyle.fromString(presentationStyleStr)
         else { return NoCodes.PresentationConfiguration.defaultConfiguration() }
 
-        let animated = (self["animated"] as? String)?.toBool() ?? true
+        var animated = true
+        
+        if let animatedFromString = (self["animated"] as? String)?.toBool() {
+            animated = animatedFromString
+        } else if let animatedFromConfig = self["animated"] as? Bool {
+            animated = animatedFromConfig
+        }
 
         return NoCodes.PresentationConfiguration(animated: animated, presentationStyle: presentationStyle)
     }
