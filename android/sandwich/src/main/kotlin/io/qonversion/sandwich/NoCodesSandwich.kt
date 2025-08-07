@@ -10,6 +10,7 @@ import io.qonversion.nocodes.interfaces.ScreenCustomizationDelegate
 import io.qonversion.nocodes.dto.QScreenPresentationConfig
 import io.qonversion.nocodes.dto.QAction
 import io.qonversion.nocodes.error.NoCodesError
+import androidx.core.content.edit
 
 class NoCodesSandwich {
 
@@ -52,6 +53,13 @@ class NoCodesSandwich {
         }
 
         NoCodes.initialize(configBuilder.build())
+    }
+
+    fun storeSdkInfo(context: Context, source: String, version: String) {
+        context.getSharedPreferences(NO_CODES_PREFS_NAME, Context.MODE_PRIVATE).edit {
+            putString(NO_CODES_KEY_VERSION, version)
+            putString(NO_CODES_KEY_SOURCE, source)
+        }
     }
 
     // endregion
