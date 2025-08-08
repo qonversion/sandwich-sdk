@@ -34,6 +34,10 @@ public class NoCodesSandwich: NSObject {
         NoCodes.initialize(with: noCodesConfig)
         NoCodes.shared.set(delegate: self)
     }
+  
+    @objc public func storeSdkInfo(source: String, version: String) {
+        // Does nothing on iOS as No-Codes are integrated into the Qonversion SDK and share its source and version
+    }
     
     @MainActor @objc public func setScreenPresentationConfig(_ configData: [String: Any], forContextKey contextKey: String? = nil) {
         let config = configData.toPresentationConfig()
