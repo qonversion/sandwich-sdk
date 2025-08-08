@@ -78,8 +78,8 @@ class QonversionSandwich(
 
     fun storeSdkInfo(source: String, version: String) {
         val editor = PreferenceManager.getDefaultSharedPreferences(application).edit()
-        editor.putString(KEY_VERSION, version)
-        editor.putString(KEY_SOURCE, source)
+        editor.putString(QONVERSION_KEY_VERSION, version)
+        editor.putString(QONVERSION_KEY_SOURCE, source)
         editor.apply()
     }
 
