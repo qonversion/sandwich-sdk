@@ -34,6 +34,7 @@ import com.qonversion.android.sdk.listeners.QonversionRemoteConfigListCallback
 import com.qonversion.android.sdk.listeners.QonversionRemoteConfigurationAttachCallback
 import com.qonversion.android.sdk.listeners.QonversionUserCallback
 import com.qonversion.android.sdk.listeners.QonversionUserPropertiesCallback
+import androidx.core.content.edit
 
 private const val TAG = "Qonversion"
 
@@ -77,10 +78,10 @@ class QonversionSandwich(
     }
 
     fun storeSdkInfo(source: String, version: String) {
-        val editor = PreferenceManager.getDefaultSharedPreferences(application).edit()
-        editor.putString(QONVERSION_KEY_VERSION, version)
-        editor.putString(QONVERSION_KEY_SOURCE, source)
-        editor.apply()
+        PreferenceManager.getDefaultSharedPreferences(application).edit {
+            putString(QONVERSION_KEY_VERSION, version)
+            putString(QONVERSION_KEY_SOURCE, source)
+        }
     }
 
     // endregion
@@ -404,12 +405,12 @@ class QonversionSandwich(
         }
         Qonversion.shared.offerings(object : QonversionOfferingsCallback {
             override fun onSuccess(offerings: QOfferings) {
-                val offering = offerings.offeringForID(offeringId)
+                val offering = offerings.offeringForId(offeringId)
                 if (offering == null) {
                     callback.onLoadingFailed()
                     return
                 }
-                val product = offering.productForID(productId)
+                val product = offering.productForId(productId)
                 if (product == null) {
                     callback.onLoadingFailed()
                 } else {
