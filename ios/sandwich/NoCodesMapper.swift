@@ -1,9 +1,8 @@
 import Foundation
 #if os(iOS)
-import NoCodes
 import Qonversion
 
-extension NoCodes.Action {
+extension NoCodesAction {
     func toMap() -> BridgeData {
         return [
             "type": type.toString(),
@@ -12,7 +11,7 @@ extension NoCodes.Action {
     }
 }
 
-extension NoCodes.ActionType {
+extension NoCodesActionType {
     func toString() -> String {
         switch self {
         case .url: return "url"
@@ -27,15 +26,15 @@ extension NoCodes.ActionType {
     }
 }
 
-extension NoCodes.PresentationStyle {
-    static func fromString(_ key: String?) -> NoCodes.PresentationStyle? {
+extension NoCodesPresentationStyle {
+    static func fromString(_ key: String?) -> NoCodesPresentationStyle? {
         switch (key) {
         case "Push":
-            return NoCodes.PresentationStyle.push
+            return NoCodesPresentationStyle.push
         case "FullScreen":
-            return NoCodes.PresentationStyle.fullScreen
+            return NoCodesPresentationStyle.fullScreen
         case "Popover":
-            return NoCodes.PresentationStyle.popover
+            return NoCodesPresentationStyle.popover
         default:
             return nil
         }
@@ -43,10 +42,10 @@ extension NoCodes.PresentationStyle {
 }
 
 extension Dictionary where Key == String, Value == Any {
-    func toPresentationConfig() -> NoCodes.PresentationConfiguration {
+    func toPresentationConfig() -> NoCodesPresentationConfiguration {
         guard let presentationStyleStr = self["presentationStyle"] as? String,
-              let presentationStyle = NoCodes.PresentationStyle.fromString(presentationStyleStr)
-        else { return NoCodes.PresentationConfiguration.defaultConfiguration() }
+              let presentationStyle = NoCodesPresentationStyle.fromString(presentationStyleStr)
+        else { return NoCodesPresentationConfiguration.defaultConfiguration() }
 
         var animated = true
         
@@ -56,7 +55,7 @@ extension Dictionary where Key == String, Value == Any {
             animated = animatedFromConfig
         }
 
-        return NoCodes.PresentationConfiguration(animated: animated, presentationStyle: presentationStyle)
+        return NoCodesPresentationConfiguration(animated: animated, presentationStyle: presentationStyle)
     }
 }
 
@@ -80,7 +79,7 @@ extension NoCodesError {
     var code = codes[type]
     var errorData: BridgeData? = nil
     
-    if let nsError = error as? NSError, nsError.domain == QonversionErrorDomain || nsError.domain == QonversionApiErrorDomain {
+    if let nsError = error as? NSError, nsError.domain == QonversionErrorDomain {
       code = "QonversionError"
       errorData = nsError.toMap()
     }

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4468479235E1715E7B57FAAB /* Pods_QonversionSandwich.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E529BAFDEE040E8CC65EEAE8 /* Pods_QonversionSandwich.framework */; };
 		6A439CA42807112400019344 /* SandwichError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A439CA32807112400019344 /* SandwichError.swift */; };
 		6A8EB5D128046BAA00DCCD9E /* Mappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8EB5D028046BAA00DCCD9E /* Mappers.swift */; };
 		6ACDA8F6280586460003AC8F /* QonversionSandwich.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACDA8F5280586460003AC8F /* QonversionSandwich.swift */; };
@@ -63,11 +62,8 @@
 		70F78C7528104EAD004974DA /* TestClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestClass.h; sourceTree = "<group>"; };
 		70F78C7628104EAD004974DA /* TestClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestClass.m; sourceTree = "<group>"; };
 		70F78C7828104F8F004974DA /* TestSwiftClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSwiftClass.swift; sourceTree = "<group>"; };
-		98E3C13BE694F9023B14718A /* Pods-QonversionSandwich.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QonversionSandwich.debug.xcconfig"; path = "Target Support Files/Pods-QonversionSandwich/Pods-QonversionSandwich.debug.xcconfig"; sourceTree = "<group>"; };
 		BD5E002836B9B98F76E4FFE5 /* Pods-Sample Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample Swift.debug.xcconfig"; path = "Target Support Files/Pods-Sample Swift/Pods-Sample Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		E06D87679C44EE198805A5C3 /* Pods-Sample Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample Swift.release.xcconfig"; path = "Target Support Files/Pods-Sample Swift/Pods-Sample Swift.release.xcconfig"; sourceTree = "<group>"; };
-		E529BAFDEE040E8CC65EEAE8 /* Pods_QonversionSandwich.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QonversionSandwich.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F0E60978D077A7DF96877F91 /* Pods-QonversionSandwich.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QonversionSandwich.release.xcconfig"; path = "Target Support Files/Pods-QonversionSandwich/Pods-QonversionSandwich.release.xcconfig"; sourceTree = "<group>"; };
 		FC7022C807F2F121E1338D7F /* Pods_Sample_Obj_C.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sample_Obj_C.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -76,7 +72,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4468479235E1715E7B57FAAB /* Pods_QonversionSandwich.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,8 +160,6 @@
 				E06D87679C44EE198805A5C3 /* Pods-Sample Swift.release.xcconfig */,
 				1418B352B6EF3C07ADC38F76 /* Pods-Sample.debug.xcconfig */,
 				0084C9E227919BFE710C6C7F /* Pods-Sample.release.xcconfig */,
-				98E3C13BE694F9023B14718A /* Pods-QonversionSandwich.debug.xcconfig */,
-				F0E60978D077A7DF96877F91 /* Pods-QonversionSandwich.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -177,7 +170,6 @@
 				FC7022C807F2F121E1338D7F /* Pods_Sample_Obj_C.framework */,
 				670A4F21CF8A1ECAF5528B99 /* Pods_Sample_Swift.framework */,
 				2978A890248F68C3F7FC8AB4 /* Pods_Sample.framework */,
-				E529BAFDEE040E8CC65EEAE8 /* Pods_QonversionSandwich.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -199,7 +191,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6A8EB5CD27FD896400DCCD9E /* Build configuration list for PBXNativeTarget "QonversionSandwich" */;
 			buildPhases = (
-				24F59709F70CE462E195DFFC /* [CP] Check Pods Manifest.lock */,
 				6A8EB5C127FD896400DCCD9E /* Headers */,
 				6A8EB5C227FD896400DCCD9E /* Sources */,
 				6A8EB5C327FD896400DCCD9E /* Frameworks */,
@@ -313,28 +304,6 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Sample-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		24F59709F70CE462E195DFFC /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-QonversionSandwich-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -535,7 +504,6 @@
 		};
 		6A8EB5CE27FD896400DCCD9E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 98E3C13BE694F9023B14718A /* Pods-QonversionSandwich.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -568,7 +536,6 @@
 		};
 		6A8EB5CF27FD896400DCCD9E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F0E60978D077A7DF96877F91 /* Pods-QonversionSandwich.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;

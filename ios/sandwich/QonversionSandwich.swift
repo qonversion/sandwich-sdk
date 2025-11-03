@@ -430,7 +430,7 @@ public class QonversionSandwich : NSObject {
   }
       
     private func productNotFoundError() -> NSError {
-      let error = NSError.init(domain: QonversionErrorDomain, code: Qonversion.Error.productNotFound.rawValue, userInfo: nil)
+      let error = NSError.init(domain: QonversionErrorDomain, code: Qonversion.ErrorCode.productNotFound.rawValue, userInfo: nil)
       
       return error
     }
