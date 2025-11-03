@@ -5,31 +5,27 @@
 //  Created by Suren Sarkisyan on 08.05.2025.
 //  Copyright © 2025 Qonversion Inc. All rights reserved.
 //
+#if os(iOS)
 
 import Foundation
-#if os(iOS)
-import NoCodes
+import Qonversion
 import UIKit
-#endif
 
 public class NoCodesSandwich: NSObject {
-    #if os(iOS)
     private var noCodesEventListener: NoCodesEventListener?
-    private var defaultPresentationConfig: NoCodes.PresentationConfiguration? = nil
-    private var screenPresentationConfigs: [String: NoCodes.PresentationConfiguration] = [:]
+    private var defaultPresentationConfig: NoCodesPresentationConfiguration? = nil
+    private var screenPresentationConfigs: [String: NoCodesPresentationConfiguration] = [:]
     private var isCustomizationDelegateSet = false
-    #endif
     
     @objc public init(noCodesEventListener: NoCodesEventListener) {
-        #if os(iOS)
         self.noCodesEventListener = noCodesEventListener
-        #endif
     }
-    
-#if os(iOS)
-    
-    @objc public func initialize(projectKey: String) {
-        let noCodesConfig = NoCodes.Configuration(projectKey: projectKey)
+
+    @objc public func initialize(
+        projectKey: String,
+        proxyUrl: String? = nil
+    ) {
+        let noCodesConfig = NoCodesConfiguration(projectKey: projectKey, proxyURL: proxyUrl)
         
         NoCodes.initialize(with: noCodesConfig)
         NoCodes.shared.set(delegate: self)
@@ -75,17 +71,14 @@ public class NoCodesSandwich: NSObject {
         
         return availableEvents.map { $0.rawValue }
     }
-    
-#endif
 }
 
-#if os(iOS)
-extension NoCodesSandwich: NoCodes.ScreenCustomizationDelegate {
-    public func presentationConfigurationForScreen(contextKey: String) -> NoCodes.PresentationConfiguration {
+extension NoCodesSandwich: NoCodesScreenCustomizationDelegate {
+    public func presentationConfigurationForScreen(contextKey: String) -> NoCodesPresentationConfiguration {
         return screenPresentationConfigs[contextKey] ?? defaultPresentationConfig ?? .defaultConfiguration()
     }
     
-    public func presentationConfigurationForScreen(id: String) -> NoCodes.PresentationConfiguration {
+    public func presentationConfigurationForScreen(id: String) -> NoCodesPresentationConfiguration {
         return screenPresentationConfigs[id] ?? defaultPresentationConfig ?? .defaultConfiguration()
     }
     
@@ -94,7 +87,7 @@ extension NoCodesSandwich: NoCodes.ScreenCustomizationDelegate {
     }
 }
 
-extension NoCodesSandwich: NoCodes.Delegate {
+extension NoCodesSandwich: NoCodesDelegate {
     public func controllerForNavigation() -> UIViewController? {
         return nil
     }
@@ -104,18 +97,18 @@ extension NoCodesSandwich: NoCodes.Delegate {
         noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.screenShown.rawValue, payload: payload.clearEmptyValues())
     }
     
-    public func noCodesStartsExecuting(action: NoCodes.Action) {
+    public func noCodesStartsExecuting(action: NoCodesAction) {
         let payload: BridgeData = action.toMap()
         noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.actionStarted.rawValue, payload: payload.clearEmptyValues())
     }
     
-    public func noCodesFailedToExecute(action: NoCodes.Action, error: Error?) {
+    public func noCodesFailedToExecute(action: NoCodesAction, error: Error?) {
         var payload: BridgeData = action.toMap()
         payload["error"] = errorToMap(error)
         noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.actionFailed.rawValue, payload: payload.clearEmptyValues())
     }
     
-    public func noCodesFinishedExecuting(action: NoCodes.Action) {
+    public func noCodesFinishedExecuting(action: NoCodesAction) {
         let payload: BridgeData = action.toMap()
         noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.actionFinished.rawValue, payload: payload.clearEmptyValues())
     }
