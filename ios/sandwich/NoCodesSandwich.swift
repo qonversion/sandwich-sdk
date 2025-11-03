@@ -21,8 +21,11 @@ public class NoCodesSandwich: NSObject {
         self.noCodesEventListener = noCodesEventListener
     }
 
-    @objc public func initialize(projectKey: String) {
-        let noCodesConfig = NoCodesConfiguration(projectKey: projectKey)
+    @objc public func initialize(
+        projectKey: String,
+        proxyUrl: String? = nil
+    ) {
+        let noCodesConfig = NoCodesConfiguration(projectKey: projectKey, proxyURL: proxyUrl)
         
         NoCodes.initialize(with: noCodesConfig)
         NoCodes.shared.set(delegate: self)
