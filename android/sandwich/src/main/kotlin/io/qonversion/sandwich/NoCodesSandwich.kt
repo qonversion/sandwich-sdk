@@ -44,7 +44,7 @@ class NoCodesSandwich {
                 val logLevel = LogLevel.valueOf(it)
                 configBuilder.setLogLevel(logLevel)
             } catch (e: IllegalArgumentException) {
-                Log.w("No-Codes Sandwich", "Invalid log level provided: " + it)
+                Log.w("No-Codes Sandwich", "Invalid log level provided: $it")
             }
         }
 
@@ -153,4 +153,4 @@ class NoCodesSandwich {
     }
 
     // endregion
-} 
+}

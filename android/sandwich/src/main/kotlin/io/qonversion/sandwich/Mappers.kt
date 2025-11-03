@@ -1,6 +1,5 @@
 package io.qonversion.sandwich
 
-import com.android.billingclient.api.*
 import com.qonversion.android.sdk.dto.QonversionError
 import com.qonversion.android.sdk.dto.QRemoteConfig
 import com.qonversion.android.sdk.dto.QRemoteConfigList
@@ -43,44 +42,17 @@ fun QonversionError.toMap(): BridgeData {
     )
 }
 
-@Suppress("DEPRECATION")
-fun SkuDetails.toMap(): BridgeData {
-    return mapOf(
-        "description" to description,
-        "freeTrialPeriod" to freeTrialPeriod,
-        "iconUrl" to iconUrl,
-        "introductoryPrice" to introductoryPrice,
-        "introductoryPriceAmountMicros" to introductoryPriceAmountMicros,
-        "introductoryPriceCycles" to introductoryPriceCycles,
-        "introductoryPricePeriod" to introductoryPricePeriod,
-        "originalJson" to originalJson,
-        "originalPrice" to originalPrice,
-        "originalPriceAmountMicros" to originalPriceAmountMicros,
-        "price" to price,
-        "priceAmountMicros" to priceAmountMicros,
-        "priceCurrencyCode" to priceCurrencyCode,
-        "sku" to sku,
-        "subscriptionPeriod" to subscriptionPeriod,
-        "title" to title,
-        "type" to type,
-        "hashCode" to hashCode(),
-        "toString" to toString()
-    )
-}
-
-@Suppress("DEPRECATION")
 fun QProduct.toMap(): BridgeData {
     return mapOf(
-        "id" to qonversionID,
-        "storeId" to storeID,
-        "basePlanId" to basePlanID,
+        "id" to qonversionId,
+        "storeId" to storeId,
+        "basePlanId" to basePlanId,
         "type" to type.name,
         "subscriptionPeriod" to subscriptionPeriod?.toMap(),
         "trialPeriod" to trialPeriod?.toMap(),
-        "skuDetails" to skuDetail?.toMap(),
         "storeDetails" to storeDetails?.toMap(),
         "prettyPrice" to prettyPrice,
-        "offeringId" to offeringID
+        "offeringId" to offeringId
     )
 }
 
@@ -211,7 +183,7 @@ fun Map<String, QEntitlement>.toEntitlementsMap(): BridgeData {
 
 fun QOffering.toMap(): BridgeData {
     return mapOf(
-        "id" to offeringID,
+        "id" to offeringId,
         "tag" to tag.tag,
         "products" to products.map { it.toMap() }
     )
@@ -314,11 +286,6 @@ fun QRemoteConfigurationAssignmentType.toFormattedString(): String {
         QRemoteConfigurationAssignmentType.Manual -> "manual"
         else -> "unknown"
     }
-}
-
-fun Map<String, Any?>.toStringMap(): Map<String, String> {
-    return filterValues { it != null }
-        .mapValues { it.value.toString() }
 }
 
 fun Map<String, Any?>.toScreenPresentationConfig(): QScreenPresentationConfig {
