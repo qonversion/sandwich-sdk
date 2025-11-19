@@ -1,5 +1,5 @@
 buildscript {
-    ext.nocodes_version = '1.0.0'
+    ext.nocodes_version = '1.1.0'
 }
 
 plugins {
@@ -11,7 +11,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        minSdk 21
+        minSdk 23
         targetSdk 33
 
         group = 'io.qonversion.sandwich'
