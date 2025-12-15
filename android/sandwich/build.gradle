@@ -40,7 +40,7 @@ android {
 
 ext {
     PUBLISH_GROUP_ID = 'io.qonversion'
-    PUBLISH_ARTIFACT_ID = 'sandwich-local'
+    PUBLISH_ARTIFACT_ID = 'sandwich'
 }
 
 dependencies {
