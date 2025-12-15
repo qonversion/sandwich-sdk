@@ -1,5 +1,5 @@
 buildscript {
-    ext.nocodes_version = '1.1.0'
+    ext.nocodes_version = '1.2.1'
 }
 
 plugins {
@@ -40,7 +40,7 @@ android {
 
 ext {
     PUBLISH_GROUP_ID = 'io.qonversion'
-    PUBLISH_ARTIFACT_ID = 'sandwich'
+    PUBLISH_ARTIFACT_ID = 'sandwich-local'
 }
 
 dependencies {
