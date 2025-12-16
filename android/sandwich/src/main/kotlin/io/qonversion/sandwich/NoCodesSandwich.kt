@@ -11,6 +11,8 @@ import io.qonversion.nocodes.dto.QScreenPresentationConfig
 import io.qonversion.nocodes.dto.QAction
 import io.qonversion.nocodes.error.NoCodesError
 import androidx.core.content.edit
+import com.qonversion.android.sdk.dto.products.QProduct
+import io.qonversion.nocodes.interfaces.PurchaseDelegateWithCallbacks
 
 class NoCodesSandwich {
 
@@ -22,6 +24,12 @@ class NoCodesSandwich {
             return screenPresentationConfigs[contextKey] ?: defaultPresentationConfig ?: QScreenPresentationConfig()
         }
     }
+
+    private var delegatedPurchaseSuccessCallback: PurchaseDelegateWithCallbacks.OnSuccess? = null
+    private var delegatedPurchaseErrorCallback: PurchaseDelegateWithCallbacks.OnError? = null
+    private var delegatedRestoreSuccessCallback: PurchaseDelegateWithCallbacks.OnSuccess? = null
+    private var delegatedRestoreErrorCallback: PurchaseDelegateWithCallbacks.OnError? = null
+
     private lateinit var noCodesDelegate: NoCodesDelegate
 
     // region Initialization
@@ -94,6 +102,11 @@ class NoCodesSandwich {
         }
     }
 
+    fun setPurchaseDelegate(delegate: NoCodesPurchaseDelegateBridge) {
+        val purchaseDelegate = createPurchaseDelegate(delegate)
+        NoCodes.shared.setPurchaseDelegate(purchaseDelegate)
+    }
+
     // endregion
 
     // region Screen Management
@@ -117,6 +130,28 @@ class NoCodesSandwich {
 
     fun setLogTag(logTag: String) {
         NoCodes.shared.setLogTag(logTag)
+    }
+
+    // endregion
+
+    // region Purchase Management
+
+    fun delegatedPurchaseCompleted() {
+        delegatedPurchaseSuccessCallback?.invoke()
+    }
+
+    fun delegatedPurchaseFailed(errorMessage: String) {
+        val exception = Exception(errorMessage)
+        delegatedPurchaseErrorCallback?.invoke(exception)
+    }
+
+    fun delegatedRestoreCompleted() {
+        delegatedRestoreSuccessCallback?.invoke()
+    }
+
+    fun delegatedRestoreFailed(errorMessage: String) {
+        val exception = Exception(errorMessage)
+        delegatedRestoreErrorCallback?.invoke(exception)
     }
 
     // endregion
@@ -148,6 +183,29 @@ class NoCodesSandwich {
 
             override fun onScreenFailedToLoad(error: NoCodesError) {
                 eventListener.onNoCodesEvent(NoCodesEventListener.Event.ScreenFailedToLoad, error.toMap())
+            }
+        }
+    }
+
+    private fun createPurchaseDelegate(delegate: NoCodesPurchaseDelegateBridge): PurchaseDelegateWithCallbacks {
+        return object : PurchaseDelegateWithCallbacks {
+            override fun purchase(
+                product: QProduct,
+                onSuccess: PurchaseDelegateWithCallbacks.OnSuccess,
+                onError: PurchaseDelegateWithCallbacks.OnError
+            ) {
+                delegatedPurchaseSuccessCallback = onSuccess
+                delegatedPurchaseErrorCallback = onError
+                delegate.purchase(product.toMap())
+            }
+    
+            override fun restore(
+                onSuccess: PurchaseDelegateWithCallbacks.OnSuccess,
+                onError: PurchaseDelegateWithCallbacks.OnError
+            ) {
+                delegatedRestoreSuccessCallback = onSuccess
+                delegatedRestoreErrorCallback = onError
+                delegate.restore()
             }
         }
     }

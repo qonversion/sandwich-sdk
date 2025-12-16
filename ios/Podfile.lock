@@ -1,9 +1,9 @@
 PODS:
-  - Qonversion (6.0.0):
-    - Qonversion/Main (= 6.0.0)
-  - Qonversion/Main (6.0.0)
-  - QonversionSandwich (6.0.11):
-    - Qonversion (= 6.0.0)
+  - Qonversion (6.1.0):
+    - Qonversion/Main (= 6.1.0)
+  - Qonversion/Main (6.1.0)
+  - QonversionSandwich (7.1.0):
+    - Qonversion (= 6.1.0)
 
 DEPENDENCIES:
   - QonversionSandwich (from `../`)
@@ -17,8 +17,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Qonversion: 694b88c4bfc06d827c189908e73ea955a1ddde6c
-  QonversionSandwich: e8c033177c8a89f882fb7bcc821af0819d367c40
+  Qonversion: 0b64e731cb59f94ab03c132cea2b70552b4dcc2b
+  QonversionSandwich: 1b9f83ed758c0a9289e09981b82c6e9fc65e7fa4
 
 PODFILE CHECKSUM: e5fb0f1b622edd873d42d0bef64736d62943be41
 
