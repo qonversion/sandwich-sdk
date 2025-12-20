@@ -45,7 +45,7 @@ public class QonversionSandwich : NSObject {
       config.setEntitlementsCacheLifetime(cacheLifetime)
     }
     
-    if let proxyUrl = proxyUrl {
+    if let proxyUrl = proxyUrl, !proxyUrl.isEmpty {
       config.setProxyURL(proxyUrl);
     }
     
@@ -143,7 +143,7 @@ public class QonversionSandwich : NSObject {
   }
   
   @objc public func purchaseProduct(_ productId: String, offeringId: String?, completion: @escaping BridgeCompletion) {
-    guard let offeringId = offeringId else {
+    guard let offeringId = offeringId, !offeringId.isEmpty else {
       return purchase(productId, completion: completion)
     }
     
@@ -304,7 +304,7 @@ public class QonversionSandwich : NSObject {
       completion(bridgeData, nil)
     }
 
-    if let contextKey = contextKey {
+    if let contextKey = contextKey, !contextKey.isEmpty {
       return Qonversion.shared().remoteConfig(contextKey: contextKey, completion: sandwichCompletion)
     }
     

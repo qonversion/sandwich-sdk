@@ -16,6 +16,9 @@ public class NoCodesSandwich: NSObject {
     private var defaultPresentationConfig: NoCodesPresentationConfiguration? = nil
     private var screenPresentationConfigs: [String: NoCodesPresentationConfiguration] = [:]
     private var isCustomizationDelegateSet = false
+    private var purchaseDelegateBridge: NoCodesPurchaseDelegateBridge?
+    private var purchaseContinuation: CheckedContinuation<Void, Error>?
+    private var restoreContinuation: CheckedContinuation<Void, Error>?
     
     @objc public init(noCodesEventListener: NoCodesEventListener) {
         self.noCodesEventListener = noCodesEventListener
@@ -25,7 +28,7 @@ public class NoCodesSandwich: NSObject {
         projectKey: String,
         proxyUrl: String? = nil
     ) {
-        let noCodesConfig = NoCodesConfiguration(projectKey: projectKey, proxyURL: proxyUrl)
+        let noCodesConfig = NoCodesConfiguration(projectKey: projectKey, proxyURL: proxyUrl?.isEmpty == true ? nil : proxyUrl)
         
         NoCodes.initialize(with: noCodesConfig)
         NoCodes.shared.set(delegate: self)
@@ -43,7 +46,7 @@ public class NoCodesSandwich: NSObject {
             NoCodes.shared.set(screenCustomizationDelegate: self)
         }
         
-        if let contextKey = contextKey {
+        if let contextKey = contextKey, !contextKey.isEmpty {
             screenPresentationConfigs[contextKey] = config
         } else {
             screenPresentationConfigs = [:]
@@ -70,6 +73,45 @@ public class NoCodesSandwich: NSObject {
         ]
         
         return availableEvents.map { $0.rawValue }
+    }
+
+    @objc public func setPurchaseDelegate(_ delegate: NoCodesPurchaseDelegateBridge) {
+        purchaseDelegateBridge = delegate
+        NoCodes.shared.set(purchaseDelegate: self)
+    }
+
+    @objc public func delegatedPurchaseCompleted() {
+        guard let continuation = purchaseContinuation else { return }
+        purchaseContinuation = nil
+        continuation.resume(returning: ())
+    }
+
+    @objc public func delegatedPurchaseFailed(_ errorMessage: String) {
+        let error = NSError(
+            domain: "NoCodesBridge",
+            code: -1,
+            userInfo: [NSLocalizedDescriptionKey: errorMessage]
+        )
+        guard let continuation = purchaseContinuation else { return }
+        purchaseContinuation = nil
+        continuation.resume(throwing: error)
+    }
+
+    @objc public func delegatedRestoreCompleted() {
+        guard let continuation = restoreContinuation else { return }
+        restoreContinuation = nil
+        continuation.resume(returning: ())
+    }
+
+    @objc public func delegatedRestoreFailed(_ errorMessage: String) {
+        let error = NSError(
+            domain: "NoCodesBridge",
+            code: -1,
+            userInfo: [NSLocalizedDescriptionKey: errorMessage]
+        )
+        guard let continuation = restoreContinuation else { return }
+        restoreContinuation = nil
+        continuation.resume(throwing: error)
     }
 }
 
@@ -121,4 +163,29 @@ extension NoCodesSandwich: NoCodesDelegate {
         noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.screenFailedToLoad.rawValue, payload: errorToMap(error)?.clearEmptyValues())
     }
 }
+
+extension NoCodesSandwich: NoCodesPurchaseDelegate {
+    public func purchase(product: Qonversion.Product) async throws {
+        guard let delegate = purchaseDelegateBridge else { return }
+
+        try await withCheckedThrowingContinuation { continuation in
+            purchaseContinuation = continuation
+            Task { @MainActor in
+                delegate.purchase(product.toMap().clearEmptyValues())
+            }
+        }
+    }
+
+    public func restore() async throws {
+        guard let delegate = purchaseDelegateBridge else { return }
+
+        try await withCheckedThrowingContinuation { continuation in
+            restoreContinuation = continuation
+            Task { @MainActor in
+                delegate.restore()
+            }
+        }
+    }
+}
+
 #endif
