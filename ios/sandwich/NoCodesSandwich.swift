@@ -28,7 +28,7 @@ public class NoCodesSandwich: NSObject {
         projectKey: String,
         proxyUrl: String? = nil
     ) {
-        let noCodesConfig = NoCodesConfiguration(projectKey: projectKey, proxyURL: proxyUrl)
+        let noCodesConfig = NoCodesConfiguration(projectKey: projectKey, proxyURL: proxyUrl?.isEmpty == true ? nil : proxyUrl)
         
         NoCodes.initialize(with: noCodesConfig)
         NoCodes.shared.set(delegate: self)
@@ -46,7 +46,7 @@ public class NoCodesSandwich: NSObject {
             NoCodes.shared.set(screenCustomizationDelegate: self)
         }
         
-        if let contextKey = contextKey {
+        if let contextKey = contextKey, !contextKey.isEmpty {
             screenPresentationConfigs[contextKey] = config
         } else {
             screenPresentationConfigs = [:]
