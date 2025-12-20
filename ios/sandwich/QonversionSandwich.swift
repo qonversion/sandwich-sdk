@@ -45,7 +45,7 @@ public class QonversionSandwich : NSObject {
       config.setEntitlementsCacheLifetime(cacheLifetime)
     }
     
-    if let proxyUrl = proxyUrl {
+    if let proxyUrl = proxyUrl, !proxyUrl.isEmpty {
       config.setProxyURL(proxyUrl);
     }
     
