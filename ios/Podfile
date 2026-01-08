@@ -4,10 +4,6 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '13.0'
 
 use_frameworks!
-#
-# target 'QonversionSandwich' do
-#  pod 'NoCodes', '0.1.3'
-# end
 
 target 'Sample' do
   pod 'QonversionSandwich', :path => '../'
