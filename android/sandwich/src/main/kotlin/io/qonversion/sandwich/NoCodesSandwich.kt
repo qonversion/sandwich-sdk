@@ -39,7 +39,8 @@ class NoCodesSandwich {
         projectKey: String,
         proxyUrl: String? = null,
         logLevelKey: String? = null,
-        logTag: String? = null
+        logTag: String? = null,
+        locale: String? = null
     ) {
         val configBuilder = NoCodesConfig.Builder(context, projectKey)
 
@@ -58,6 +59,10 @@ class NoCodesSandwich {
 
         logTag?.let {
             configBuilder.setLogTag(it)
+        }
+
+        locale?.takeIf { it.isNotEmpty() }?.let {
+            configBuilder.setLocale(it)
         }
 
         NoCodes.initialize(configBuilder.build())
@@ -130,6 +135,10 @@ class NoCodesSandwich {
 
     fun setLogTag(logTag: String) {
         NoCodes.shared.setLogTag(logTag)
+    }
+
+    fun setLocale(locale: String?) {
+        NoCodes.shared.setLocale(locale)
     }
 
     // endregion
