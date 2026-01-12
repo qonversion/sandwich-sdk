@@ -14,6 +14,7 @@ import com.qonversion.android.sdk.dto.QPurchaseUpdatePolicy
 import com.qonversion.android.sdk.dto.QRemoteConfig
 import com.qonversion.android.sdk.dto.QRemoteConfigList
 import com.qonversion.android.sdk.dto.QUser
+import com.qonversion.android.sdk.dto.QPurchaseResult
 import com.qonversion.android.sdk.dto.QonversionError
 import com.qonversion.android.sdk.dto.QonversionErrorCode
 import com.qonversion.android.sdk.dto.eligibility.QEligibility
@@ -34,6 +35,7 @@ import com.qonversion.android.sdk.listeners.QonversionRemoteConfigListCallback
 import com.qonversion.android.sdk.listeners.QonversionRemoteConfigurationAttachCallback
 import com.qonversion.android.sdk.listeners.QonversionUserCallback
 import com.qonversion.android.sdk.listeners.QonversionUserPropertiesCallback
+import com.qonversion.android.sdk.listeners.QonversionPurchaseCallback
 import androidx.core.content.edit
 
 private const val TAG = "Qonversion"
@@ -129,6 +131,47 @@ class QonversionSandwich(
     fun checkEntitlements(resultListener: ResultListener) {
         val entitlementsCallback = getEntitlementsCallback(resultListener)
         Qonversion.shared.checkEntitlements(entitlementsCallback)
+    }
+
+    fun purchaseWithResult(
+        productId: String,
+        offerId: String?,
+        applyOffer: Boolean?,
+        oldProductId: String?,
+        updatePolicyKey: String?,
+        contextKeys: List<String>?,
+        resultListener: ResultListener
+    ) {
+        val currentActivity = activityProvider.currentActivity
+            ?: run {
+                resultListener.onError(noActivityForPurchaseError.toSandwichError())
+                return
+            }
+
+        val purchaseCallback = object : QonversionPurchaseCallback {
+            override fun onResult(result: QPurchaseResult) {
+                resultListener.onSuccess(result.toMap())
+            }
+        }
+
+        Qonversion.shared.products(object: QonversionProductsCallback {
+            override fun onSuccess(products: Map<String, QProduct>) {
+                val product = products[productId]
+                val oldProduct = products[oldProductId]
+                val purchaseOptions = configurePurchaseOptions(offerId, applyOffer, oldProduct, updatePolicyKey, contextKeys)
+
+                if (product != null) {
+                    Qonversion.shared.purchase(currentActivity, product, purchaseOptions, purchaseCallback)
+                } else {
+                    val error = QonversionError(QonversionErrorCode.ProductNotFound)
+                    resultListener.onError(error.toSandwichError())
+                }
+            }
+
+            override fun onError(error: QonversionError) {
+                resultListener.onError(error.toSandwichError())
+            }
+        })
     }
 
     fun offerings(resultListener: ResultListener) {

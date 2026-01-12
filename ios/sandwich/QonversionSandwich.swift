@@ -159,6 +159,49 @@ public class QonversionSandwich : NSObject {
     }
   }
   
+  // MARK: - Purchase with Result
+  
+  @objc public func purchaseWithResult(
+    _ productId: String,
+    quantity: Int,
+    contextKeys: [String],
+    promoOffer: [String: Any],
+    completion: @escaping BridgeCompletion
+  ) {
+    Qonversion.shared().products { [weak self] products, _ in
+      guard let self = self else { return }
+      
+      guard let product = products[productId] else {
+        let error = self.productNotFoundError()
+        return completion(nil, error.toSandwichError())
+      }
+      
+      let purchaseOptions: Qonversion.PurchaseOptions
+      
+      if #available(iOS 12.2, macOS 10.14.4, watchOS 6.2, tvOS 12.2, visionOS 1.0, *),
+         let productDiscountId = promoOffer["productDiscountId"] as? String,
+         let productDiscount = product.skProduct?.discounts.first(where: { $0.identifier == productDiscountId }),
+         let keyIdentifier = promoOffer["keyIdentifier"] as? String,
+         let nonce = promoOffer["nonce"] as? String,
+         let nonceUUID = UUID(uuidString: nonce),
+         let signature = promoOffer["signature"] as? String,
+         let timestamp = promoOffer["timestamp"] as? Int {
+        let timestampNumber = NSNumber(value: timestamp)
+        let paymentDiscount = SKPaymentDiscount(identifier: productDiscountId, keyIdentifier: keyIdentifier, nonce: nonceUUID, signature: signature, timestamp: timestampNumber)
+        
+        let promotionalOffer = Qonversion.PromotionalOffer(productDiscount: productDiscount, paymentDiscount: paymentDiscount)
+        purchaseOptions = Qonversion.PurchaseOptions(quantity: quantity, contextKeys: contextKeys, promoOffer: promotionalOffer)
+      } else {
+        purchaseOptions = Qonversion.PurchaseOptions(quantity: quantity, contextKeys: contextKeys)
+      }
+      
+      Qonversion.shared().purchaseWithResult(product, options: purchaseOptions) { purchaseResult in
+        let bridgeData: [String: Any]? = purchaseResult.toMap().clearEmptyValues()
+        completion(bridgeData, nil)
+      }
+    }
+  }
+  
   @objc public func promoPurchase(_ productId: String, completion: @escaping BridgeCompletion) {
     if let executionBlock = promoPurchasesExecutionBlocks[productId] {
       promoPurchasesExecutionBlocks[productId] = nil

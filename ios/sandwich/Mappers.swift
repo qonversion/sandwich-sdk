@@ -711,6 +711,72 @@ extension Date {
     }
 }
 
+// MARK: - PurchaseResult Mappers
+
+extension Qonversion.PurchaseResult {
+  func toMap() -> BridgeData {
+    return [
+      "status": status.toString(),
+      "entitlements": entitlements?.mapValues { $0.toMap() },
+      "error": (error as NSError?)?.toMap(),
+      "isFallbackGenerated": isFallbackGenerated,
+      "source": source.toString(),
+      "storeTransaction": transaction?.toStoreTransactionMap()
+    ]
+  }
+}
+
+extension Qonversion.PurchaseResultStatus {
+  func toString() -> String {
+    switch self {
+    case .success:
+      return "Success"
+    case .userCanceled:
+      return "UserCanceled"
+    case .pending:
+      return "Pending"
+    case .error:
+      return "Error"
+    @unknown default:
+      return "Error"
+    }
+  }
+}
+
+extension Qonversion.PurchaseResultSource {
+  func toString() -> String {
+    switch self {
+    case .api:
+      return "Api"
+    case .local:
+      return "Local"
+    @unknown default:
+      return "Api"
+    }
+  }
+}
+
+// MARK: - StoreTransaction Mapper
+
+extension SKPaymentTransaction {
+  func toStoreTransactionMap() -> BridgeData {
+    var promoOfferId: String? = nil
+    if #available(iOS 12.2, macOS 10.14.4, watchOS 6.2, tvOS 12.2, visionOS 1.0, *) {
+      promoOfferId = payment.paymentDiscount?.identifier
+    }
+    
+    return [
+      "transactionId": transactionIdentifier,
+      "originalTransactionId": originalTransaction?.transactionIdentifier ?? transactionIdentifier,
+      "transactionTimestamp": transactionDate?.toMilliseconds(),
+      "productId": payment.productIdentifier,
+      "quantity": payment.quantity,
+      "promoOfferId": promoOfferId,
+      "purchaseToken": nil // iOS doesn't have purchaseToken, only Android
+    ]
+  }
+}
+
 extension String {
   func toData() -> Data {
     let len = count / 2
