@@ -195,7 +195,7 @@ public class QonversionSandwich : NSObject {
         purchaseOptions = Qonversion.PurchaseOptions(quantity: quantity, contextKeys: contextKeys)
       }
       
-      Qonversion.shared().purchaseWithResult(product, options: purchaseOptions) { purchaseResult in
+      Qonversion.shared().purchase(product, options: purchaseOptions) { purchaseResult in
         let bridgeData: [String: Any]? = purchaseResult.toMap().clearEmptyValues()
         completion(bridgeData, nil)
       }

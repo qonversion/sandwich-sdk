@@ -764,10 +764,10 @@ extension SKPaymentTransaction {
     if #available(iOS 12.2, macOS 10.14.4, watchOS 6.2, tvOS 12.2, visionOS 1.0, *) {
       promoOfferId = payment.paymentDiscount?.identifier
     }
-    
+
     return [
       "transactionId": transactionIdentifier,
-      "originalTransactionId": originalTransaction?.transactionIdentifier ?? transactionIdentifier,
+      "originalTransactionId": original?.transactionIdentifier ?? transactionIdentifier,
       "transactionTimestamp": transactionDate?.toMilliseconds(),
       "productId": payment.productIdentifier,
       "quantity": payment.quantity,
