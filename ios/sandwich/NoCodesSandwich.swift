@@ -26,9 +26,14 @@ public class NoCodesSandwich: NSObject {
 
     @objc public func initialize(
         projectKey: String,
-        proxyUrl: String? = nil
+        proxyUrl: String? = nil,
+        locale: String? = nil
     ) {
-        let noCodesConfig = NoCodesConfiguration(projectKey: projectKey, proxyURL: proxyUrl?.isEmpty == true ? nil : proxyUrl)
+        let noCodesConfig = NoCodesConfiguration(
+            projectKey: projectKey,
+            proxyURL: proxyUrl?.isEmpty == true ? nil : proxyUrl,
+            locale: locale?.isEmpty == true ? nil : locale
+        )
         
         NoCodes.initialize(with: noCodesConfig)
         NoCodes.shared.set(delegate: self)
@@ -60,6 +65,10 @@ public class NoCodesSandwich: NSObject {
     
     @MainActor @objc public func close() {
         NoCodes.shared.close()
+    }
+    
+    @objc public func setLocale(_ locale: String?) {
+        NoCodes.shared.setLocale(locale)
     }
     
     @objc public func getAvailableEvents() -> [String] {

@@ -1,6 +1,10 @@
 package io.qonversion.sandwich
 
+import com.android.billingclient.api.Purchase
 import com.qonversion.android.sdk.dto.QonversionError
+import com.qonversion.android.sdk.dto.QPurchaseResult
+import com.qonversion.android.sdk.dto.QPurchaseResultSource
+import com.qonversion.android.sdk.dto.QPurchaseResultStatus
 import com.qonversion.android.sdk.dto.QRemoteConfig
 import com.qonversion.android.sdk.dto.QRemoteConfigList
 import com.qonversion.android.sdk.dto.QRemoteConfigurationAssignmentType
@@ -327,3 +331,58 @@ fun NoCodesError.toMap(): BridgeData {
         "qonversionError" to qonversionError?.toMap()
     )
 }
+
+// region PurchaseResult Mappers
+
+fun QPurchaseResult.toMap(): BridgeData {
+    return mapOf(
+        "status" to status.toFormattedString(),
+        "entitlements" to entitlements.toEntitlementsMap(),
+        "error" to error?.toMap(),
+        "isFallbackGenerated" to isFallbackGenerated,
+        "source" to source.toFormattedString(),
+        "storeTransaction" to purchase?.toStoreTransactionMap()
+    )
+}
+
+fun QPurchaseResultStatus.toFormattedString(): String {
+    return when (this) {
+        QPurchaseResultStatus.Success -> "Success"
+        QPurchaseResultStatus.UserCanceled -> "UserCanceled"
+        QPurchaseResultStatus.Pending -> "Pending"
+        QPurchaseResultStatus.Error -> "Error"
+    }
+}
+
+fun QPurchaseResultSource.toFormattedString(): String {
+    return when (this) {
+        QPurchaseResultSource.Api -> "Api"
+        QPurchaseResultSource.Local -> "Local"
+    }
+}
+
+// endregion
+
+// region StoreTransaction Mapper
+
+fun Purchase.toStoreTransactionMap(): BridgeData {
+    val productId = products.firstOrNull()
+    val originalOrderId = formatOriginalTransactionId(orderId ?: "")
+    
+    return mapOf(
+        "transactionId" to orderId,
+        "originalTransactionId" to originalOrderId,
+        "transactionTimestamp" to purchaseTime.toDouble(),
+        "productId" to productId,
+        "quantity" to quantity,
+        "promoOfferId" to null, // Android doesn't have promoOfferId, only iOS
+        "purchaseToken" to purchaseToken
+    )
+}
+
+private fun formatOriginalTransactionId(transactionId: String): String {
+    val regex = Regex("\\.{2}.*")
+    return regex.replace(transactionId, "")
+}
+
+// endregion
