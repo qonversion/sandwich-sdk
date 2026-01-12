@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.framework    = 'StoreKit'
   s.platforms    = {
     "ios" => "13.0",
-    "osx" => "10.13"
+    "osx" => "10.15"
   }
   s.source_files = 'ios/sandwich/**/*.{h,m,swift}'
   s.dependency "Qonversion", "6.3.0"
