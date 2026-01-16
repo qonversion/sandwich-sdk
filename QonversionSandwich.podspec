@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'QonversionSandwich'
-  s.version      = '7.3.0'
+  s.version      = '7.3.1'
   s.summary      = 'qonversion.io'
   s.swift_version = '5.0'
   s.description  = <<-DESC
