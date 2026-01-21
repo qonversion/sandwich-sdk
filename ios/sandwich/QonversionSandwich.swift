@@ -454,13 +454,22 @@ public class QonversionSandwich : NSObject {
     _ error: Error?,
     completion: @escaping BridgeCompletion
   ) {
+    // If entitlements are available, return them even if there's an error.
+    // This handles cases like Stripe users on iOS where the backend successfully
+    // returns entitlements but StoreKit may throw an error due to empty Apple receipt.
+    if !entitlements.isEmpty {
+      let entitlementsDict: [String: Any] = entitlements.mapValues { $0.toMap() }.clearEmptyValues()
+      completion(entitlementsDict, nil)
+      return
+    }
+    
+    // Only return error if entitlements are empty
     if let error = error as NSError? {
       return completion(nil, error.toSandwichError())
     }
     
-    let entitlementsDict: [String: Any] = entitlements.mapValues { $0.toMap() }.clearEmptyValues()
-    
-    completion(entitlementsDict, nil)
+    // Empty entitlements without error
+    completion([:], nil)
   }
   
   private func subscribeOnAsyncEvents() {
