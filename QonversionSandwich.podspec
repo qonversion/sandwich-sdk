@@ -16,6 +16,6 @@ Pod::Spec.new do |s|
     "osx" => "10.15"
   }
   s.source_files = 'ios/sandwich/**/*.{h,m,swift}'
-  s.dependency "Qonversion", "6.3.1"
+  s.dependency "Qonversion", "6.4.0"
   s.module_name = 'QonversionSandwich'
 end
