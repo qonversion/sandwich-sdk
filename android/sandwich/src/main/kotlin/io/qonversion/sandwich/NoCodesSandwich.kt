@@ -5,6 +5,7 @@ import android.util.Log
 import io.qonversion.nocodes.NoCodes
 import io.qonversion.nocodes.NoCodesConfig
 import io.qonversion.nocodes.dto.LogLevel
+import io.qonversion.nocodes.dto.NoCodesTheme
 import io.qonversion.nocodes.interfaces.NoCodesDelegate
 import io.qonversion.nocodes.interfaces.ScreenCustomizationDelegate
 import io.qonversion.nocodes.dto.QScreenPresentationConfig
@@ -40,7 +41,8 @@ class NoCodesSandwich {
         proxyUrl: String? = null,
         logLevelKey: String? = null,
         logTag: String? = null,
-        locale: String? = null
+        locale: String? = null,
+        theme: String? = null
     ) {
         val configBuilder = NoCodesConfig.Builder(context, projectKey)
 
@@ -63,6 +65,15 @@ class NoCodesSandwich {
 
         locale?.takeIf { it.isNotEmpty() }?.let {
             configBuilder.setLocale(it)
+        }
+
+        theme?.let {
+            try {
+                val noCodesTheme = NoCodesTheme.entries.find { entry -> entry.value == it } ?: NoCodesTheme.Auto
+                configBuilder.setTheme(noCodesTheme)
+            } catch (e: IllegalArgumentException) {
+                Log.w("No-Codes Sandwich", "Invalid theme provided: $it")
+            }
         }
 
         NoCodes.initialize(configBuilder.build())
@@ -139,6 +150,13 @@ class NoCodesSandwich {
 
     fun setLocale(locale: String?) {
         NoCodes.shared.setLocale(locale)
+    }
+
+    fun setTheme(theme: String?) {
+        val noCodesTheme = theme?.let {
+            NoCodesTheme.entries.find { entry -> entry.value == it }
+        } ?: NoCodesTheme.Auto
+        NoCodes.shared.setTheme(noCodesTheme)
     }
 
     // endregion
