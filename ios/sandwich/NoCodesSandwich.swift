@@ -27,12 +27,16 @@ public class NoCodesSandwich: NSObject {
     @objc public func initialize(
         projectKey: String,
         proxyUrl: String? = nil,
-        locale: String? = nil
+        locale: String? = nil,
+        theme: String? = nil
     ) {
+        let noCodesTheme = parseTheme(theme)
+        
         let noCodesConfig = NoCodesConfiguration(
             projectKey: projectKey,
             proxyURL: proxyUrl?.isEmpty == true ? nil : proxyUrl,
-            locale: locale?.isEmpty == true ? nil : locale
+            locale: locale?.isEmpty == true ? nil : locale,
+            theme: noCodesTheme
         )
         
         NoCodes.initialize(with: noCodesConfig)
@@ -69,6 +73,24 @@ public class NoCodesSandwich: NSObject {
     
     @objc public func setLocale(_ locale: String?) {
         NoCodes.shared.setLocale(locale)
+    }
+    
+    @objc public func setTheme(_ theme: String?) {
+        let noCodesTheme = parseTheme(theme)
+        NoCodes.shared.setTheme(noCodesTheme)
+    }
+    
+    private func parseTheme(_ theme: String?) -> NoCodesTheme {
+        guard let themeValue = theme, !themeValue.isEmpty else {
+            return .auto
+        }
+        
+        guard let noCodesTheme = NoCodesTheme(rawValue: themeValue) else {
+            print("[No-Codes Sandwich] Invalid theme provided: \(themeValue). Using 'auto' as default.")
+            return .auto
+        }
+        
+        return noCodesTheme
     }
     
     @objc public func getAvailableEvents() -> [String] {
