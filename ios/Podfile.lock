@@ -1,25 +1,30 @@
 PODS:
-  - Qonversion (6.4.0):
-    - Qonversion/Main (= 6.4.0)
-  - Qonversion/Main (6.4.0)
-  - QonversionSandwich (7.3.0):
-    - Qonversion (= 6.4.0)
+  - Qonversion (6.7.0):
+    - Qonversion/Main (= 6.7.0)
+  - Qonversion/Main (6.7.0)
+  - QonversionSandwich (7.5.2):
+    - Qonversion (~> 6.6)
 
 DEPENDENCIES:
+  - Qonversion (from `https://github.com/qonversion/qonversion-ios-sdk.git`, branch `feature/deferred-purchase-listener`)
   - QonversionSandwich (from `../`)
 
-SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - Qonversion
-
 EXTERNAL SOURCES:
+  Qonversion:
+    :branch: feature/deferred-purchase-listener
+    :git: https://github.com/qonversion/qonversion-ios-sdk.git
   QonversionSandwich:
     :path: "../"
 
-SPEC CHECKSUMS:
-  Qonversion: f7620e1cc3b03541b9cf4a0ed357a5646d123fe3
-  QonversionSandwich: 16fca43b410266f8082fa084b533f616525ca426
+CHECKOUT OPTIONS:
+  Qonversion:
+    :commit: 647989e66ad4dd1175ebb581e79f7d0cc395f696
+    :git: https://github.com/qonversion/qonversion-ios-sdk.git
 
-PODFILE CHECKSUM: ac49d3b542908b3399ace18f7369621020b752c0
+SPEC CHECKSUMS:
+  Qonversion: 6dee5747c1bc682774b897fcc1917cf631ca3611
+  QonversionSandwich: 04acfeb73dccfaab074fd58bcf9fd8bd0996d7d5
+
+PODFILE CHECKSUM: f18a0ab8aa014c5343a39587b7b0591899932d97
 
 COCOAPODS: 1.16.2

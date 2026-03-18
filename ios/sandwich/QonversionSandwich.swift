@@ -36,7 +36,8 @@ public class QonversionSandwich : NSObject {
     
     let config = Qonversion.Configuration(projectKey: projectKey, launchMode: launchMode)
     config.setEntitlementsUpdateListener(self)
-    
+    config.setDeferredPurchasesListener(self)
+
     if let env = Qonversion.Environment.fromString(environmentKey) {
       config.setEnvironment(env)
     }
@@ -467,8 +468,9 @@ public class QonversionSandwich : NSObject {
     guard !isSubscribedOnAsyncEvents else { return }
     
     Qonversion.shared().setEntitlementsUpdateListener(self)
+    Qonversion.shared().setDeferredPurchasesListener(self)
     Qonversion.shared().setPromoPurchasesDelegate(self)
-    
+
     isSubscribedOnAsyncEvents = true
   }
       
@@ -486,6 +488,16 @@ extension QonversionSandwich: Qonversion.EntitlementsUpdateListener {
     let entitlementsDict: BridgeData = entitlements.mapValues { $0.toMap() }.clearEmptyValues()
     
     qonversionEventListener?.qonversionDidReceiveUpdatedEntitlements(entitlementsDict as [String: Any])
+  }
+}
+
+// MARK: - DeferredPurchasesListener
+
+extension QonversionSandwich: Qonversion.DeferredPurchasesListener {
+  public func deferredPurchaseCompleted(_ transaction: Qonversion.DeferredTransaction) {
+    let transactionDict: BridgeData = transaction.toMap()
+
+    qonversionEventListener?.qonversionDidCompleteDeferredPurchase(transactionDict.clearEmptyValues())
   }
 }
 
