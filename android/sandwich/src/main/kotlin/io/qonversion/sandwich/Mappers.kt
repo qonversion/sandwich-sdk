@@ -1,8 +1,6 @@
 package io.qonversion.sandwich
 
 import com.android.billingclient.api.Purchase
-import com.qonversion.android.sdk.dto.QDeferredTransaction
-import com.qonversion.android.sdk.dto.QDeferredTransactionType
 import com.qonversion.android.sdk.dto.QonversionError
 import com.qonversion.android.sdk.dto.QPurchaseResult
 import com.qonversion.android.sdk.dto.QPurchaseResultSource
@@ -361,30 +359,6 @@ fun QPurchaseResultSource.toFormattedString(): String {
         QPurchaseResultSource.Api -> "Api"
         QPurchaseResultSource.Local -> "Local"
     }
-}
-
-// endregion
-
-// region DeferredTransaction Mapper
-
-fun QDeferredTransactionType.toFormattedString(): String {
-    return when (this) {
-        QDeferredTransactionType.Subscription -> "Subscription"
-        QDeferredTransactionType.Consumable -> "Consumable"
-        QDeferredTransactionType.NonConsumable -> "NonConsumable"
-        else -> "Unknown"
-    }
-}
-
-fun QDeferredTransaction.toMap(): BridgeData {
-    return mapOf(
-        "productId" to productId,
-        "transactionId" to transactionId,
-        "originalTransactionId" to originalTransactionId,
-        "type" to type.toFormattedString(),
-        "value" to value,
-        "currency" to currency
-    )
 }
 
 // endregion

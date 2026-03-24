@@ -24,7 +24,6 @@ import com.qonversion.android.sdk.dto.offerings.QOfferings
 import com.qonversion.android.sdk.dto.products.QProduct
 import com.qonversion.android.sdk.dto.properties.QUserProperties
 import com.qonversion.android.sdk.dto.properties.QUserPropertyKey
-import com.qonversion.android.sdk.dto.QDeferredTransaction
 import com.qonversion.android.sdk.listeners.QDeferredPurchasesListener
 import com.qonversion.android.sdk.listeners.QEntitlementsUpdateListener
 import com.qonversion.android.sdk.listeners.QonversionEligibilityCallback
@@ -500,8 +499,8 @@ class QonversionSandwich(
 
     private fun QonversionConfig.Builder.setDeferredPurchasesListener() = apply {
         setDeferredPurchasesListener(object : QDeferredPurchasesListener {
-            override fun deferredPurchaseCompleted(transaction: QDeferredTransaction) {
-                qonversionEventsListener.onDeferredPurchaseCompleted(transaction.toMap())
+            override fun deferredPurchaseCompleted(purchaseResult: QPurchaseResult) {
+                qonversionEventsListener.onDeferredPurchaseCompleted(purchaseResult.toMap())
             }
         })
     }
