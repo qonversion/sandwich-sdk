@@ -1,8 +1,8 @@
 PODS:
-  - Qonversion (6.7.0):
-    - Qonversion/Main (= 6.7.0)
-  - Qonversion/Main (6.7.0)
-  - QonversionSandwich (7.5.2):
+  - Qonversion (6.8.0):
+    - Qonversion/Main (= 6.8.0)
+  - Qonversion/Main (6.8.0)
+  - QonversionSandwich (7.6.0):
     - Qonversion (~> 6.6)
 
 DEPENDENCIES:
@@ -22,8 +22,8 @@ CHECKOUT OPTIONS:
     :git: https://github.com/qonversion/qonversion-ios-sdk.git
 
 SPEC CHECKSUMS:
-  Qonversion: 6dee5747c1bc682774b897fcc1917cf631ca3611
-  QonversionSandwich: 04acfeb73dccfaab074fd58bcf9fd8bd0996d7d5
+  Qonversion: dc8d5a02ec83a4bfe1f2a73f08d9c00ebb254063
+  QonversionSandwich: 64c5b796f5b552571f36c1e5f163f8d8052069e3
 
 PODFILE CHECKSUM: f18a0ab8aa014c5343a39587b7b0591899932d97
 
