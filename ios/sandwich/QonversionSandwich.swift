@@ -494,10 +494,10 @@ extension QonversionSandwich: Qonversion.EntitlementsUpdateListener {
 // MARK: - DeferredPurchasesListener
 
 extension QonversionSandwich: Qonversion.DeferredPurchasesListener {
-  public func deferredPurchaseCompleted(_ transaction: Qonversion.DeferredTransaction) {
-    let transactionDict: BridgeData = transaction.toMap()
+  public func deferredPurchaseCompleted(_ purchaseResult: Qonversion.PurchaseResult) {
+    let resultDict: BridgeData = purchaseResult.toMap()
 
-    qonversionEventListener?.qonversionDidCompleteDeferredPurchase(transactionDict.clearEmptyValues())
+    qonversionEventListener?.qonversionDidCompleteDeferredPurchase(resultDict.clearEmptyValues())
   }
 }
 

@@ -777,35 +777,6 @@ extension SKPaymentTransaction {
   }
 }
 
-// MARK: - DeferredTransaction Mapper
-
-extension Qonversion.DeferredTransactionType {
-  func toString() -> String {
-    switch self {
-    case .subscription:
-      return "Subscription"
-    case .consumable:
-      return "Consumable"
-    case .nonConsumable:
-      return "NonConsumable"
-    default:
-      return "Unknown"
-    }
-  }
-}
-
-extension Qonversion.DeferredTransaction {
-  func toMap() -> BridgeData {
-    return [
-      "productId": productId,
-      "transactionId": transactionId,
-      "originalTransactionId": originalTransactionId,
-      "type": type.toString(),
-      "value": value,
-      "currency": currency
-    ]
-  }
-}
 
 extension String {
   func toData() -> Data {
