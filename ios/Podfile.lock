@@ -18,7 +18,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Qonversion:
-    :commit: 647989e66ad4dd1175ebb581e79f7d0cc395f696
+    :commit: 371a5a84058f83d84e646be0e8d3e8afd135edb3
     :git: https://github.com/qonversion/qonversion-ios-sdk.git
 
 SPEC CHECKSUMS:
