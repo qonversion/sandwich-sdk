@@ -7,5 +7,4 @@ use_frameworks!
 
 target 'Sample' do
   pod 'QonversionSandwich', :path => '../'
-  pod 'Qonversion', :git => 'https://github.com/qonversion/qonversion-ios-sdk.git', :branch => 'feature/deferred-purchase-listener'
 end
