@@ -3,7 +3,7 @@ PODS:
     - Qonversion/Main (= 6.8.0)
   - Qonversion/Main (6.8.0)
   - QonversionSandwich (7.6.0):
-    - Qonversion (~> 6.6)
+    - Qonversion (~> 6.8)
 
 DEPENDENCIES:
   - Qonversion (from `https://github.com/qonversion/qonversion-ios-sdk.git`, branch `feature/deferred-purchase-listener`)
