@@ -3,7 +3,7 @@ PODS:
     - Qonversion/Main (= 6.9.0)
   - Qonversion/Main (6.9.0)
   - QonversionSandwich (7.7.0):
-    - Qonversion (~> 6.8)
+    - Qonversion (~> 6.9)
 
 DEPENDENCIES:
   - QonversionSandwich (from `../`)
