@@ -33,6 +33,10 @@ extension TestSwiftClass: QonversionEventListener {
     }
     
     func shouldPurchasePromoProduct(with productId: String) {
-        
+
+    }
+
+    func qonversionDidCompleteDeferredPurchase(_ transaction: [String : Any]) {
+
     }
 }

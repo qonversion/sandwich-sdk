@@ -24,6 +24,7 @@ import com.qonversion.android.sdk.dto.offerings.QOfferings
 import com.qonversion.android.sdk.dto.products.QProduct
 import com.qonversion.android.sdk.dto.properties.QUserProperties
 import com.qonversion.android.sdk.dto.properties.QUserPropertyKey
+import com.qonversion.android.sdk.listeners.QDeferredPurchasesListener
 import com.qonversion.android.sdk.listeners.QEntitlementsUpdateListener
 import com.qonversion.android.sdk.listeners.QonversionEligibilityCallback
 import com.qonversion.android.sdk.listeners.QonversionEntitlementsCallback
@@ -67,6 +68,7 @@ class QonversionSandwich(
             .setEnvironment(environmentKey)
             .setEntitlementsCacheLifetime(entitlementsCacheLifetimeKey)
             .setEntitlementsUpdateListener()
+            .setDeferredPurchasesListener()
 
         proxyUrl?.let {
             configBuilder.setProxyURL(it)
@@ -491,6 +493,14 @@ class QonversionSandwich(
         setEntitlementsUpdateListener(object : QEntitlementsUpdateListener {
             override fun onEntitlementsUpdated(entitlements: Map<String, QEntitlement>) {
                 qonversionEventsListener.onEntitlementsUpdated(entitlements.toEntitlementsMap())
+            }
+        })
+    }
+
+    private fun QonversionConfig.Builder.setDeferredPurchasesListener() = apply {
+        setDeferredPurchasesListener(object : QDeferredPurchasesListener {
+            override fun deferredPurchaseCompleted(purchaseResult: QPurchaseResult) {
+                qonversionEventsListener.onDeferredPurchaseCompleted(purchaseResult.toMap())
             }
         })
     }

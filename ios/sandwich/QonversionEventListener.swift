@@ -11,6 +11,8 @@ import Foundation
 @objc public protocol QonversionEventListener {
 
   @objc func qonversionDidReceiveUpdatedEntitlements(_ entitlements: [String: Any])
-  
+
   @objc func shouldPurchasePromoProduct(with productId: String)
+
+  @objc func qonversionDidCompleteDeferredPurchase(_ transaction: [String: Any])
 }
