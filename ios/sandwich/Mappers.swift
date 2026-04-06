@@ -777,6 +777,7 @@ extension SKPaymentTransaction {
   }
 }
 
+
 extension String {
   func toData() -> Data {
     let len = count / 2
