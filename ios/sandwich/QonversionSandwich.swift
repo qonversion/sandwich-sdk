@@ -105,16 +105,24 @@ public class QonversionSandwich : NSObject {
         let timestampNumber = NSNumber(value: timestamp)
         let paymentDiscount = SKPaymentDiscount(identifier: productDiscountId, keyIdentifier: keyIdentifier, nonce: nonceUUID, signature: signature, timestamp: timestampNumber)
         
+        #if SWIFT_PACKAGE
+        // initWithProductDiscount:paymentDiscount: is internal to qonversion-ios-sdk
+        // (not in the public .h), so it is unavailable to SPM consumers.
+        let promotionalOffer = Qonversion.PromotionalOffer()
+        promotionalOffer.productDiscount = productDiscount
+        promotionalOffer.paymentDiscount = paymentDiscount
+        #else
         let promotionalOffer = Qonversion.PromotionalOffer(productDiscount: productDiscount, paymentDiscount: paymentDiscount)
+        #endif
         purchaseOptions = Qonversion.PurchaseOptions(quantity: quantity, contextKeys: contextKeys, promoOffer: promotionalOffer)
       } else {
         purchaseOptions = Qonversion.PurchaseOptions(quantity: quantity, contextKeys: contextKeys)
       }
-      
+
       Qonversion.shared().purchaseProduct(product, options: purchaseOptions, completion: purchaseCompletion)
     }
   }
-  
+
   @objc public func getPromotionalOffer(_ productId: String, productDiscountId: String, completion: @escaping BridgeCompletion) {
     if #available(iOS 12.2, macOS 10.14.4, watchOS 6.2, tvOS 12.2, visionOS 1.0, *) {
       Qonversion.shared().products { [weak self] result, err in
@@ -190,12 +198,20 @@ public class QonversionSandwich : NSObject {
         let timestampNumber = NSNumber(value: timestamp)
         let paymentDiscount = SKPaymentDiscount(identifier: productDiscountId, keyIdentifier: keyIdentifier, nonce: nonceUUID, signature: signature, timestamp: timestampNumber)
         
+        #if SWIFT_PACKAGE
+        // initWithProductDiscount:paymentDiscount: is internal to qonversion-ios-sdk
+        // (not in the public .h), so it is unavailable to SPM consumers.
+        let promotionalOffer = Qonversion.PromotionalOffer()
+        promotionalOffer.productDiscount = productDiscount
+        promotionalOffer.paymentDiscount = paymentDiscount
+        #else
         let promotionalOffer = Qonversion.PromotionalOffer(productDiscount: productDiscount, paymentDiscount: paymentDiscount)
+        #endif
         purchaseOptions = Qonversion.PurchaseOptions(quantity: quantity, contextKeys: contextKeys, promoOffer: promotionalOffer)
       } else {
         purchaseOptions = Qonversion.PurchaseOptions(quantity: quantity, contextKeys: contextKeys)
       }
-      
+
       Qonversion.shared().purchase(product, options: purchaseOptions) { purchaseResult in
         let bridgeData: [String: Any]? = purchaseResult.toMap().clearEmptyValues()
         completion(bridgeData, nil)
