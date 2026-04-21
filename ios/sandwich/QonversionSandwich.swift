@@ -8,6 +8,9 @@
 
 import Foundation
 import Qonversion
+#if SWIFT_PACKAGE
+import QonversionSwift
+#endif
 
 public class QonversionSandwich : NSObject {
   
