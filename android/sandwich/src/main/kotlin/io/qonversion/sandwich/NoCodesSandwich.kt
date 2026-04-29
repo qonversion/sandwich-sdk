@@ -6,6 +6,7 @@ import io.qonversion.nocodes.NoCodes
 import io.qonversion.nocodes.NoCodesConfig
 import io.qonversion.nocodes.dto.LogLevel
 import io.qonversion.nocodes.dto.NoCodesTheme
+import io.qonversion.nocodes.interfaces.CustomVariablesDelegate
 import io.qonversion.nocodes.interfaces.NoCodesDelegate
 import io.qonversion.nocodes.interfaces.ScreenCustomizationDelegate
 import io.qonversion.nocodes.dto.QScreenPresentationConfig
@@ -23,6 +24,13 @@ class NoCodesSandwich {
     private val screenCustomizationDelegate = object : ScreenCustomizationDelegate {
         override fun getPresentationConfigurationForScreen(contextKey: String): QScreenPresentationConfig {
             return screenPresentationConfigs[contextKey] ?: defaultPresentationConfig ?: QScreenPresentationConfig()
+        }
+    }
+
+    private val customVariablesByContextKey = mutableMapOf<String, Map<String, String>>()
+    private val customVariablesDelegate = object : CustomVariablesDelegate {
+        override fun getCustomVariables(contextKey: String): Map<String, String> {
+            return customVariablesByContextKey[contextKey] ?: emptyMap()
         }
     }
 
@@ -77,6 +85,7 @@ class NoCodesSandwich {
         }
 
         NoCodes.initialize(configBuilder.build())
+        NoCodes.shared.setCustomVariablesDelegate(customVariablesDelegate)
     }
 
     fun storeSdkInfo(context: Context, source: String, version: String) {
@@ -127,7 +136,12 @@ class NoCodesSandwich {
 
     // region Screen Management
 
-    fun showScreen(contextKey: String) {
+    fun showScreen(contextKey: String, customVariables: Map<String, String>? = null) {
+        if (customVariables != null) {
+            customVariablesByContextKey[contextKey] = customVariables
+        } else {
+            customVariablesByContextKey.remove(contextKey)
+        }
         NoCodes.shared.showScreen(contextKey)
     }
 

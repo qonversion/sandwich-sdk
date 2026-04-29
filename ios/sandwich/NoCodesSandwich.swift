@@ -19,6 +19,7 @@ public class NoCodesSandwich: NSObject {
     private var purchaseDelegateBridge: NoCodesPurchaseDelegateBridge?
     private var purchaseContinuation: CheckedContinuation<Void, Error>?
     private var restoreContinuation: CheckedContinuation<Void, Error>?
+    private var customVariablesByContextKey: [String: [String: String]] = [:]
     
     @objc public init(noCodesEventListener: NoCodesEventListener) {
         self.noCodesEventListener = noCodesEventListener
@@ -41,6 +42,7 @@ public class NoCodesSandwich: NSObject {
         
         NoCodes.initialize(with: noCodesConfig)
         NoCodes.shared.set(delegate: self)
+        NoCodes.shared.set(customVariablesDelegate: self)
     }
   
     @objc public func storeSdkInfo(source: String, version: String) {
@@ -63,7 +65,12 @@ public class NoCodesSandwich: NSObject {
         }
     }
     
-    @MainActor @objc public func showScreen(_ contextKey: String) {
+    @MainActor @objc public func showScreen(_ contextKey: String, customVariables: [String: String]? = nil) {
+        if let customVariables = customVariables {
+            customVariablesByContextKey[contextKey] = customVariables
+        } else {
+            customVariablesByContextKey.removeValue(forKey: contextKey)
+        }
         NoCodes.shared.showScreen(withContextKey: contextKey)
     }
     
@@ -192,6 +199,12 @@ extension NoCodesSandwich: NoCodesDelegate {
     
     public func noCodesFailedToLoadScreen(error: Error?) {
         noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.screenFailedToLoad.rawValue, payload: errorToMap(error)?.clearEmptyValues())
+    }
+}
+
+extension NoCodesSandwich: NoCodesCustomVariablesDelegate {
+    public func customVariables(for contextKey: String) -> [String: String] {
+        return customVariablesByContextKey[contextKey] ?? [:]
     }
 }
 
