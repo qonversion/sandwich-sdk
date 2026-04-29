@@ -27,6 +27,7 @@ import com.qonversion.android.sdk.dto.properties.QUserPropertyKey
 import com.qonversion.android.sdk.listeners.QDeferredPurchasesListener
 import com.qonversion.android.sdk.listeners.QEntitlementsUpdateListener
 import com.qonversion.android.sdk.listeners.QonversionEligibilityCallback
+import com.qonversion.android.sdk.listeners.QonversionEmptyCallback
 import com.qonversion.android.sdk.listeners.QonversionEntitlementsCallback
 import com.qonversion.android.sdk.listeners.QonversionExperimentAttachCallback
 import com.qonversion.android.sdk.listeners.QonversionOfferingsCallback
@@ -257,6 +258,14 @@ class QonversionSandwich(
 
             override fun onError(error: QonversionError) {
                 resultListener.onError(error.toSandwichError())
+            }
+        })
+    }
+
+    fun forceSendProperties(callback: () -> Unit) {
+        Qonversion.shared.forceSendProperties(object : QonversionEmptyCallback {
+            override fun onComplete() {
+                callback()
             }
         })
     }
