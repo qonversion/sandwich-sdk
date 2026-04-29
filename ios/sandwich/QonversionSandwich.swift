@@ -303,9 +303,13 @@ public class QonversionSandwich : NSObject {
       }
 
       let bridgeData: [String: Any]? = userProperties?.toMap().clearEmptyValues()
-      
+
       completion(bridgeData, nil)
     }
+  }
+
+  @objc public func forceSendProperties(_ completion: @escaping () -> Void) {
+    Qonversion.shared().forceSendProperties(completion)
   }
   
   @objc public func logout() {
