@@ -4,5 +4,5 @@ interface QonversionEventsListener {
 
     fun onEntitlementsUpdated(entitlements: BridgeData)
 
-    fun onDeferredPurchaseCompleted(transaction: BridgeData)
+    fun onDeferredPurchaseCompleted(purchaseResult: BridgeData)
 }
