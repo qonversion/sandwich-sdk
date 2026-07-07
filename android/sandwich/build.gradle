@@ -1,5 +1,5 @@
 buildscript {
-    ext.nocodes_version = '1.9.2'
+    ext.nocodes_version = '1.9.3'
 }
 
 plugins {
