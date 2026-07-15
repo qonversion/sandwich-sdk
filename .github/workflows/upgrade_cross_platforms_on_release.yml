@@ -1,34 +1,50 @@
-name: Upgrade cross-platforms on release
+name: Upgrade cross-platforms
 
 on:
-  workflow_run:
-    workflows: [Publish SDKs]
-    types:
-      - completed
   workflow_dispatch:
+    inputs:
+      sandwich_version:
+        description: 'Sandwich version to upgrade cross-platforms to (empty — the latest release tag)'
+        required: false
+        default: ''
 
 jobs:
   prepare:
-    name: Wait for publishing and prepare sandwich version number
+    name: Resolve sandwich version number
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion != 'failure' }}
     outputs:
-      sandwich_version: ${{ steps.tag.outputs.sandwich_version }}
+      sandwich_version: ${{ steps.version.outputs.sandwich_version }}
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - id: tag
-        name: Get Previous tag
-        run: echo sandwich_version=`git describe --tags \`git rev-list --tags --max-count=1\`` >> $GITHUB_OUTPUT
+      - id: version
+        name: Resolve sandwich version
+        env:
+          EXPLICIT_VERSION: ${{ inputs.sandwich_version }}
+        run: |
+          if [ -n "$EXPLICIT_VERSION" ]; then
+            version="$EXPLICIT_VERSION"
+          else
+            # Release tags only (x.x.x) — tags like "latest" from other
+            # workflows must not leak into the cross-platform dispatches.
+            version=$(git tag -l | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)
+          fi
+
+          if ! echo "$version" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error::Could not resolve a sandwich version (got: '$version'). Pass it explicitly."
+            exit 1
+          fi
+
+          echo "Upgrading cross-platforms to sandwich $version"
+          echo "sandwich_version=$version" >> $GITHUB_OUTPUT
 
   notify_cross_platforms:
     permissions: write-all
     name: Notify cross-platforms
     runs-on: ubuntu-latest
     needs: prepare
-    if: ${{ !endsWith(needs.prepare.outputs.sandwich_version, '.0') }}
     steps:
       - uses: actions/github-script@v6
         with:
@@ -79,13 +95,3 @@ jobs:
                 sandwich_version: '${{ needs.prepare.outputs.sandwich_version }}'
               },
             })
-
-  on_publishing_failed:
-    name: Cancel due to publishing failure
-    runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
-    steps:
-      - name: Fail job
-        run: |
-          echo "Publishing script failed"
-          exit 1
