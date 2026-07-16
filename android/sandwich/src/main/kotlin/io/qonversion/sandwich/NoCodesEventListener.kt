@@ -9,6 +9,7 @@ interface NoCodesEventListener {
         ActionStarted("nocodes_action_started"),
         ActionFinished("nocodes_action_finished"),
         ActionFailed("nocodes_action_failed"),
-        ScreenFailedToLoad("nocodes_screen_failed_to_load")
+        ScreenFailedToLoad("nocodes_screen_failed_to_load"),
+        CustomAction("nocodes_custom_action")
     }
 }
