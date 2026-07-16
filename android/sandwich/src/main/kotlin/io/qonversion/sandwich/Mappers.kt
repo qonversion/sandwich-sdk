@@ -339,7 +339,7 @@ fun NoCodesError.toSandwichError(): SandwichError {
     return SandwichError(
         code.toString(),
         code.defaultMessage,
-        details ?: ""
+        details ?: qonversionError?.let { "${it.description}. ${it.additionalMessage}" } ?: ""
     )
 }
 
