@@ -1,5 +1,10 @@
 apply plugin: 'com.vanniktech.maven.publish'
 
+// Empty javadoc jar replacing the disabled AGP javadoc generation (see sandwich/build.gradle).
+def emptyJavadocJar = tasks.register("emptyJavadocJar", Jar) {
+    archiveClassifier = "javadoc"
+}
+
 afterEvaluate {
     mavenPublishing {
         coordinates(PUBLISH_GROUP_ID, PUBLISH_ARTIFACT_ID, android.defaultConfig.versionName)
@@ -28,5 +33,9 @@ afterEvaluate {
                 developerConnection = POM_SCM_DEV_CONNECTION
             }
         }
+    }
+
+    publishing.publications.withType(MavenPublication).configureEach {
+        artifact(emptyJavadocJar)
     }
 }
