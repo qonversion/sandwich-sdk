@@ -8,7 +8,9 @@ import io.qonversion.nocodes.dto.LogLevel
 import io.qonversion.nocodes.dto.NoCodesTheme
 import io.qonversion.nocodes.interfaces.CustomVariablesDelegate
 import io.qonversion.nocodes.interfaces.NoCodesDelegate
+import io.qonversion.nocodes.interfaces.NoCodesScreenLoadCallback
 import io.qonversion.nocodes.interfaces.ScreenCustomizationDelegate
+import io.qonversion.nocodes.dto.QNoCodeScreen
 import io.qonversion.nocodes.dto.QScreenPresentationConfig
 import io.qonversion.nocodes.dto.QAction
 import io.qonversion.nocodes.error.NoCodesError
@@ -145,6 +147,18 @@ class NoCodesSandwich {
         NoCodes.shared.showScreen(contextKey)
     }
 
+    fun loadScreen(contextKey: String, resultListener: ResultListener) {
+        NoCodes.shared.loadScreen(contextKey, object : NoCodesScreenLoadCallback {
+            override fun onSuccess(screen: QNoCodeScreen) {
+                resultListener.onSuccess(screen.toMap())
+            }
+
+            override fun onError(error: NoCodesError) {
+                resultListener.onError(error.toSandwichError())
+            }
+        })
+    }
+
     fun close() {
         NoCodes.shared.close()
     }
@@ -216,6 +230,11 @@ class NoCodesSandwich {
 
             override fun onActionFinishedExecuting(action: QAction) {
                 eventListener.onNoCodesEvent(NoCodesEventListener.Event.ActionFinished, action.toMap())
+            }
+
+            override fun onCustomAction(value: String) {
+                val payload = mapOf("value" to value)
+                eventListener.onNoCodesEvent(NoCodesEventListener.Event.CustomAction, payload)
             }
 
             override fun onFinished() {
