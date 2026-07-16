@@ -61,25 +61,32 @@ extension Dictionary where Key == String, Value == Any {
 
 extension NoCodesError {
 
+  private static let codeStrings = [
+    NoCodesErrorType.unknown: "Unknown",
+    NoCodesErrorType.`internal`: "Internal",
+    NoCodesErrorType.authorizationFailed: "AuthorizationFailed",
+    NoCodesErrorType.critical: "Critical",
+    NoCodesErrorType.invalidRequest: "BadNetworkRequest",
+    NoCodesErrorType.invalidResponse: "BadResponse",
+    NoCodesErrorType.productNotFound: "ProductNotFound",
+    NoCodesErrorType.productsLoadingFailed: "ProductsLoadingFailed",
+    NoCodesErrorType.rateLimitExceeded: "RateLimitExceeded",
+    NoCodesErrorType.screenNotFound: "ScreenNotFound",
+    NoCodesErrorType.screenLoadingFailed: "ScreenLoadingFailed",
+    NoCodesErrorType.sdkInitializationError: "SDKInitializationError",
+    NoCodesErrorType.clientError: "ClientError"
+  ]
+
+  private var qonversionNSError: NSError? {
+    guard let nsError = error as? NSError, nsError.domain == QonversionErrorDomain else { return nil }
+    return nsError
+  }
+
   func toMap() -> BridgeData {
-    let codes = [
-      NoCodesErrorType.unknown: "Unknown",
-      NoCodesErrorType.`internal`: "Internal",
-      NoCodesErrorType.authorizationFailed: "AuthorizationFailed",
-      NoCodesErrorType.critical: "Critical",
-      NoCodesErrorType.invalidRequest: "BadNetworkRequest",
-      NoCodesErrorType.invalidResponse: "BadResponse",
-      NoCodesErrorType.productNotFound: "ProductNotFound",
-      NoCodesErrorType.productsLoadingFailed: "ProductsLoadingFailed",
-      NoCodesErrorType.rateLimitExceeded: "RateLimitExceeded",
-      NoCodesErrorType.screenLoadingFailed: "ScreenLoadingFailed",
-      NoCodesErrorType.sdkInitializationError: "SDKInitializationError"
-    ]
-    
-    var code = codes[type]
+    var code = NoCodesError.codeStrings[type]
     var errorData: BridgeData? = nil
-    
-    if let nsError = error as? NSError, nsError.domain == QonversionErrorDomain {
+
+    if let nsError = qonversionNSError {
       code = "QonversionError"
       errorData = nsError.toMap()
     }
@@ -90,6 +97,50 @@ extension NoCodesError {
       "additionalMessage": additionalInfo?.map { "\($0.key): \($0.value)" }.joined(separator: ", ") ?? "",
       "qonversionError": errorData,
     ]
+  }
+
+  func toSandwichError() -> SandwichError {
+    let code = qonversionNSError == nil ? NoCodesError.codeStrings[type] ?? "Unknown" : "QonversionError"
+    return SandwichError(
+      code: code,
+      domain: "NoCodes",
+      details: message,
+      additionalMessage: additionalInfo?.map { "\($0.key): \($0.value)" }.joined(separator: ", ")
+    )
+  }
+}
+
+extension NoCodesScreen {
+  func toMap() -> BridgeData {
+    return [
+      "id": id,
+      "contextKey": contextKey,
+      "defaultSelectedProductId": defaultSelectedProductId,
+      "defaultVariables": defaultVariables.map { $0.toMap() }
+    ]
+  }
+}
+
+extension NoCodesScreenVariable {
+  func toMap() -> BridgeData {
+    return [
+      "kind": kind.rawValue,
+      "key": key,
+      "type": type,
+      "value": value.bridgeValue,
+      "stringValue": value.stringValue
+    ]
+  }
+}
+
+extension NoCodesScreenVariableValue {
+  var bridgeValue: Any? {
+    switch self {
+    case .bool(let boolValue): return boolValue
+    case .string(let stringValue): return stringValue
+    case .number(let numberValue): return numberValue
+    case .none: return nil
+    }
   }
 }
 

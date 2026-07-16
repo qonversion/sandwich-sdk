@@ -30,6 +30,9 @@ import com.qonversion.android.sdk.dto.products.QProductStoreDetails
 import com.qonversion.android.sdk.dto.properties.QUserProperties
 import com.qonversion.android.sdk.dto.properties.QUserProperty
 import io.qonversion.nocodes.dto.QAction
+import io.qonversion.nocodes.dto.QNoCodeScreen
+import io.qonversion.nocodes.dto.QScreenVariable
+import io.qonversion.nocodes.dto.QScreenVariableValue
 import io.qonversion.nocodes.error.NoCodesError
 import io.qonversion.nocodes.dto.QScreenPresentationConfig
 import io.qonversion.nocodes.dto.QScreenPresentationStyle
@@ -330,6 +333,51 @@ fun NoCodesError.toMap(): BridgeData {
         "description" to details,
         "qonversionError" to qonversionError?.toMap()
     )
+}
+
+fun NoCodesError.toSandwichError(): SandwichError {
+    return SandwichError(
+        code.toString(),
+        code.defaultMessage,
+        details ?: qonversionError?.let { "${it.description}. ${it.additionalMessage}" } ?: ""
+    )
+}
+
+fun QNoCodeScreen.toMap(): BridgeData {
+    return mapOf(
+        "id" to id,
+        "contextKey" to contextKey,
+        "defaultSelectedProductId" to defaultSelectedProductId,
+        "defaultVariables" to defaultVariables.map { it.toMap() }
+    )
+}
+
+fun QScreenVariable.toMap(): BridgeData {
+    return mapOf(
+        "kind" to kind.toFormattedString(),
+        "key" to key,
+        "type" to type,
+        "value" to value.toBridgeValue(),
+        "stringValue" to value.asString()
+    )
+}
+
+fun QScreenVariable.Kind.toFormattedString(): String {
+    return when (this) {
+        QScreenVariable.Kind.Custom -> "custom"
+        QScreenVariable.Kind.Product -> "product"
+        QScreenVariable.Kind.SelectedProduct -> "selected_product"
+        else -> "unknown"
+    }
+}
+
+fun QScreenVariableValue.toBridgeValue(): Any? {
+    return when (this) {
+        is QScreenVariableValue.Bool -> value
+        is QScreenVariableValue.Str -> value
+        is QScreenVariableValue.Num -> value
+        QScreenVariableValue.None -> null
+    }
 }
 
 // region PurchaseResult Mappers

@@ -73,7 +73,20 @@ public class NoCodesSandwich: NSObject {
         }
         NoCodes.shared.showScreen(withContextKey: contextKey)
     }
-    
+
+    @objc public func loadScreen(_ contextKey: String, completion: @escaping BridgeCompletion) {
+        Task { @MainActor in
+            do {
+                let screen = try await NoCodes.shared.loadScreen(withContextKey: contextKey)
+                completion(screen.toMap().clearEmptyValues(), nil)
+            } catch let error as NoCodesError {
+                completion(nil, error.toSandwichError())
+            } catch {
+                completion(nil, (error as NSError).toSandwichError())
+            }
+        }
+    }
+
     @MainActor @objc public func close() {
         NoCodes.shared.close()
     }
@@ -107,7 +120,8 @@ public class NoCodesSandwich: NSObject {
             .actionStarted,
             .actionFailed,
             .actionFinished,
-            .screenFailedToLoad
+            .screenFailedToLoad,
+            .customAction
         ]
         
         return availableEvents.map { $0.rawValue }
@@ -192,7 +206,12 @@ extension NoCodesSandwich: NoCodesDelegate {
         let payload: BridgeData = action.toMap()
         noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.actionFinished.rawValue, payload: payload.clearEmptyValues())
     }
-    
+
+    public func noCodesReceivedCustomAction(value: String) {
+        let payload: BridgeData = ["value": value]
+        noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.customAction.rawValue, payload: payload.clearEmptyValues())
+    }
+
     public func noCodesFinished() {
         noCodesEventListener?.noCodesDidTrigger(event: NoCodesEvent.finished.rawValue, payload: nil)
     }
