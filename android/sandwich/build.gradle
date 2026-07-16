@@ -49,3 +49,12 @@ dependencies {
 }
 
 apply from: "../scripts/maven-release.gradle"
+
+// AGP's javadoc generation (JavaDocGenerationTask) fails with "PermittedSubclasses
+// requires ASM9" on sealed classes coming from binary dependencies (no-codes 1.10.0+),
+// so skip it; maven-release.gradle attaches an empty javadoc jar instead — Maven Central
+// only checks its presence. Configured here and not in the applied script because Groovy
+// resolves constructor calls at compile time, and script plugins don't see plugin classes.
+mavenPublishing {
+    configure(new com.vanniktech.maven.publish.AndroidSingleVariantLibrary("release", true, false))
+}
