@@ -54,6 +54,7 @@ fun QProduct.toMap(): BridgeData {
         "id" to qonversionId,
         "storeId" to storeId,
         "basePlanId" to basePlanId,
+        "purchaseOptionId" to purchaseOptionId,
         "type" to type.name,
         "subscriptionPeriod" to subscriptionPeriod?.toMap(),
         "trialPeriod" to trialPeriod?.toMap(),
@@ -127,6 +128,7 @@ fun QProductInAppDetails.toMap(): BridgeData {
 fun QProductStoreDetails.toMap(): BridgeData {
     return mapOf(
         "basePlanId" to basePlanId,
+        "purchaseOptionId" to purchaseOptionId,
         "productId" to productId,
         "name" to name,
         "title" to title,
