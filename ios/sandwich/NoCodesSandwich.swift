@@ -9,6 +9,9 @@
 
 import Foundation
 import Qonversion
+#if SWIFT_PACKAGE
+import NoCodes
+#endif
 import UIKit
 
 public class NoCodesSandwich: NSObject {
