@@ -1,5 +1,11 @@
 buildscript {
     ext.nocodes_version = '1.11.0'
+    // Direct compile dependency: the sandwich uses the sdk API directly
+    // (~40 imports), so the explicit coordinate is permanent - relying on
+    // no-codes' transitive pin was the anomaly. Keep this at >= the version
+    // no-codes was built against (1.11.0 -> sdk 9.6.0); Gradle resolves to
+    // the higher of the two.
+    ext.qonversion_version = '9.7.0'
 }
 
 plugins {
@@ -44,6 +50,7 @@ ext {
 }
 
 dependencies {
+    api "io.qonversion.android.sdk:sdk:$qonversion_version"
     api "io.qonversion:no-codes:$nocodes_version"
     implementation 'androidx.preference:preference:1.2.0'
 }
