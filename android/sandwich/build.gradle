@@ -1,8 +1,10 @@
 buildscript {
     ext.nocodes_version = '1.11.0'
-    // Direct pin: no-codes 1.11.0 transitively brings sdk 9.6.0, but the
-    // bridge needs invalidateRemoteConfigsCache from 9.7.0 - Gradle resolves
-    // to the higher direct version. Drop when no-codes re-pins to 9.7.0+.
+    // Direct compile dependency: the sandwich uses the sdk API directly
+    // (~40 imports), so the explicit coordinate is permanent - relying on
+    // no-codes' transitive pin was the anomaly. Keep this at >= the version
+    // no-codes was built against (1.11.0 -> sdk 9.6.0); Gradle resolves to
+    // the higher of the two.
     ext.qonversion_version = '9.7.0'
 }
 
