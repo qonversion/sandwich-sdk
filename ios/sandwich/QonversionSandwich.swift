@@ -384,7 +384,11 @@ public class QonversionSandwich : NSObject {
     
     Qonversion.shared().remoteConfigList(sandwichCompletion)
   }
-  
+
+  @objc public func invalidateRemoteConfigsCache() {
+    Qonversion.shared().invalidateRemoteConfigsCache()
+  }
+
   @objc public func attachUserToExperiment(with experimentId: String, groupId: String, completion: @escaping BridgeCompletion) {
     Qonversion.shared().attachUser(toExperiment: experimentId, groupId: groupId) { success, error in
       if let error = error as NSError? {

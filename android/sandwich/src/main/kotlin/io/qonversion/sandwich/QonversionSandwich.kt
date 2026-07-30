@@ -332,6 +332,10 @@ class QonversionSandwich(
         Qonversion.shared.remoteConfigList(callback)
     }
 
+    fun invalidateRemoteConfigsCache() {
+        Qonversion.shared.invalidateRemoteConfigsCache()
+    }
+
     fun attachUserToExperiment(experimentId: String, groupId: String, resultListener: ResultListener) {
         Qonversion.shared.attachUserToExperiment(experimentId, groupId, object : QonversionExperimentAttachCallback {
             override fun onSuccess() {

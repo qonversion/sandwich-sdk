@@ -1,5 +1,9 @@
 buildscript {
     ext.nocodes_version = '1.11.0'
+    // Direct pin: no-codes 1.11.0 transitively brings sdk 9.6.0, but the
+    // bridge needs invalidateRemoteConfigsCache from 9.7.0 - Gradle resolves
+    // to the higher direct version. Drop when no-codes re-pins to 9.7.0+.
+    ext.qonversion_version = '9.7.0'
 }
 
 plugins {
@@ -44,6 +48,7 @@ ext {
 }
 
 dependencies {
+    api "io.qonversion.android.sdk:sdk:$qonversion_version"
     api "io.qonversion:no-codes:$nocodes_version"
     implementation 'androidx.preference:preference:1.2.0'
 }
