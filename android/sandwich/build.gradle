@@ -5,7 +5,9 @@ buildscript {
     // no-codes' transitive pin was the anomaly. Keep this at >= the version
     // no-codes was built against (1.11.0 -> sdk 9.6.0); Gradle resolves to
     // the higher of the two.
-    ext.qonversion_version = '9.7.0'
+    // Frozen assignment provenance was added in the next native feature
+    // release. This PR must merge only after Android SDK 9.8.0 is published.
+    ext.qonversion_version = '9.8.0'
 }
 
 plugins {
@@ -53,6 +55,7 @@ dependencies {
     api "io.qonversion.android.sdk:sdk:$qonversion_version"
     api "io.qonversion:no-codes:$nocodes_version"
     implementation 'androidx.preference:preference:1.2.0'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 apply from: "../scripts/maven-release.gradle"

@@ -16,6 +16,8 @@ Pod::Spec.new do |s|
     "osx" => "10.15"
   }
   s.source_files = 'ios/sandwich/**/*.{h,m,swift}'
-  s.dependency "Qonversion", "6.14.0"
+  # Frozen assignment provenance is provided by the next native feature
+  # release. Merge only after Qonversion 6.15.0 is available on CocoaPods.
+  s.dependency "Qonversion", "6.15.0"
   s.module_name = 'QonversionSandwich'
 end
