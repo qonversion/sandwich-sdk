@@ -4,6 +4,21 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
+  android-unit-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./android
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+      - name: Native frozen assignment bridge contract
+        run: ./gradlew :sandwich:testDebugUnitTest
+
   lint:
     runs-on: macos-latest
 
@@ -12,7 +27,9 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - name: Frozen assignment bridge contract
+        run: python3 scripts/tests/test_frozen_mapper_contract.py
       - name: Validation
         run: |
           pod lib lint --allow-warnings

@@ -16,7 +16,16 @@ jobs:
       # tag, so the published artifacts always match the released commit even
       # if main has moved forward since the release was published.
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - name: Verify Android bridge before publishing
+        run: ./gradlew :sandwich:testDebugUnitTest
 
       - name: Prepare Sonatype Gradle properties
         run: |
@@ -41,7 +50,7 @@ jobs:
           xcode-version: latest-stable
 
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: CocoaPods Release
         run: pod trunk push --allow-warnings QonversionSandwich.podspec

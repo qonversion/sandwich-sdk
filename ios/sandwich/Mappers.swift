@@ -661,16 +661,18 @@ extension Qonversion.RemoteConfigurationSourceType {
 
 extension Qonversion.RemoteConfigurationAssignmentType {
   func toString() -> String {
-    // Use the resilient case name so a newly added native enum value is not
-    // collapsed by a Sandwich binary compiled before that case existed.
-    switch String(describing: self).lowercased() {
-    case "auto":
+    // This is imported from Objective-C NS_ENUM. String(describing:) renders
+    // its raw-value wrapper, not the case name, so map cases explicitly.
+    switch self {
+    case .auto:
       return "auto"
-    case "manual":
+    case .manual:
       return "manual"
-    case "frozen":
+    case .frozen:
       return "frozen"
-    default:
+    case .unknown:
+      return "unknown"
+    @unknown default:
       return "unknown"
     }
   }
