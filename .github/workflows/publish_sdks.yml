@@ -32,11 +32,13 @@ jobs:
           mkdir -p ~/.gradle
           echo "${{ secrets.SONATYPE_GPG_FILE }}" > key.gpg.asc
           gpg -d --passphrase "${{ secrets.SONATYPE_GPG_PASSPHRASE }}" --batch "key.gpg.asc" > "$HOME/.gradle/key.gpg"
-          echo "signing.keyId=${{ secrets.SONATYPE_GPG_ID }}" >> ~/.gradle/gradle.properties
-          echo "signing.password=${{ secrets.SONATYPE_GPG_PASSWORD }}" >> ~/.gradle/gradle.properties
-          echo "signing.secretKeyRingFile=$HOME/.gradle/key.gpg" >> ~/.gradle/gradle.properties
-          echo "mavenCentralUsername=${{ secrets.MAVEN_CENTRAL_USERNAME }}" >> ~/.gradle/gradle.properties
-          echo "mavenCentralPassword=${{ secrets.MAVEN_CENTRAL_PASSWORD }}" >> ~/.gradle/gradle.properties
+          {
+            echo "signing.keyId=${{ secrets.SONATYPE_GPG_ID }}"
+            echo "signing.password=${{ secrets.SONATYPE_GPG_PASSWORD }}"
+            echo "signing.secretKeyRingFile=$HOME/.gradle/key.gpg"
+            echo "mavenCentralUsername=${{ secrets.MAVEN_CENTRAL_USERNAME }}"
+            echo "mavenCentralPassword=${{ secrets.MAVEN_CENTRAL_PASSWORD }}"
+          } >> ~/.gradle/gradle.properties
 
       - name: Publish to MavenCentral
         run: ./gradlew :sandwich:publishAndReleaseToMavenCentral
@@ -51,6 +53,9 @@ jobs:
 
       - name: Check out code
         uses: actions/checkout@v4
+
+      - name: Verify iOS frozen assignment bridge
+        run: python3 scripts/tests/test_frozen_mapper_contract.py
 
       - name: CocoaPods Release
         run: pod trunk push --allow-warnings QonversionSandwich.podspec

@@ -5,8 +5,7 @@ buildscript {
     // no-codes' transitive pin was the anomaly. Keep this at >= the version
     // no-codes was built against (1.11.0 -> sdk 9.6.0); Gradle resolves to
     // the higher of the two.
-    // Frozen assignment provenance was added in the next native feature
-    // release. This PR must merge only after Android SDK 9.8.0 is published.
+    // The native mapper must preserve `frozen` before Sandwich can bridge it.
     ext.qonversion_version = '9.8.0'
 }
 

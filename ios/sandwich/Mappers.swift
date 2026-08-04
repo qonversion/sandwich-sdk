@@ -661,8 +661,6 @@ extension Qonversion.RemoteConfigurationSourceType {
 
 extension Qonversion.RemoteConfigurationAssignmentType {
   func toString() -> String {
-    // This is imported from Objective-C NS_ENUM. String(describing:) renders
-    // its raw-value wrapper, not the case name, so map cases explicitly.
     switch self {
     case .auto:
       return "auto"
