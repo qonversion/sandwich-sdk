@@ -290,9 +290,14 @@ fun QRemoteConfigurationSourceType.toFormattedString(): String {
 }
 
 fun QRemoteConfigurationAssignmentType.toFormattedString(): String {
-    return when (this) {
-        QRemoteConfigurationAssignmentType.Auto -> "auto"
-        QRemoteConfigurationAssignmentType.Manual -> "manual"
+    return remoteConfigurationAssignmentTypeNameToFormattedString(name)
+}
+
+internal fun remoteConfigurationAssignmentTypeNameToFormattedString(name: String): String {
+    return when (name.lowercase()) {
+        "auto" -> "auto"
+        "manual" -> "manual"
+        "frozen" -> "frozen"
         else -> "unknown"
     }
 }

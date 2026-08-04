@@ -666,7 +666,11 @@ extension Qonversion.RemoteConfigurationAssignmentType {
       return "auto"
     case .manual:
       return "manual"
-    default:
+    case .frozen:
+      return "frozen"
+    case .unknown:
+      return "unknown"
+    @unknown default:
       return "unknown"
     }
   }

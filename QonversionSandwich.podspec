@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'QonversionSandwich'
-  s.version      = '7.12.0'
+  s.version      = '7.13.0'
   s.summary      = 'qonversion.io'
   s.swift_version = '5.0'
   s.description  = <<-DESC
@@ -16,6 +16,7 @@ Pod::Spec.new do |s|
     "osx" => "10.15"
   }
   s.source_files = 'ios/sandwich/**/*.{h,m,swift}'
-  s.dependency "Qonversion", "6.14.0"
+  # The native mapper must preserve `frozen` before Sandwich can bridge it.
+  s.dependency "Qonversion", "6.15.0"
   s.module_name = 'QonversionSandwich'
 end
