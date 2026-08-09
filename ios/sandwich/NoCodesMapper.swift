@@ -1,6 +1,9 @@
 import Foundation
 #if os(iOS)
 import Qonversion
+#if SWIFT_PACKAGE
+import NoCodes
+#endif
 
 extension NoCodesAction {
     func toMap() -> BridgeData {

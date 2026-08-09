@@ -75,11 +75,19 @@ extension NSError {
       }
 
       if (strCode == nil && domain == QonversionErrorDomain) {
+        #if SWIFT_PACKAGE
+        // QNUtils is internal to qonversion-ios-sdk and not exposed to SPM consumers.
+        // Keep this list in sync with QNUtils.authErrorsCodes (QNUtils.m).
+        let authErrorCodes: [Int] = [401, 402, 403]
+        let isAuthErrorCode = authErrorCodes.contains(code)
+        #else
         let authErrorCodes = QNUtils.authErrorsCodes() as? [NSNumber] ?? []
+        let isAuthErrorCode = authErrorCodes.contains { $0.intValue == code }
+        #endif
 
         if (code >= 500 && code < 600) {
           strCode = codes[Qonversion.ErrorCode.internalError.rawValue]
-        } else if (authErrorCodes.contains { $0.intValue == code }) {
+        } else if (isAuthErrorCode) {
           strCode = codes[Qonversion.ErrorCode.invalidCredentials.rawValue]
         }
       }
