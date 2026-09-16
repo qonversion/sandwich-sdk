@@ -23,6 +23,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### mac upgrade_qonversion
+
+```sh
+[bundle exec] fastlane mac upgrade_qonversion
+```
+
+
+
 ### mac patch
 
 ```sh
