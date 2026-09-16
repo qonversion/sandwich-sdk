@@ -75,11 +75,9 @@ extension NSError {
       }
 
       if (strCode == nil && domain == QonversionErrorDomain) {
-        let authErrorCodes = QNUtils.authErrorsCodes() as? [NSNumber] ?? []
-
         if (code >= 500 && code < 600) {
           strCode = codes[Qonversion.ErrorCode.internalError.rawValue]
-        } else if (authErrorCodes.contains { $0.intValue == code }) {
+        } else if (QONErrors.isAuthorizationError(self)) {
           strCode = codes[Qonversion.ErrorCode.invalidCredentials.rawValue]
         }
       }

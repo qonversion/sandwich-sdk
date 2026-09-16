@@ -16,3 +16,36 @@ jobs:
       - name: Validation
         run: |
           pod lib lint --allow-warnings
+
+  spm:
+    name: SPM (${{ matrix.platform }})
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: ['iOS Simulator', 'macOS']
+
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: actions/checkout@v4
+      # The podspec and Package.swift must pin the same Qonversion iOS SDK version
+      # (`fastlane upgrade_qonversion version:x.y.z` bumps both).
+      - name: Check the Qonversion pins match
+        run: |
+          pod_pin=$(grep -oE 's.dependency "Qonversion", "[0-9.]+"' QonversionSandwich.podspec | grep -oE '"[0-9.]+"$' | tr -d '"')
+          spm_pin=$(grep -oE 'qonversion-ios-sdk.git", exact: "[0-9.]+"' Package.swift | grep -oE '"[0-9.]+"$' | tr -d '"')
+          echo "podspec: $pod_pin, Package.swift: $spm_pin"
+          [ -n "$pod_pin" ] && [ "$pod_pin" = "$spm_pin" ] || { echo "::error::Qonversion pin mismatch between QonversionSandwich.podspec and Package.swift"; exit 1; }
+      # `swift build` compiles only the host (macOS) slice and skips the iOS-only No-Codes bridge;
+      # xcodebuild against the package (the xcodeproj lives under ios/, so the repo root resolves as a package)
+      # builds the slices SPM consumers actually get.
+      - name: SPM build (${{ matrix.platform }})
+        run: |
+          xcodebuild -scheme QonversionSandwich \
+            -destination 'generic/platform=${{ matrix.platform }}' \
+            build CODE_SIGNING_ALLOWED=NO
+      - name: swift build (CLI resolution)
+        if: matrix.platform == 'macOS'
+        run: swift build

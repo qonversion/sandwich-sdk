@@ -5,7 +5,31 @@ If you are looking for cross-platform SDKs then visit the corresponding reposito
 - [React Native](https://github.com/qonversion/react-native-sdk)
 - [Unity](https://github.com/qonversion/unity-sdk)
 - [Cordova](https://github.com/qonversion/cordova-plugin)
+- [Capacitor](https://github.com/qonversion/capacitor-plugin)
 
 Native SDKs used in this hybrid one:
 - [iOS](https://github.com/qonversion/qonversion-ios-sdk)
 - [Android](https://github.com/qonversion/android-sdk)
+
+## Integration (iOS)
+
+The iOS part is distributed both as a CocoaPod and as a Swift package. Both pin the same Qonversion iOS SDK version, and both pins are exact — an app that also depends on `Qonversion` / `qonversion-ios-sdk` directly must use that same version, otherwise dependency resolution fails.
+
+CocoaPods (a wrapper podspec):
+```ruby
+s.dependency "QonversionSandwich", "7.13.0"
+```
+
+CocoaPods (a Podfile):
+```ruby
+pod 'QonversionSandwich', '7.13.0'
+```
+
+Swift Package Manager (a wrapper `Package.swift`):
+```swift
+.package(url: "https://github.com/qonversion/sandwich-sdk.git", exact: "7.13.0")
+// target dependency:
+.product(name: "QonversionSandwich", package: "sandwich-sdk")
+```
+
+Wrapper code only needs `import QonversionSandwich` (`@import QonversionSandwich;` from Objective-C). Under SPM the Qonversion SDK is split into the `Qonversion`, `QonversionSwift` and `NoCodes` modules, which is why the bridge sources import them under `#if SWIFT_PACKAGE` — this is internal to the bridge. The version numbers above are rewritten by the release pipeline.
