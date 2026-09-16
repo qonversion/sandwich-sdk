@@ -29,17 +29,34 @@ def update_ios_version(new_version)
     result_value = "s.version      = '#{new_version}'"
 
     update_file(path, regex, result_value)
+
+    # README integration snippets carry the sandwich version — keep them at the released one.
+    update_file_strict("../README.md", /pod 'QonversionSandwich', '.*'/, "pod 'QonversionSandwich', '#{new_version}'")
+    update_file_strict("../README.md", /s.dependency "QonversionSandwich", ".*"/, "s.dependency \"QonversionSandwich\", \"#{new_version}\"")
+    update_file_strict("../README.md", /sandwich-sdk.git", exact: ".*"\)/, "sandwich-sdk.git\", exact: \"#{new_version}\")")
 end
 
+# The Qonversion iOS SDK pin lives in two manifests (podspec + Package.swift); they must always match.
 def update_qonversion_dependency(new_version)
-    update_file("../QonversionSandwich.podspec", /s.dependency "Qonversion", ".*"/, "s.dependency \"Qonversion\", \"#{new_version}\"")
-    update_file("../Package.swift", /qonversion-ios-sdk.git", exact: ".*"\)/, "qonversion-ios-sdk.git\", exact: \"#{new_version}\")")
+    UI.user_error!("Pass version:x.y.z") unless new_version.to_s.match?(/\A\d+\.\d+\.\d+\z/)
+
+    update_file_strict("../QonversionSandwich.podspec", /s.dependency "Qonversion", ".*"/, "s.dependency \"Qonversion\", \"#{new_version}\"")
+    update_file_strict("../Package.swift", /qonversion-ios-sdk.git", exact: ".*"\)/, "qonversion-ios-sdk.git\", exact: \"#{new_version}\")")
 end
 
 def update_file(path, regex, result_value)
 	file = File.read(path)
     new_content = file.gsub(regex, result_value)
     File.open(path, 'w') { |line| line.puts new_content }
+end
+
+# Like update_file, but fails loudly unless the pattern matches exactly once —
+# a silent no-op here would let the two dependency pins drift apart.
+def update_file_strict(path, regex, result_value)
+    file = File.read(path)
+    matches = file.scan(regex).length
+    UI.user_error!("#{path}: expected exactly one match for #{regex.inspect}, found #{matches}") unless matches == 1
+    File.write(path, file.sub(regex, result_value))
 end
 
 def get_tag
@@ -95,7 +112,7 @@ platform :mac do
   # Bumps the Qonversion iOS SDK pin in both distribution manifests (podspec + Package.swift)
   # so CocoaPods and SPM consumers always get the same native SDK version.
   lane :upgrade_qonversion do |options|
-  	update_qonversion_dependency(options[:version])
+    update_qonversion_dependency(options[:version])
   end
 
   lane :patch do
