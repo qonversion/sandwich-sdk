@@ -13,7 +13,7 @@ Native SDKs used in this hybrid one:
 
 ## Integration (iOS)
 
-The iOS part is distributed both as a CocoaPod and as a Swift package. Both pin the same Qonversion iOS SDK version, and both pins are exact — an app that also depends on `Qonversion` / `qonversion-ios-sdk` directly must use that same version, otherwise dependency resolution fails.
+The iOS part is distributed both as a CocoaPod and as a Swift package. CocoaPods trunk becomes read-only on December 2, 2026 ([announcement](https://blog.cocoapods.org/CocoaPods-Specs-Repo/)), so wrappers should resolve the sandwich through the Swift package wherever their host framework supports it — see the [migration guide](https://documentation.qonversion.io/docs/dec-2026-migration-guide-cocoapods-to-spm). Both pin the same Qonversion iOS SDK version, and both pins are exact — an app that also depends on `Qonversion` / `qonversion-ios-sdk` directly must use that same version, otherwise dependency resolution fails.
 
 CocoaPods (a wrapper podspec):
 ```ruby
