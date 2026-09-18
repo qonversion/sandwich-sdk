@@ -13,7 +13,7 @@ let package = Package(
             targets: ["QonversionSandwich"])
     ],
     dependencies: [
-        .package(url: "https://github.com/qonversion/qonversion-ios-sdk.git", exact: "6.15.0")
+        .package(url: "https://github.com/qonversion/qonversion-ios-sdk.git", exact: "6.17.2")
     ],
     targets: [
         .target(
