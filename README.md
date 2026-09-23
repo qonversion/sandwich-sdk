@@ -17,17 +17,17 @@ The iOS part is distributed both as a CocoaPod and as a Swift package. CocoaPods
 
 CocoaPods (a wrapper podspec):
 ```ruby
-s.dependency "QonversionSandwich", "7.13.1"
+s.dependency "QonversionSandwich", "7.14.0"
 ```
 
 CocoaPods (a Podfile):
 ```ruby
-pod 'QonversionSandwich', '7.13.1'
+pod 'QonversionSandwich', '7.14.0'
 ```
 
 Swift Package Manager (a wrapper `Package.swift`):
 ```swift
-.package(url: "https://github.com/qonversion/sandwich-sdk.git", exact: "7.13.1")
+.package(url: "https://github.com/qonversion/sandwich-sdk.git", exact: "7.14.0")
 // target dependency:
 .product(name: "QonversionSandwich", package: "sandwich-sdk")
 ```
