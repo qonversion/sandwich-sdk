@@ -5,7 +5,7 @@ buildscript {
     // no-codes' transitive pin was the anomaly. Keep this at >= the version
     // no-codes was built against (1.11.0 -> sdk 9.6.0); Gradle resolves to
     // the higher of the two.
-    ext.qonversion_version = '9.7.1'
+    ext.qonversion_version = '9.8.0'
 }
 
 plugins {

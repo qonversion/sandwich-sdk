@@ -324,6 +324,8 @@ extension Qonversion.EntitlementSource {
       return "Stripe"
     case .manual:
       return "Manual"
+    case .paddle:
+      return "Paddle"
     default:
       return "Unknown"
     }
