@@ -60,8 +60,12 @@ The Android part is published to Maven Central as `io.qonversion:sandwich`. Wrap
 way their build system requires — for example, a Cordova plugin declares it in `plugin.xml`:
 
 ```xml
+<!-- e.g. 7.14.0 — the current version is in maven-metadata.xml -->
 <framework src="io.qonversion:sandwich:7.14.0" />
 ```
+
+The version in this example is not rewritten by the release pipeline; take the current one from
+[`maven-metadata.xml`](https://repo1.maven.org/maven2/io/qonversion/sandwich/maven-metadata.xml).
 
 The pin is exact for the same reason as on iOS.
 
